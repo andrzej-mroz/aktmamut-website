@@ -1,6 +1,6 @@
 # AKT Mamut Website
 
-Repository foundation for the incremental migration of AKTMamut.eu.
+Repository for the incremental migration of AKTMamut.eu to Astro.
 
 ## Repository structure
 
@@ -8,6 +8,10 @@ Repository foundation for the incremental migration of AKTMamut.eu.
 AKT-Mamut-Website/
 ├── PROJECT.md
 ├── README.md
+├── astro.config.mjs
+├── package.json
+├── package-lock.json
+├── tsconfig.json
 ├── src/
 ├── public/
 ├── docs/
@@ -26,11 +30,39 @@ Additional preserved project files may remain at the repository root where movin
 
 ## Architecture overview
 
-Google Sheets and GPX source data are processed by the existing Python generators into JSON and GeoJSON. The future Astro application will consume those generated files, build the static website, and use Leaflet only for interactive maps. GitHub versions the deployable project, while Netlify is responsible only for deployment.
+Google Sheets and GPX source data are processed by the existing Python generators into JSON and GeoJSON. Astro consumes those generated files and builds the static website, while Leaflet is reserved only for interactive maps. GitHub versions the deployable project, and Netlify will be responsible only for deployment.
 
 The governing migration rule is: **Replace the presentation layer only.**
 
 See [Target Architecture](docs/target-architecture.md) for system boundaries and long-term responsibilities.
+
+## Local development
+
+Install dependencies:
+
+```powershell
+npm install
+```
+
+Start the development server:
+
+```powershell
+npm run dev
+```
+
+Create the production build:
+
+```powershell
+npm run build
+```
+
+Preview the production build:
+
+```powershell
+npm run preview
+```
+
+On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the same arguments.
 
 ## Current website
 
@@ -38,11 +70,11 @@ See [Target Architecture](docs/target-architecture.md) for system boundaries and
 
 The legacy site continues to contain its existing HTML, CSS, JavaScript, generated JSON and GeoJSON, media, Netlify configuration, and supporting files.
 
-## Future Astro website
+## Astro foundation
 
-`src/` is reserved for the future Astro application source. `public/` is reserved for static assets served directly.
+Astro is initialized in the repository root and uses static output.
 
-Astro has not been initialized or installed yet.
+`src/` contains the Astro application source. `public/` contains static assets served directly. The current Astro homepage is only a foundation check; no legacy page has been migrated.
 
 ## Data factory
 
@@ -60,7 +92,7 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 
 ## Documentation
 
-- `PROJECT.md` defines project scope and migration principles.
+- `PROJECT.md` defines project scope and migration status.
 - `docs/architecture-review.md` records the current-state assessment.
 - `docs/migration-strategy.md` describes the incremental migration sequence.
 - `docs/target-architecture.md` defines the long-term system boundaries and responsibilities.
@@ -68,5 +100,5 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 
 ## Repository status
 
-The repository structure is aligned with the future Astro root, but Astro has not been initialized. The legacy website remains frozen under `website/old-site/`.
+Sprint 3 establishes the Astro foundation only. The legacy website, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
 
