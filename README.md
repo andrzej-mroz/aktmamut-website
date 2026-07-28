@@ -13,7 +13,10 @@ AKT-Mamut-Website/
 ├── package-lock.json
 ├── tsconfig.json
 ├── scripts/
-│   └── sync-legacy.mjs
+│   ├── lib/
+│   │   └── legacy-paths.mjs
+│   ├── sync-legacy.mjs
+│   └── validate-legacy.mjs
 ├── src/
 │   ├── components/
 │   │   ├── SiteHeader.astro
@@ -61,10 +64,16 @@ Install dependencies:
 npm install
 ```
 
-Synchronize the frozen legacy site into the generated public compatibility directory:
+Generate the temporary legacy compatibility site:
 
 ```powershell
 npm.cmd run sync:legacy
+```
+
+Validate the generated compatibility site:
+
+```powershell
+npm.cmd run validate:legacy
 ```
 
 Start the development server:
@@ -85,7 +94,7 @@ Preview the production build:
 npm run preview
 ```
 
-`npm run dev` and `npm run build` synchronize the legacy site automatically before Astro starts. `public/legacy/` is generated from `website/old-site/` and is intentionally ignored by Git.
+`npm run dev` and `npm run build` execute synchronization and validation automatically before Astro starts. `public/legacy/` is generated from `website/old-site/`, rewritten only for temporary path compatibility, and intentionally ignored by Git.
 
 On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the same arguments.
 
@@ -96,6 +105,22 @@ On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the
 The legacy site continues to contain its existing HTML, CSS, JavaScript, generated JSON and GeoJSON, media, Netlify configuration, and supporting files.
 
 During migration, unmigrated navigation destinations are served from the generated `/legacy/` compatibility path. The authoritative legacy source remains only in `website/old-site/`.
+
+## Legacy compatibility
+
+During synchronization, supported root-relative paths in generated HTML, CSS, JavaScript, and JSON are prefixed with `/legacy/`. Exact directory routes are converted to their real `index.html` files so they work consistently in Astro development and production preview.
+
+The validator confirms:
+
+- representative pages and assets exist;
+- generated files match the source structure;
+- root-relative local paths have been resolved;
+- `/legacy/legacy/` was not produced;
+- text differs only through approved path rewriting;
+- all non-text files remain byte-identical;
+- the authoritative legacy source remains equal to its synchronization manifest.
+
+This compatibility layer is temporary and will be removed route by route as Astro migration progresses.
 
 ## Astro foundation
 
@@ -129,4 +154,4 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 
 ## Repository status
 
-Sprint 5 replaces the temporary header with the statically rendered legacy identity and primary navigation. Unmigrated pages remain available through the generated legacy compatibility layer. The legacy homepage, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
+Sprint 6 makes the frozen legacy website usable below `/legacy/` through generated, validated path rewriting. The legacy homepage has not been migrated to Astro, and Leaflet, the Python pipeline, and Netlify deployment remain unchanged.

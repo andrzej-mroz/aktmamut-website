@@ -129,9 +129,23 @@ The legacy implementation remains separate from the future Astro source under `s
 
 ## Temporary legacy compatibility layer
 
-Until individual routes are migrated, `scripts/sync-legacy.mjs` copies the frozen legacy website from `website/old-site/` to the generated `public/legacy/` directory. Astro development and production build commands run this synchronization automatically.
+During migration, the following temporary path is active:
 
-The generated directory is ignored by Git. It is a deployment compatibility layer, not a second source of truth. The authoritative legacy files remain in `website/old-site/`, and any compatibility issue caused by legacy absolute paths must be addressed through a separate, explicit decision rather than by editing the generated copy.
+```text
+Frozen legacy source
+        │
+        ▼
+Synchronization and path rewriting
+        │
+        ▼
+Generated /legacy compatibility site
+```
+
+`scripts/sync-legacy.mjs` copies the frozen website from `website/old-site/` and rewrites supported root-relative local URLs only in the generated `public/legacy/` copy. `scripts/validate-legacy.mjs` verifies path compatibility, exact text transformations, binary identity, complete file structure, and source immutability.
+
+The generated directory is ignored by Git. It is a deployment compatibility layer, not a second source of truth. The authoritative legacy files remain in `website/old-site/`.
+
+This compatibility layer is temporary and disappears progressively as legacy routes move to Astro.
 
 ## Target outcome
 

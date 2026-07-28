@@ -8,15 +8,17 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 5 — Legacy Header and Navigation Migration
+### SPRINT 6 — Legacy Compatibility Layer
 
 Status: **Completed**
 
-The production-oriented header is now rendered statically by Astro. Its typed navigation configuration is centralized in `src/data/navigation.ts`, and `BaseLayout.astro` supplies the current route for accessible active-page state.
+`website/old-site/` remains the frozen and authoritative legacy implementation. The synchronization process copies it to the generated `public/legacy/` directory and rewrites supported root-relative local paths only in that generated copy.
 
-Routes that have not yet been migrated point to the preserved legacy website under `/legacy/`. `website/old-site/` remains the frozen and authoritative legacy implementation. `scripts/sync-legacy.mjs` generates `public/legacy/` before development and production builds, and the generated directory is ignored by Git.
+Compatibility rewriting covers HTML, CSS, JavaScript, and JSON. A dedicated validator checks required files, unresolved root-relative paths, duplicate `/legacy/legacy/` prefixes, source immutability, exact generated text transformations, and byte identity for every non-text file.
 
-No legacy homepage content has been migrated. Leaflet and all map functionality remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
+The compatibility layer is temporary and will disappear progressively as legacy routes are migrated to Astro.
+
+No legacy homepage content has been migrated. Leaflet and map logic remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
 
 ## Target repository structure
 
@@ -35,7 +37,10 @@ AKT-Mamut-Website/
 │   └── styles/
 │       └── global.css
 ├── scripts/
-│   └── sync-legacy.mjs
+│   ├── lib/
+│   │   └── legacy-paths.mjs
+│   ├── sync-legacy.mjs
+│   └── validate-legacy.mjs
 ├── public/
 │   ├── assets/
 │   │   └── brand/
@@ -59,7 +64,7 @@ AKT-Mamut-Website/
 
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
-- `public/` contains static assets served directly without build-time processing. `public/legacy/` is a generated compatibility copy and is not tracked.
+- `public/legacy/` is generated, path-adjusted for temporary compatibility, ignored by Git, and never authoritative.
 - `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
 - `docs/` records architecture, migration strategy, and engineering decisions.
 - `assets/` is reserved for shared migration and brand assets.
@@ -75,11 +80,11 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 5
+## Out of scope for Sprint 6
 
-- Migrating the legacy homepage or destination pages.
-- Migrating Leaflet or map code.
+- Migrating or redesigning legacy pages.
+- Migrating Leaflet or changing map logic.
 - Modifying the Python data pipeline.
-- Adding frontend frameworks, CSS frameworks, or browser JavaScript.
-- Configuring Netlify for Astro.
+- Adding frontend dependencies.
+- Configuring Netlify.
 - Publishing or deploying the Astro website.

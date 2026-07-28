@@ -1,10 +1,24 @@
-import { cp, mkdir, rm, stat } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { cp, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  createFileManifest,
+  formatIssues,
+  inspectGeneratedTextFiles,
+  isTextFile,
+  listFiles,
+  rewriteLegacyPaths,
+} from "./lib/legacy-paths.mjs";
 
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const sourceDirectory = resolve(repositoryRoot, "website", "old-site");
 const destinationDirectory = resolve(repositoryRoot, "public", "legacy");
+const manifestPath = resolve(
+  repositoryRoot,
+  ".astro",
+  "legacy-source-manifest.json",
+);
 
 let source;
 
@@ -22,10 +36,62 @@ if (!source.isDirectory()) {
   );
 }
 
-await rm(destinationDirectory, { recursive: true, force: true });
-await mkdir(dirname(destinationDirectory), { recursive: true });
-await cp(sourceDirectory, destinationDirectory, { recursive: true });
+const sourceFiles = await listFiles(sourceDirectory);
+const sourceManifestBefore = await createFileManifest(sourceDirectory);
+const temporaryRoot = await mkdtemp(join(tmpdir(), "akt-mamut-legacy-"));
+const temporarySite = join(temporaryRoot, "legacy");
 
-console.log(
-  `Legacy website synchronized from ${sourceDirectory} to ${destinationDirectory}`,
-);
+let rewrittenFiles = 0;
+let rewrittenReferences = 0;
+
+try {
+  await rm(destinationDirectory, { recursive: true, force: true });
+  await cp(sourceDirectory, temporarySite, { recursive: true });
+
+  const copiedFiles = await listFiles(temporarySite);
+
+  for (const filePath of copiedFiles.filter(isTextFile)) {
+    const originalText = await readFile(filePath, "utf8");
+    const result = rewriteLegacyPaths(originalText);
+
+    if (result.referenceCount > 0) {
+      await writeFile(filePath, result.text, "utf8");
+      rewrittenFiles += 1;
+      rewrittenReferences += result.referenceCount;
+    }
+  }
+
+  const issues = await inspectGeneratedTextFiles(temporarySite);
+
+  if (issues.length > 0) {
+    throw new Error(
+      `Legacy synchronization validation failed:\n${formatIssues(issues)}`,
+    );
+  }
+
+  const sourceManifestAfter = await createFileManifest(sourceDirectory);
+
+  if (
+    JSON.stringify(sourceManifestAfter) !== JSON.stringify(sourceManifestBefore)
+  ) {
+    throw new Error(
+      "Legacy synchronization failed: authoritative source changed during synchronization.",
+    );
+  }
+
+  await mkdir(dirname(destinationDirectory), { recursive: true });
+  await rename(temporarySite, destinationDirectory);
+  await mkdir(dirname(manifestPath), { recursive: true });
+  await writeFile(
+    manifestPath,
+    `${JSON.stringify(sourceManifestBefore, null, 2)}\n`,
+    "utf8",
+  );
+
+  console.log(`Legacy files copied: ${sourceFiles.length}`);
+  console.log(`Legacy text files rewritten: ${rewrittenFiles}`);
+  console.log(`Legacy path references rewritten: ${rewrittenReferences}`);
+  console.log(`Legacy compatibility site generated at ${destinationDirectory}`);
+} finally {
+  await rm(temporaryRoot, { recursive: true, force: true });
+}

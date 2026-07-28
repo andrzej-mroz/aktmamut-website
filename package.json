@@ -8,9 +8,10 @@
   },
   "scripts": {
     "sync:legacy": "node scripts/sync-legacy.mjs",
-    "dev": "npm run sync:legacy && astro dev",
+    "validate:legacy": "node scripts/validate-legacy.mjs",
+    "dev": "npm run sync:legacy && npm run validate:legacy && astro dev",
     "start": "npm run dev",
-    "build": "npm run sync:legacy && astro build",
+    "build": "npm run sync:legacy && npm run validate:legacy && astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
