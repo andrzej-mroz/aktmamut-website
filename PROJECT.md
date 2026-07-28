@@ -8,15 +8,32 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-Sprint 1 establishes the repository foundation only.
+Sprint 2 aligns the repository with the standard Astro project layout before Astro is installed.
 
 No website code has been migrated, redesigned, or modified in this phase.
 
+## Target repository structure
+
+```text
+AKT-Mamut-Website/
+├── src/
+├── public/
+├── data/
+├── docs/
+├── assets/
+├── website/
+│   └── old-site/
+├── README.md
+├── PROJECT.md
+└── .gitignore
+```
+
 ## Architectural boundaries
 
-- `website/old-site/` contains the current production website unchanged.
-- `website/astro/` is reserved for the future Astro application.
-- `data/` contains the existing local data factory, generators, GPX files, generated datasets, backups, and local working data.
+- `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
+- `src/` will become the Astro application source directory.
+- `public/` will contain static assets served directly without build-time processing.
+- `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
 - `docs/` records architecture, migration strategy, and engineering decisions.
 - `assets/` is reserved for shared migration and brand assets.
 
@@ -31,10 +48,11 @@ No website code has been migrated, redesigned, or modified in this phase.
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 1
+## Out of scope for Sprint 2
 
-- Creating the Astro project.
-- Modifying the current website.
+- Initializing or installing Astro.
+- Creating Astro configuration or package files.
+- Modifying the legacy website.
 - Redesigning pages.
 - Changing Netlify configuration.
 - Refactoring data generators.
