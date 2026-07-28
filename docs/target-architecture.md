@@ -127,6 +127,12 @@ It is used to verify:
 
 The legacy implementation remains separate from the future Astro source under `src/`.
 
+## Temporary legacy compatibility layer
+
+Until individual routes are migrated, `scripts/sync-legacy.mjs` copies the frozen legacy website from `website/old-site/` to the generated `public/legacy/` directory. Astro development and production build commands run this synchronization automatically.
+
+The generated directory is ignored by Git. It is a deployment compatibility layer, not a second source of truth. The authoritative legacy files remain in `website/old-site/`, and any compatibility issue caused by legacy absolute paths must be addressed through a separate, explicit decision rather than by editing the generated copy.
+
 ## Target outcome
 
 The completed architecture will provide:
@@ -137,4 +143,3 @@ The completed architecture will provide:
 - Leaflet limited to interactive maps;
 - versioned source in GitHub;
 - static deployment through Netlify.
-

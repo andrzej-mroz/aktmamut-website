@@ -12,10 +12,14 @@ AKT-Mamut-Website/
 ├── package.json
 ├── package-lock.json
 ├── tsconfig.json
+├── scripts/
+│   └── sync-legacy.mjs
 ├── src/
 │   ├── components/
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
+│   ├── data/
+│   │   └── navigation.ts
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
@@ -23,6 +27,10 @@ AKT-Mamut-Website/
 │   └── styles/
 │       └── global.css
 ├── public/
+│   ├── assets/
+│   │   └── brand/
+│   │       └── M256.webp
+│   └── legacy/                  # generated, ignored
 ├── docs/
 │   ├── architecture-review.md
 │   ├── migration-strategy.md
@@ -53,6 +61,12 @@ Install dependencies:
 npm install
 ```
 
+Synchronize the frozen legacy site into the generated public compatibility directory:
+
+```powershell
+npm.cmd run sync:legacy
+```
+
 Start the development server:
 
 ```powershell
@@ -71,6 +85,8 @@ Preview the production build:
 npm run preview
 ```
 
+`npm run dev` and `npm run build` synchronize the legacy site automatically before Astro starts. `public/legacy/` is generated from `website/old-site/` and is intentionally ignored by Git.
+
 On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the same arguments.
 
 ## Current website
@@ -79,13 +95,15 @@ On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the
 
 The legacy site continues to contain its existing HTML, CSS, JavaScript, generated JSON and GeoJSON, media, Netlify configuration, and supporting files.
 
+During migration, unmigrated navigation destinations are served from the generated `/legacy/` compatibility path. The authoritative legacy source remains only in `website/old-site/`.
+
 ## Astro foundation
 
 Astro is initialized in the repository root and uses static output.
 
-`src/layouts/BaseLayout.astro` provides the shared document structure. `src/styles/global.css` defines the global design tokens and reusable container and section classes. The current header and footer are temporary migration components.
+`src/layouts/BaseLayout.astro` provides the shared document structure. `src/styles/global.css` defines the global design tokens and reusable container and section classes. The production-oriented Astro header is rendered statically and reads its route configuration from `src/data/navigation.ts`.
 
-The Astro homepage remains a migration status page; no legacy page has been migrated.
+The Astro homepage remains a migration status page; no legacy homepage content has been migrated.
 
 ## Data factory
 
@@ -111,5 +129,4 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 
 ## Repository status
 
-Sprint 4 establishes the global Astro layout and design foundation. The legacy website, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
-
+Sprint 5 replaces the temporary header with the statically rendered legacy identity and primary navigation. Unmigrated pages remain available through the generated legacy compatibility layer. The legacy homepage, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.

@@ -32,7 +32,7 @@ const documentTitle = title === "AKT Mamut" ? title : `${title} | AKT Mamut`;
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="site-shell">
-      <SiteHeader />
+      <SiteHeader currentPath={Astro.url.pathname} />
       <main id="main-content">
         <slot />
       </main>
@@ -68,4 +68,3 @@ const documentTitle = title === "AKT Mamut" ? title : `${title} | AKT Mamut`;
     flex: 1;
   }
 </style>
-

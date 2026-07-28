@@ -3,6 +3,9 @@ node_modules/
 dist/
 .astro/
 
+# Generated copy of the frozen legacy website
+/public/legacy/
+
 # Preserved legacy Git repository
 /.legacy/
 
@@ -26,4 +29,3 @@ __pycache__/
 # Local operating-system files
 Thumbs.db
 .DS_Store
-

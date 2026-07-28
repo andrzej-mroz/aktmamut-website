@@ -8,17 +8,15 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 4 — Global Layout and Design Foundation
+### SPRINT 5 — Legacy Header and Navigation Migration
 
 Status: **Completed**
 
-`BaseLayout.astro` is the shared HTML document layout and owns global metadata, the site shell, and the page slot.
+The production-oriented header is now rendered statically by Astro. Its typed navigation configuration is centralized in `src/data/navigation.ts`, and `BaseLayout.astro` supplies the current route for accessible active-page state.
 
-Global design tokens and reusable structural classes are defined in `src/styles/global.css`.
+Routes that have not yet been migrated point to the preserved legacy website under `/legacy/`. `website/old-site/` remains the frozen and authoritative legacy implementation. `scripts/sync-legacy.mjs` generates `public/legacy/` before development and production builds, and the generated directory is ignored by Git.
 
-`SiteHeader.astro` and `SiteFooter.astro` are temporary migration components. They establish semantic and responsive site structure without copying the legacy implementation.
-
-No legacy page has been migrated. Leaflet and all map functionality remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
+No legacy homepage content has been migrated. Leaflet and all map functionality remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
 
 ## Target repository structure
 
@@ -28,13 +26,21 @@ AKT-Mamut-Website/
 │   ├── components/
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
+│   ├── data/
+│   │   └── navigation.ts
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
 │   │   └── index.astro
 │   └── styles/
 │       └── global.css
+├── scripts/
+│   └── sync-legacy.mjs
 ├── public/
+│   ├── assets/
+│   │   └── brand/
+│   │       └── M256.webp
+│   └── legacy/                  # generated, ignored
 ├── data/
 ├── docs/
 ├── assets/
@@ -53,7 +59,7 @@ AKT-Mamut-Website/
 
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
-- `public/` contains static assets served directly without build-time processing.
+- `public/` contains static assets served directly without build-time processing. `public/legacy/` is a generated compatibility copy and is not tracked.
 - `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
 - `docs/` records architecture, migration strategy, and engineering decisions.
 - `assets/` is reserved for shared migration and brand assets.
@@ -69,12 +75,11 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 4
+## Out of scope for Sprint 5
 
-- Migrating legacy pages or navigation.
-- Adding Leaflet or map code.
+- Migrating the legacy homepage or destination pages.
+- Migrating Leaflet or map code.
 - Modifying the Python data pipeline.
 - Adding frontend frameworks, CSS frameworks, or browser JavaScript.
 - Configuring Netlify for Astro.
 - Publishing or deploying the Astro website.
-
