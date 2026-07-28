@@ -8,21 +8,32 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 3 — Astro Foundation
+### SPRINT 4 — Global Layout and Design Foundation
 
 Status: **Completed**
 
-Astro is initialized in the repository root and configured for static output.
+`BaseLayout.astro` is the shared HTML document layout and owns global metadata, the site shell, and the page slot.
 
-The foundation contains only a minimal verification homepage. No legacy page has been migrated yet.
+Global design tokens and reusable structural classes are defined in `src/styles/global.css`.
 
-The legacy implementation remains frozen under `website/old-site/`. Leaflet and the Python data-generation pipeline remain unchanged. Netlify has not yet been configured for the Astro project.
+`SiteHeader.astro` and `SiteFooter.astro` are temporary migration components. They establish semantic and responsive site structure without copying the legacy implementation.
+
+No legacy page has been migrated. Leaflet and all map functionality remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
 
 ## Target repository structure
 
 ```text
 AKT-Mamut-Website/
 ├── src/
+│   ├── components/
+│   │   ├── SiteHeader.astro
+│   │   └── SiteFooter.astro
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   ├── pages/
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css
 ├── public/
 ├── data/
 ├── docs/
@@ -58,12 +69,12 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 3
+## Out of scope for Sprint 4
 
-- Migrating legacy pages or components.
+- Migrating legacy pages or navigation.
 - Adding Leaflet or map code.
 - Modifying the Python data pipeline.
-- Adding frontend frameworks, CSS frameworks, or testing tools.
+- Adding frontend frameworks, CSS frameworks, or browser JavaScript.
 - Configuring Netlify for Astro.
 - Publishing or deploying the Astro website.
 

@@ -1,0 +1,71 @@
+---
+import SiteFooter from "../components/SiteFooter.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+}
+
+const {
+  title,
+  description = "AKT Mamut — expeditions, mountain challenges and geographic exploration.",
+  lang = "en",
+} = Astro.props;
+
+const documentTitle = title === "AKT Mamut" ? title : `${title} | AKT Mamut`;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <title>{documentTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="site-shell">
+      <SiteHeader />
+      <main id="main-content">
+        <slot />
+      </main>
+      <SiteFooter />
+    </div>
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: fixed;
+    z-index: 10;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-small);
+    background: var(--color-text);
+    color: var(--color-surface);
+    transform: translateY(-200%);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  .site-shell {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+  }
+</style>
+

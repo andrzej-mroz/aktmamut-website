@@ -1,0 +1,41 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-content">
+    <p><strong>AKT Mamut</strong></p>
+    <p>Presentation layer migration in progress.</p>
+    <p>&copy; {currentYear}</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-block: var(--space-5);
+    font-size: 0.875rem;
+  }
+
+  .footer-content strong {
+    color: var(--color-text);
+  }
+
+  @media (min-width: 48rem) {
+    .footer-content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-5);
+    }
+  }
+</style>
+

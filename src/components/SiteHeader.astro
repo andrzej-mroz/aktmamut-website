@@ -1,0 +1,93 @@
+<header class="site-header">
+  <div class="container header-content">
+    <div class="brand-group">
+      <a class="site-name" href="/">AKT Mamut</a>
+      <span class="preview-label">Migration preview</span>
+    </div>
+
+    <nav aria-label="Primary navigation">
+      <ul class="navigation-list">
+        <li><a aria-current="page" href="/">Home</a></li>
+        <li><a href="#">Expeditions</a></li>
+        <li><a href="#">Challenges</a></li>
+        <li><a href="#">Statistics</a></li>
+        <li><a href="#">Manual</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .header-content {
+    display: flex;
+    min-height: var(--header-height);
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+
+  .brand-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .site-name {
+    color: var(--color-text);
+    font-size: 1.125rem;
+    font-weight: 750;
+    text-decoration: none;
+  }
+
+  .preview-label {
+    padding: var(--space-1) var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-small);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .navigation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navigation-list a {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .navigation-list a:hover,
+  .navigation-list a[aria-current="page"] {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 48rem) {
+    .header-content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      padding-block: 0;
+    }
+
+    .navigation-list {
+      justify-content: flex-end;
+    }
+  }
+</style>
+

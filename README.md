@@ -13,6 +13,15 @@ AKT-Mamut-Website/
 ├── package-lock.json
 ├── tsconfig.json
 ├── src/
+│   ├── components/
+│   │   ├── SiteHeader.astro
+│   │   └── SiteFooter.astro
+│   ├── layouts/
+│   │   └── BaseLayout.astro
+│   ├── pages/
+│   │   └── index.astro
+│   └── styles/
+│       └── global.css
 ├── public/
 ├── docs/
 │   ├── architecture-review.md
@@ -74,7 +83,9 @@ The legacy site continues to contain its existing HTML, CSS, JavaScript, generat
 
 Astro is initialized in the repository root and uses static output.
 
-`src/` contains the Astro application source. `public/` contains static assets served directly. The current Astro homepage is only a foundation check; no legacy page has been migrated.
+`src/layouts/BaseLayout.astro` provides the shared document structure. `src/styles/global.css` defines the global design tokens and reusable container and section classes. The current header and footer are temporary migration components.
+
+The Astro homepage remains a migration status page; no legacy page has been migrated.
 
 ## Data factory
 
@@ -100,5 +111,5 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 
 ## Repository status
 
-Sprint 3 establishes the Astro foundation only. The legacy website, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
+Sprint 4 establishes the global Astro layout and design foundation. The legacy website, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
 
