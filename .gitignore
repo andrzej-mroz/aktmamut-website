@@ -1,0 +1,24 @@
+# Preserved legacy Git metadata
+.legacy/
+
+# Local data factory — kept outside Git
+/data/*
+!/data/README.md
+
+# Local credentials and environment files
+data/creds/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python-generated local state
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local operating-system files
+Thumbs.db
+.DS_Store
+

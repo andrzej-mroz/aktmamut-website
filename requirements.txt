@@ -1,0 +1,32 @@
+# ==================================================
+# AKT MAMUT
+# requirements for:
+# - generate_geojson.py
+# - generate_challenges.py
+# ==================================================
+
+# pip install -r requirements.txt
+
+# =========================
+# DATA PROCESSING
+# =========================
+pandas
+
+# =========================
+# GPX PROCESSING
+# =========================
+gpxpy
+
+# =========================
+# HTTP
+# =========================
+requests
+
+# =========================
+# GOOGLE API
+# =========================
+gspread
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+oauth2client

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>AKT MAMUT – Expeditions</title>
+        <link rel="icon" type="image/png" href="/assets/img/M32.webp" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="/assets/css/shared.css?v=20260621210643" />
+        <link rel="stylesheet" href="/expeditions/expeditions.css?v=20260621210643" />
+
+        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    </head>
+    <body>
+        <div class="expeditions-page">
+            <div id="headerMount" data-mode="back-home"></div>
+
+            <div class="expeditions-map-wrap">
+                <div class="expeditions-topbar">
+                    <div class="expeditions-topbar-title">
+                        <strong>Expeditions</strong>
+                        <span id="version-info"></span>
+                    </div>
+                </div>
+
+                <div class="folium-map" id="map_f15ff5f41b2dbbf273d8c3052233061a"></div>
+            </div>
+        </div>
+
+        <script src="/assets/js/app-version.js?v=20260621210643"></script>
+        <script src="/assets/js/header.js?v=20260621210643"></script>
+        <script src="/expeditions/markers.js?v=20260621210643"></script>
+        <script src="/expeditions/expeditions.js?v=20260621210643"></script>
+    </body>
+</html>

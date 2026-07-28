@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>AKT MAMUT – Challenges</title>
+        <link rel="icon" type="image/png" href="/assets/img/M32.webp" />
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="/assets/css/shared.css?v=20260621210643" />
+        <link rel="stylesheet" href="/assets/css/challenges.css?v=20260621210643" />
+    </head>
+    <body>
+        <div id="headerMount" data-mode="back-home"></div>
+
+        <div class="page">
+            <section class="hero">
+                <h1>Challenges</h1>
+                <p>Wybierz wyzwanie i sprawdź postęp zdobywania szczytów.</p>
+            </section>
+
+            <div id="content" class="loading">Ładowanie challenges…</div>
+        </div>
+
+        <script>
+            function renderIcon(icon, name) {
+                if (!icon) return '';
+
+                const lower = icon.toLowerCase();
+                const isImage = lower.endsWith('.svg') || lower.endsWith('.png') || lower.endsWith('.webp') || lower.endsWith('.jpg') || lower.endsWith('.jpeg') || lower.endsWith('.gif') || icon.startsWith('/');
+
+                if (isImage) {
+                    return `<img src="${icon}" alt="${name}">`;
+                }
+
+                return `<span style="font-size: 1.5rem; line-height: 1;">${icon}</span>`;
+            }
+
+            async function fetchJson(url) {
+                const response = await fetch(url, { cache: 'no-store' });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status} for ${url}`);
+                }
+
+                return response.json();
+            }
+
+            async function buildCards() {
+                const content = document.getElementById('content');
+
+                try {
+                    const challenges = await fetchJson('/challenges/data/challenges-index.json');
+
+                    if (!Array.isArray(challenges) || challenges.length === 0) {
+                        content.className = 'empty';
+                        content.textContent = 'Brak aktywnych challenges.';
+                        return;
+                    }
+
+                    const stats = await Promise.all(
+                        challenges.map(async (challenge) => {
+                            const rows = await fetchJson(`/challenges/data/challenges-${challenge.key}.json`);
+
+                            const total = Array.isArray(rows) ? rows.length : 0;
+                            const done = Array.isArray(rows) ? rows.filter((r) => r.status === 'done').length : 0;
+
+                            const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+                            return {
+                                ...challenge,
+                                total,
+                                done,
+                                todo: Math.max(0, total - done),
+                                percent,
+                            };
+                        })
+                    );
+
+                    const grid = document.createElement('div');
+                    grid.className = 'grid';
+
+                    for (const item of stats) {
+                        const card = document.createElement('article');
+                        card.className = 'card';
+
+                        card.innerHTML = `
+                        <div class="card-head">
+                            <div class="card-icon">${renderIcon(item.icon, item.name)}</div>
+                            <h2 class="card-title">${item.name}</h2>
+                        </div>
+
+                        <div class="meta">
+                            <div class="metric">
+                                <span class="metric-label">Peaks</span>
+                                <span class="metric-value">${item.total}</span>
+                            </div>
+
+                            <div class="metric">
+                                <span class="metric-label">Completed</span>
+                                <span class="metric-value">${item.done}</span>
+                            </div>
+                        </div>
+
+                        <div class="progress-row">
+                            <div class="progress-top">
+                                <span class="left">${item.done} / ${item.total}</span>
+                                <span class="right">${item.percent}%</span>
+                            </div>
+
+                            <div class="bar">
+                                <div class="bar-fill" style="width: ${item.percent}%"></div>
+                            </div>
+
+                            <a class="open-btn" href="/challenges/index.html?region=${item.key}">
+                                Open challenge
+                            </a>
+                        </div>
+                    `;
+
+                        grid.appendChild(card);
+                    }
+
+                    content.className = '';
+                    content.innerHTML = '';
+                    content.appendChild(grid);
+                } catch (error) {
+                    console.error(error);
+                    content.className = 'error';
+                    content.textContent = 'Nie udało się wczytać challenges.';
+                }
+            }
+
+            buildCards();
+        </script>
+        <a class="manual-floating" href="/challenges/manual.html" title="Manual"> ⚙ </a>
+        <script src="/assets/js/app-version.js?v=20260621210643"></script>
+        <script src="/assets/js/header.js?v=20260621210643"></script>
+    </body>
+</html>
