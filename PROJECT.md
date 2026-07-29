@@ -8,17 +8,17 @@ The project is moving from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 9 — Migrate the Manual to Astro Markdown
+### SPRINT 10 — Statistics Audit and Data Contract
 
 Status: **Completed**
 
-The production Manual is now a native Astro route at `/manual/`. Its authoritative content is stored as Markdown in the `manual` Content Collection, rendered through the shared `ContentLayout.astro`, and styled by the scoped editorial rules in `src/styles/content.css`.
+The legacy Statistics module and its complete 524-feature Expeditions GeoJSON source have been audited. The audit identifies the runtime sequence, four source properties actually consumed by Statistics, browser-side calculations, table behavior, accessibility limitations, responsive behavior, and coupling to the map-oriented GeoJSON.
 
-The migration preserves all substantive legacy Manual content while improving document semantics: one H1, twelve H2 sections with stable anchors, native lists, a semantic configuration table, readable code blocks, and accessible responsive behavior. The primary navigation now points directly to `/manual/`.
+The proposed target contract is defined in `src/data/statistics.types.ts`. Deterministic, read-only Node scripts audit the complete source dataset and verify that all current records can be normalized without missing fields, invalid values, or duplicate identifiers.
 
-The original Manual remains unchanged at `website/old-site/manual/index.html` and continues to be available in the generated compatibility site at `/legacy/manual/index.html`.
+The selected long-term architecture is a dedicated `statistics.json` generated and validated by Python, then consumed statically by Astro. This sprint defines that boundary only: no Python generator, Astro Statistics page, Leaflet migration, or runtime routing change has been implemented.
 
-Expeditions, Challenges, and Statistics remain compatibility routes below `/legacy/`. Leaflet and all map behavior remain in the frozen legacy implementation. The Python data-generation pipeline and Netlify configuration remain unchanged.
+Statistics remains live at `/legacy/statistics/index.html` and remains marked as unmigrated. The frozen legacy source, GeoJSON, Python pipeline, Leaflet implementation, Manual, homepage, and Netlify configuration are unchanged.
 
 ## Target repository structure
 
@@ -36,7 +36,8 @@ AKT-Mamut-Website/
 │   ├── data/
 │   │   ├── homepage.ts
 │   │   ├── navigation.ts
-│   │   └── routes.ts
+│   │   ├── routes.ts
+│   │   └── statistics.types.ts
 │   ├── layouts/
 │   │   ├── BaseLayout.astro
 │   │   └── ContentLayout.astro
@@ -50,8 +51,10 @@ AKT-Mamut-Website/
 ├── scripts/
 │   ├── lib/
 │   │   └── legacy-paths.mjs
+│   ├── audit-statistics-data.mjs
 │   ├── sync-legacy.mjs
-│   └── validate-legacy.mjs
+│   ├── validate-legacy.mjs
+│   └── validate-statistics-contract.mjs
 ├── public/
 │   ├── assets/
 │   └── legacy/                  # generated, ignored
@@ -59,7 +62,9 @@ AKT-Mamut-Website/
 ├── docs/
 │   ├── homepage-audit.md
 │   ├── homepage-component-plan.md
-│   └── manual-audit.md
+│   ├── manual-audit.md
+│   ├── statistics-audit.md
+│   └── statistics-data-contract.md
 ├── assets/
 ├── website/
 │   └── old-site/
@@ -77,13 +82,13 @@ AKT-Mamut-Website/
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
 - `src/content/` contains authored Markdown managed through Astro Content Collections.
-- `src/content.config.ts` defines collection loaders and metadata validation.
-- `src/layouts/ContentLayout.astro` owns the shared editorial document frame, while `src/styles/content.css` styles rendered Markdown content.
-- `src/data/routes.ts` owns current compatibility destinations and canonical Astro routes.
+- `src/data/statistics.types.ts` defines only the proposed normalized Statistics contract and does not power the live page.
+- `scripts/audit-statistics-data.mjs` and `scripts/validate-statistics-contract.mjs` inspect the legacy GeoJSON without modifying it.
+- `src/data/routes.ts` owns current compatibility destinations and canonical future routes.
 - `public/assets/` contains approved static assets required directly by Astro pages.
 - `public/legacy/` is generated, path-adjusted for temporary compatibility, ignored by Git, and never authoritative.
 - `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
-- `docs/` records architecture, migration strategy, audits, component plans, and engineering decisions.
+- `docs/` records architecture, migration strategy, audits, contracts, component plans, and engineering decisions.
 - `assets/` is reserved for shared migration and brand assets.
 
 ## Migration principles
@@ -97,12 +102,14 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 9
+## Out of scope for Sprint 10
 
-- Migrating Expeditions, Challenges, or Statistics to Astro.
+- Creating an Astro `/statistics/` page.
+- Changing the live Statistics route or migrated navigation state.
+- Writing the production Python Statistics generator.
+- Generating or committing `statistics.json`.
+- Modifying Expeditions GeoJSON or other geographic data.
 - Migrating Leaflet or changing map logic.
-- Modifying the Python data pipeline.
-- Adding frontend dependencies or external fonts.
-- Changing the legacy Manual source.
+- Adding charting or frontend dependencies.
 - Configuring Netlify.
 - Publishing or deploying the Astro website.
