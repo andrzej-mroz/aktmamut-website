@@ -1,0 +1,310 @@
+---
+import type { HomepageLink } from "../../data/homepage";
+
+interface HeroVideo {
+  readonly src: string;
+  readonly type: string;
+  readonly width: number;
+  readonly height: number;
+  readonly durationSeconds: number;
+}
+
+interface Props {
+  actions: readonly HomepageLink[];
+  video: HeroVideo;
+}
+
+const { actions, video } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="home-title" data-home-hero>
+  <video
+    class="hero-video"
+    muted
+    playsinline
+    loop
+    preload="metadata"
+    width={video.width}
+    height={video.height}
+    aria-hidden="true"
+    tabindex="-1"
+    data-hero-video
+  >
+    <source src={video.src} type={video.type} />
+  </video>
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="container hero-content">
+    <div class="hero-copy">
+      <p class="hero-kicker">Since 2015</p>
+      <p class="hero-brand">AKT MAMUT</p>
+      <h1 id="home-title">The Carpathian World</h1>
+      <p class="hero-lead">
+        A mountain project built around expeditions, routes and peak challenges
+        across the landscapes of the Carpathians.
+      </p>
+      <p class="hero-supporting">
+        It brings together years of routes, maps and mountain observations,
+        gradually forming a growing archive of places explored across the range.
+      </p>
+
+      <div class="hero-actions">
+        {
+          actions.map((action, index) => (
+            <a
+              class:list={[
+                "hero-action",
+                index === 0 ? "hero-action-primary" : "hero-action-secondary",
+              ]}
+              href={action.href}
+            >
+              {action.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <button
+        class="video-control"
+        type="button"
+        aria-pressed="true"
+        hidden
+        data-hero-video-control
+      >
+        Play background video
+      </button>
+    </div>
+  </div>
+</section>
+
+<script is:inline type="module">
+  const hero = document.querySelector("[data-home-hero]");
+  const video = hero?.querySelector("[data-hero-video]");
+  const control = hero?.querySelector("[data-hero-video-control]");
+
+  if (video instanceof HTMLVideoElement && control instanceof HTMLButtonElement) {
+    const motionPreference = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    const updateControl = () => {
+      const isPaused = video.paused;
+      control.textContent = isPaused
+        ? "Play background video"
+        : "Pause background video";
+      control.setAttribute("aria-pressed", String(isPaused));
+    };
+
+    control.hidden = false;
+    updateControl();
+
+    if (!motionPreference.matches) {
+      video.play().catch(updateControl);
+    }
+
+    control.addEventListener("click", () => {
+      if (video.paused) {
+        video.play().catch(updateControl);
+      } else {
+        video.pause();
+      }
+    });
+
+    video.addEventListener("play", updateControl);
+    video.addEventListener("pause", updateControl);
+    motionPreference.addEventListener("change", (event) => {
+      if (event.matches) video.pause();
+    });
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    min-height: max(36rem, 82svh);
+    overflow: hidden;
+    background: #101b16;
+    color: white;
+    isolation: isolate;
+  }
+
+  .hero-video,
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-video {
+    z-index: -2;
+    object-fit: cover;
+    opacity: 0.72;
+  }
+
+  .hero-overlay {
+    z-index: -1;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(8, 15, 12, 0.88) 0%,
+        rgba(8, 15, 12, 0.7) 52%,
+        rgba(8, 15, 12, 0.48) 100%
+      ),
+      linear-gradient(0deg, rgba(8, 15, 12, 0.7) 0%, transparent 65%);
+  }
+
+  .hero-content {
+    display: flex;
+    align-items: flex-end;
+    padding-block: clamp(3rem, 9vw, 5.5rem);
+  }
+
+  .hero-copy {
+    width: min(100%, 58rem);
+  }
+
+  .hero-kicker {
+    display: inline-flex;
+    margin-bottom: var(--space-5);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 0.8125rem;
+    font-weight: 750;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .hero-brand {
+    margin-bottom: var(--space-3);
+    color: rgba(255, 255, 255, 0.88);
+    font-family:
+      "Arial Narrow",
+      "Aptos Narrow",
+      system-ui,
+      sans-serif;
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-stretch: condensed;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+  }
+
+  h1 {
+    max-width: 20ch;
+    font-family:
+      "Arial Narrow",
+      "Aptos Narrow",
+      system-ui,
+      sans-serif;
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    font-stretch: condensed;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 0.96;
+    text-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-lead,
+  .hero-supporting {
+    max-width: 39rem;
+    color: rgba(255, 255, 255, 0.93);
+  }
+
+  .hero-lead {
+    margin-top: var(--space-5);
+    font-size: clamp(1.0625rem, 2.4vw, 1.25rem);
+    line-height: 1.55;
+  }
+
+  .hero-supporting {
+    margin-top: var(--space-3);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+  }
+
+  .hero-action,
+  .video-control {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  .hero-action {
+    padding-inline: var(--space-5);
+    text-decoration: none;
+  }
+
+  .hero-action-primary {
+    background: white;
+    color: #15211b;
+  }
+
+  .hero-action-primary:hover {
+    background: #e8eee9;
+    color: #15211b;
+  }
+
+  .hero-action-secondary {
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(8, 15, 12, 0.28);
+    color: white;
+  }
+
+  .hero-action-secondary:hover {
+    background: rgba(255, 255, 255, 0.14);
+    color: white;
+  }
+
+  .video-control {
+    margin-top: var(--space-5);
+    padding-inline: var(--space-4);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(8, 15, 12, 0.56);
+    color: white;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  .video-control:hover {
+    background: rgba(8, 15, 12, 0.78);
+  }
+
+  .video-control[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .hero {
+      min-height: max(40rem, calc(100svh - var(--header-height)));
+    }
+  }
+
+  @media (max-width: 35rem) {
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .hero-action {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      transform: none;
+    }
+  }
+</style>

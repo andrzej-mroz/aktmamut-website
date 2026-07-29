@@ -1,0 +1,111 @@
+---
+import type { HomepageMetric } from "../../data/homepage";
+
+interface Props {
+  metrics: readonly HomepageMetric[];
+}
+
+const { metrics } = Astro.props;
+---
+
+<section class="about page-section" aria-labelledby="about-project-title">
+  <div class="container about-layout">
+    <div class="about-copy">
+      <h2 id="about-project-title">About the project</h2>
+      <p>
+        AKT MAMUT is a personal mountain project focused on routes, maps, peaks and
+        useful thematic modules around the Carpathians and beyond.
+      </p>
+      <p>
+        Instead of relying on long promotional text, the project is built from real
+        material: tracks, photos, challenge lists and mountain datasets.
+      </p>
+    </div>
+
+    <dl class="metrics-grid">
+      {
+        metrics.map((metric) => (
+          <div class="metric">
+            <dt>{metric.label}</dt>
+            <dd>{metric.value}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</section>
+
+<style>
+  .about {
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .about-layout {
+    display: grid;
+    gap: clamp(2rem, 6vw, 4rem);
+  }
+
+  .about-copy {
+    max-width: 42rem;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+
+  .about-copy p {
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+
+  .metric {
+    display: flex;
+    min-height: 8.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-background);
+  }
+
+  .metric dt {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  .metric dd {
+    order: -1;
+    color: var(--color-text);
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  @media (min-width: 36rem) {
+    .metrics-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .about-layout {
+      grid-template-columns: minmax(0, 1.05fr) minmax(26rem, 0.95fr);
+      align-items: start;
+    }
+  }
+</style>

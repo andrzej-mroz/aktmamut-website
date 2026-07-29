@@ -8,17 +8,17 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 7 — Legacy Homepage Audit and Content Model
+### SPRINT 8 — Astro Homepage Migration
 
 Status: **Completed**
 
-The frozen legacy homepage has been audited without changing its implementation. Its content hierarchy, routes, assets, JavaScript behavior, metadata, accessibility risks, and responsive behavior are recorded in `docs/homepage-audit.md`.
+The production homepage is now rendered by Astro through five focused homepage components composed by `src/pages/index.astro`. Repeated editorial content is supplied by the typed model in `src/data/homepage.ts`, and every working destination is supplied through the centralized compatibility routes.
 
-The next Astro homepage is specified in `docs/homepage-component-plan.md`. Reusable editorial data now lives in `src/data/homepage.ts`, and route ownership is centralized in `src/data/routes.ts`. The production Astro homepage remains the migration status page; no legacy homepage section or Leaflet behavior has been migrated yet.
+The migration preserves the legacy homepage wording, section order, video-based identity, module inventory, featured directions, About copy, and metrics. Semantic landmarks, heading structure, link behavior, responsive grids, planned-module semantics, focus visibility, video controls, and reduced-motion handling have been corrected.
 
-The approved legacy hero video is copied byte-for-byte to `public/assets/home/hero.mp4` so Sprint 8 can use a stable public path without coupling the Astro application to the frozen source tree.
+The Hero uses the local, approved asset at `public/assets/home/hero.mp4`. The only homepage browser-side JavaScript controls background-video playback and respects the user's reduced-motion preference.
 
-The Python data-generation pipeline, legacy pages, map code, and Netlify configuration remain unchanged.
+Expeditions, Challenges, Statistics, and Manual remain compatibility routes below `/legacy/`. Leaflet and all map behavior remain in the frozen legacy implementation. The Python data-generation pipeline and Netlify configuration remain unchanged.
 
 ## Target repository structure
 
@@ -26,6 +26,12 @@ The Python data-generation pipeline, legacy pages, map code, and Netlify configu
 AKT-Mamut-Website/
 ├── src/
 │   ├── components/
+│   │   ├── home/
+│   │   │   ├── AboutProjectSection.astro
+│   │   │   ├── FeaturedDirectionsSection.astro
+│   │   │   ├── HomeHero.astro
+│   │   │   ├── ProjectModulesSection.astro
+│   │   │   └── ProjectStatementSection.astro
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
 │   ├── data/
@@ -70,6 +76,7 @@ AKT-Mamut-Website/
 
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
+- `src/components/home/` owns homepage-specific semantic sections and scoped styles.
 - `src/data/routes.ts` owns current compatibility destinations and future canonical routes.
 - `src/data/homepage.ts` contains typed editorial homepage data, not presentation markup.
 - `public/assets/` contains approved static assets required directly by Astro pages.
@@ -89,13 +96,12 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 7
+## Out of scope for Sprint 8
 
-- Implementing the audited homepage in Astro.
-- Creating homepage component skeletons.
-- Migrating or redesigning legacy routes.
+- Migrating Expeditions, Challenges, Statistics, or Manual to Astro.
 - Migrating Leaflet or changing map logic.
 - Modifying the Python data pipeline.
-- Adding frontend dependencies.
+- Adding frontend dependencies or external fonts.
+- Adding new homepage claims, modules, metrics, or destination links.
 - Configuring Netlify.
 - Publishing or deploying the Astro website.

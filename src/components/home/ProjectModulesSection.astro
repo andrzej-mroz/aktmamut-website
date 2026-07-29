@@ -1,0 +1,164 @@
+---
+import type { HomepageModule } from "../../data/homepage";
+
+interface Props {
+  modules: readonly HomepageModule[];
+}
+
+const { modules } = Astro.props;
+---
+
+<section class="modules page-section" id="modules" aria-labelledby="modules-title">
+  <div class="container">
+    <header class="section-header">
+      <h2 id="modules-title">Explore the project</h2>
+      <p>
+        The homepage works as a hub for AKT MAMUT modules — current and future.
+      </p>
+    </header>
+
+    <ul class="modules-grid" role="list">
+      {
+        modules.map((module) => (
+          <li>
+            {module.status === "live" && module.destination ? (
+              <a class="module-card module-card-live" href={module.destination.href}>
+                <span class="module-symbol" aria-hidden="true">
+                  {module.symbol}
+                </span>
+                <h3>{module.title}</h3>
+                <p>{module.description}</p>
+                <span class="module-meta">{module.meta}</span>
+              </a>
+            ) : (
+              <article class="module-card module-card-planned">
+                <span class="module-symbol" aria-hidden="true">
+                  {module.symbol}
+                </span>
+                <h3>{module.title}</h3>
+                <p>{module.description}</p>
+                <span class="module-meta">{module.meta}</span>
+              </article>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .modules {
+    background: var(--color-background);
+  }
+
+  .section-header {
+    max-width: 45rem;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+  }
+
+  .section-header h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: -0.03em;
+  }
+
+  .section-header p {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .modules-grid > li {
+    min-width: 0;
+  }
+
+  .module-card {
+    display: flex;
+    min-height: 16rem;
+    height: 100%;
+    flex-direction: column;
+    padding: clamp(1.375rem, 4vw, 1.75rem);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .module-card-live {
+    box-shadow: var(--shadow-soft);
+    text-decoration: none;
+  }
+
+  .module-card-live:hover {
+    border-color: color-mix(
+      in srgb,
+      var(--color-accent) 48%,
+      var(--color-border)
+    );
+    color: var(--color-text);
+  }
+
+  .module-card-planned {
+    background: color-mix(
+      in srgb,
+      var(--color-surface) 70%,
+      var(--color-background)
+    );
+  }
+
+  .module-symbol {
+    display: inline-flex;
+    width: 3.5rem;
+    height: 3.5rem;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-5);
+    border-radius: var(--radius-medium);
+    background: var(--color-background);
+    font-size: 1.65rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .module-card p {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .module-meta {
+    margin-top: auto;
+    padding-top: var(--space-5);
+    color: var(--color-accent);
+    font-size: 0.9375rem;
+    font-weight: 750;
+  }
+
+  .module-card-planned .module-meta {
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 40rem) {
+    .modules-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 70rem) {
+    .modules-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>
