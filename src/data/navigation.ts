@@ -1,30 +1,30 @@
+import { routes } from "./routes";
+
 export interface NavigationItem {
   label: string;
   href: string;
   migrated: boolean;
 }
 
-export const legacyBasePath = "/legacy";
-
 export const primaryNavigation: NavigationItem[] = [
   {
     label: "Home",
-    href: "/",
+    href: routes.home,
     migrated: true,
   },
   {
     label: "Expeditions",
-    href: `${legacyBasePath}/expeditions/index.html`,
+    href: routes.expeditions,
     migrated: false,
   },
   {
     label: "Challenges",
-    href: `${legacyBasePath}/challenges/list.html`,
+    href: routes.challenges,
     migrated: false,
   },
   {
     label: "Statistics",
-    href: `${legacyBasePath}/statistics/index.html`,
+    href: routes.statistics,
     migrated: false,
   },
 ];

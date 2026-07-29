@@ -8,17 +8,17 @@ The project will move from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 6 — Legacy Compatibility Layer
+### SPRINT 7 — Legacy Homepage Audit and Content Model
 
 Status: **Completed**
 
-`website/old-site/` remains the frozen and authoritative legacy implementation. The synchronization process copies it to the generated `public/legacy/` directory and rewrites supported root-relative local paths only in that generated copy.
+The frozen legacy homepage has been audited without changing its implementation. Its content hierarchy, routes, assets, JavaScript behavior, metadata, accessibility risks, and responsive behavior are recorded in `docs/homepage-audit.md`.
 
-Compatibility rewriting covers HTML, CSS, JavaScript, and JSON. A dedicated validator checks required files, unresolved root-relative paths, duplicate `/legacy/legacy/` prefixes, source immutability, exact generated text transformations, and byte identity for every non-text file.
+The next Astro homepage is specified in `docs/homepage-component-plan.md`. Reusable editorial data now lives in `src/data/homepage.ts`, and route ownership is centralized in `src/data/routes.ts`. The production Astro homepage remains the migration status page; no legacy homepage section or Leaflet behavior has been migrated yet.
 
-The compatibility layer is temporary and will disappear progressively as legacy routes are migrated to Astro.
+The approved legacy hero video is copied byte-for-byte to `public/assets/home/hero.mp4` so Sprint 8 can use a stable public path without coupling the Astro application to the frozen source tree.
 
-No legacy homepage content has been migrated. Leaflet and map logic remain unchanged. The Python data-generation pipeline remains unchanged. Netlify has not yet been configured for the Astro project.
+The Python data-generation pipeline, legacy pages, map code, and Netlify configuration remain unchanged.
 
 ## Target repository structure
 
@@ -29,7 +29,9 @@ AKT-Mamut-Website/
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
 │   ├── data/
-│   │   └── navigation.ts
+│   │   ├── homepage.ts
+│   │   ├── navigation.ts
+│   │   └── routes.ts
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
@@ -43,11 +45,15 @@ AKT-Mamut-Website/
 │   └── validate-legacy.mjs
 ├── public/
 │   ├── assets/
-│   │   └── brand/
-│   │       └── M256.webp
+│   │   ├── brand/
+│   │   │   └── M256.webp
+│   │   └── home/
+│   │       └── hero.mp4
 │   └── legacy/                  # generated, ignored
 ├── data/
 ├── docs/
+│   ├── homepage-audit.md
+│   └── homepage-component-plan.md
 ├── assets/
 ├── website/
 │   └── old-site/
@@ -64,9 +70,12 @@ AKT-Mamut-Website/
 
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
+- `src/data/routes.ts` owns current compatibility destinations and future canonical routes.
+- `src/data/homepage.ts` contains typed editorial homepage data, not presentation markup.
+- `public/assets/` contains approved static assets required directly by Astro pages.
 - `public/legacy/` is generated, path-adjusted for temporary compatibility, ignored by Git, and never authoritative.
 - `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
-- `docs/` records architecture, migration strategy, and engineering decisions.
+- `docs/` records architecture, migration strategy, audits, component plans, and engineering decisions.
 - `assets/` is reserved for shared migration and brand assets.
 
 ## Migration principles
@@ -80,9 +89,11 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 6
+## Out of scope for Sprint 7
 
-- Migrating or redesigning legacy pages.
+- Implementing the audited homepage in Astro.
+- Creating homepage component skeletons.
+- Migrating or redesigning legacy routes.
 - Migrating Leaflet or changing map logic.
 - Modifying the Python data pipeline.
 - Adding frontend dependencies.

@@ -22,7 +22,9 @@ AKT-Mamut-Website/
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
 │   ├── data/
-│   │   └── navigation.ts
+│   │   ├── homepage.ts
+│   │   ├── navigation.ts
+│   │   └── routes.ts
 │   ├── layouts/
 │   │   └── BaseLayout.astro
 │   ├── pages/
@@ -31,11 +33,15 @@ AKT-Mamut-Website/
 │       └── global.css
 ├── public/
 │   ├── assets/
-│   │   └── brand/
-│   │       └── M256.webp
+│   │   ├── brand/
+│   │   │   └── M256.webp
+│   │   └── home/
+│   │       └── hero.mp4
 │   └── legacy/                  # generated, ignored
 ├── docs/
 │   ├── architecture-review.md
+│   ├── homepage-audit.md
+│   ├── homepage-component-plan.md
 │   ├── migration-strategy.md
 │   ├── target-architecture.md
 │   └── decisions/
@@ -126,9 +132,9 @@ This compatibility layer is temporary and will be removed route by route as Astr
 
 Astro is initialized in the repository root and uses static output.
 
-`src/layouts/BaseLayout.astro` provides the shared document structure. `src/styles/global.css` defines the global design tokens and reusable container and section classes. The production-oriented Astro header is rendered statically and reads its route configuration from `src/data/navigation.ts`.
+`src/layouts/BaseLayout.astro` provides the shared document structure. `src/styles/global.css` defines the global design tokens and reusable container and section classes. The production-oriented Astro header is rendered statically and reads route configuration shared through `src/data/routes.ts`.
 
-The Astro homepage remains a migration status page; no legacy homepage content has been migrated.
+The legacy homepage audit and the planned Astro component architecture are documented, and its reusable editorial content has a typed model in `src/data/homepage.ts`. The Astro homepage remains a migration status page; no audited homepage section has been implemented yet.
 
 ## Data factory
 
@@ -150,8 +156,10 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 - `docs/architecture-review.md` records the current-state assessment.
 - `docs/migration-strategy.md` describes the incremental migration sequence.
 - `docs/target-architecture.md` defines the long-term system boundaries and responsibilities.
+- `docs/homepage-audit.md` records the legacy homepage content, behavior, risks, and migration decisions.
+- `docs/homepage-component-plan.md` defines the Astro component and data-flow plan for Sprint 8.
 - `docs/decisions/` contains Architecture Decision Records.
 
 ## Repository status
 
-Sprint 6 makes the frozen legacy website usable below `/legacy/` through generated, validated path rewriting. The legacy homepage has not been migrated to Astro, and Leaflet, the Python pipeline, and Netlify deployment remain unchanged.
+Sprint 7 completes the legacy homepage audit and content model while leaving the production Astro homepage as a migration status page. The legacy compatibility layer remains active, and the actual homepage, Leaflet maps, Python pipeline, and Netlify deployment remain unchanged.
