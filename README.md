@@ -20,34 +20,34 @@ AKT-Mamut-Website/
 ├── src/
 │   ├── components/
 │   │   ├── home/
-│   │   │   ├── AboutProjectSection.astro
-│   │   │   ├── FeaturedDirectionsSection.astro
-│   │   │   ├── HomeHero.astro
-│   │   │   ├── ProjectModulesSection.astro
-│   │   │   └── ProjectStatementSection.astro
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
+│   ├── content/
+│   │   └── manual/
+│   │       └── index.md
+│   ├── content.config.ts
 │   ├── data/
 │   │   ├── homepage.ts
 │   │   ├── navigation.ts
 │   │   └── routes.ts
 │   ├── layouts/
-│   │   └── BaseLayout.astro
+│   │   ├── BaseLayout.astro
+│   │   └── ContentLayout.astro
 │   ├── pages/
+│   │   ├── manual/
+│   │   │   └── index.astro
 │   │   └── index.astro
 │   └── styles/
+│       ├── content.css
 │       └── global.css
 ├── public/
 │   ├── assets/
-│   │   ├── brand/
-│   │   │   └── M256.webp
-│   │   └── home/
-│   │       └── hero.mp4
 │   └── legacy/                  # generated, ignored
 ├── docs/
 │   ├── architecture-review.md
 │   ├── homepage-audit.md
 │   ├── homepage-component-plan.md
+│   ├── manual-audit.md
 │   ├── migration-strategy.md
 │   ├── target-architecture.md
 │   └── decisions/
@@ -114,6 +114,8 @@ On Windows systems that block the PowerShell npm wrapper, use `npm.cmd` with the
 
 The production homepage is rendered by Astro from `src/pages/index.astro`, focused components in `src/components/home/`, and typed content in `src/data/homepage.ts`.
 
+The production Manual is available at `/manual/`. Its source is `src/content/manual/index.md` in the `manual` Content Collection. `src/pages/manual/index.astro` resolves the collection entry and renders it through `src/layouts/ContentLayout.astro`; Markdown-specific presentation is isolated in `src/styles/content.css`.
+
 `website/old-site/` contains the frozen legacy implementation. It remains the migration baseline for routes that have not yet moved to Astro.
 
 During migration, unmigrated navigation destinations are served from the generated `/legacy/` compatibility path. The authoritative legacy source remains only in `website/old-site/`.
@@ -134,13 +136,11 @@ The validator confirms:
 
 This compatibility layer is temporary and will be removed route by route as Astro migration progresses.
 
-## Astro homepage
+## Astro content
 
-`src/layouts/BaseLayout.astro` provides the shared document structure, production Header, main landmark, and Footer. `src/styles/global.css` defines the global design tokens and reusable container and section classes.
+Astro Content Collections provide validated frontmatter and a stable source model for editorial pages. The Manual collection currently validates title, description, language, update date, legacy source path, and an optional eyebrow.
 
-The homepage preserves the approved legacy wording and section hierarchy while using responsive, semantic Astro components. Repeated modules, featured directions, actions, metrics, video metadata, and routes come from typed centralized data.
-
-The local Hero video includes a visible pause/resume control. That control and reduced-motion handling are the homepage's only browser-side JavaScript.
+The shared content layout supplies document metadata, semantic structure, controlled measure, and the global site shell. The content stylesheet is scoped to rendered editorial content and covers headings, paragraphs, lists, blockquotes, code blocks, tables, links, and media without affecting the rest of the application.
 
 ## Data factory
 
@@ -164,8 +164,9 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 - `docs/target-architecture.md` defines the long-term system boundaries and responsibilities.
 - `docs/homepage-audit.md` records the legacy homepage content, behavior, risks, and migration decisions.
 - `docs/homepage-component-plan.md` defines the implemented Astro homepage composition and its original Sprint 8 scope.
+- `docs/manual-audit.md` records the Manual source inventory, content model, semantic adaptations, anchors, accessibility findings, and migration decisions.
 - `docs/decisions/` contains Architecture Decision Records.
 
 ## Repository status
 
-Sprint 8 replaces the temporary migration-status page with the production Astro homepage. Destination pages and Leaflet maps remain available through the unchanged legacy compatibility layer; the Python pipeline and Netlify deployment remain unchanged.
+Sprint 9 migrates the Manual to Markdown and a native `/manual/` Astro route. Expeditions, Challenges, Statistics, and Leaflet maps remain available through the unchanged legacy compatibility layer; the Python pipeline and Netlify deployment remain unchanged.

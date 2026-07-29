@@ -1,0 +1,192 @@
+.content-prose {
+  padding-top: clamp(2rem, 5vw, 3rem);
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.content-prose > :first-child {
+  margin-top: 0;
+}
+
+.content-prose > :last-child {
+  margin-bottom: 0;
+}
+
+.content-prose h2,
+.content-prose h3 {
+  scroll-margin-top: calc(var(--header-height) + var(--space-5));
+  color: var(--color-text);
+  letter-spacing: -0.025em;
+}
+
+.content-prose h2 {
+  margin-top: clamp(3rem, 8vw, 5rem);
+  margin-bottom: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+}
+
+.content-prose h3 {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+  font-size: 1.25rem;
+}
+
+.content-prose p,
+.content-prose ul,
+.content-prose ol,
+.content-prose blockquote,
+.content-prose pre,
+.content-prose table,
+.content-prose figure,
+.content-prose hr {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.content-prose ul,
+.content-prose ol {
+  padding-left: 1.5rem;
+}
+
+.content-prose li + li {
+  margin-top: var(--space-2);
+}
+
+.content-prose li > ul,
+.content-prose li > ol {
+  margin-block: var(--space-2);
+}
+
+.content-prose a {
+  overflow-wrap: anywhere;
+  font-weight: 650;
+}
+
+.content-prose strong {
+  color: var(--color-text);
+  font-weight: 750;
+}
+
+.content-prose em {
+  font-style: italic;
+}
+
+.content-prose blockquote {
+  padding: var(--space-4) var(--space-5);
+  border-left: 0.25rem solid var(--color-accent);
+  border-radius: 0 var(--radius-small) var(--radius-small) 0;
+  background: color-mix(
+    in srgb,
+    var(--color-accent) 7%,
+    var(--color-surface)
+  );
+  color: var(--color-text-muted);
+}
+
+.content-prose blockquote > :first-child {
+  margin-top: 0;
+}
+
+.content-prose blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+.content-prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.content-prose code {
+  padding: 0.12em 0.35em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-background);
+  color: var(--color-text);
+  font-family:
+    "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  font-size: 0.9em;
+  overflow-wrap: anywhere;
+}
+
+.content-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  background: var(--color-background);
+  line-height: 1.6;
+  white-space: pre;
+}
+
+.content-prose pre code {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 0.875rem;
+  overflow-wrap: normal;
+}
+
+.content-prose table {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+.content-prose th,
+.content-prose td {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+
+.content-prose th {
+  background: var(--color-background);
+  color: var(--color-text);
+  font-weight: 750;
+}
+
+.content-prose td {
+  background: var(--color-surface);
+}
+
+.content-prose img {
+  width: auto;
+  height: auto;
+  border-radius: var(--radius-medium);
+}
+
+.content-prose figure {
+  margin-inline: 0;
+}
+
+.content-prose figcaption {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 35rem) {
+  .content-prose {
+    line-height: 1.7;
+  }
+
+  .content-prose pre {
+    padding: var(--space-4);
+  }
+
+  .content-prose th,
+  .content-prose td {
+    padding: var(--space-2) var(--space-3);
+  }
+}

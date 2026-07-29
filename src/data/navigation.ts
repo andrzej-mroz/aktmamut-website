@@ -27,4 +27,9 @@ export const primaryNavigation: NavigationItem[] = [
     href: routes.statistics,
     migrated: false,
   },
+  {
+    label: "Manual",
+    href: routes.manual,
+    migrated: true,
+  },
 ];

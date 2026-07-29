@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from "astro:content";
+import ContentLayout from "../../layouts/ContentLayout.astro";
+
+const manual = await getEntry("manual", "index");
+
+if (!manual) {
+  throw new Error("Manual content entry was not found.");
+}
+
+const { Content } = await render(manual);
+---
+
+<ContentLayout
+  title={manual.data.title}
+  description={manual.data.description}
+  lang={manual.data.lang}
+  eyebrow={manual.data.eyebrow}
+>
+  <Content />
+</ContentLayout>

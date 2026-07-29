@@ -4,21 +4,21 @@
 
 This repository is the migration workspace for AKTMamut.eu.
 
-The project will move from a manually maintained static website to an Astro-based static architecture while preserving the existing public site, data-generation workflows, URLs, and interactive map behavior throughout the transition.
+The project is moving from a manually maintained static website to an Astro-based static architecture while preserving the existing public site, data-generation workflows, URLs, and interactive map behavior throughout the transition.
 
 ## Current phase
 
-### SPRINT 8 — Astro Homepage Migration
+### SPRINT 9 — Migrate the Manual to Astro Markdown
 
 Status: **Completed**
 
-The production homepage is now rendered by Astro through five focused homepage components composed by `src/pages/index.astro`. Repeated editorial content is supplied by the typed model in `src/data/homepage.ts`, and every working destination is supplied through the centralized compatibility routes.
+The production Manual is now a native Astro route at `/manual/`. Its authoritative content is stored as Markdown in the `manual` Content Collection, rendered through the shared `ContentLayout.astro`, and styled by the scoped editorial rules in `src/styles/content.css`.
 
-The migration preserves the legacy homepage wording, section order, video-based identity, module inventory, featured directions, About copy, and metrics. Semantic landmarks, heading structure, link behavior, responsive grids, planned-module semantics, focus visibility, video controls, and reduced-motion handling have been corrected.
+The migration preserves all substantive legacy Manual content while improving document semantics: one H1, twelve H2 sections with stable anchors, native lists, a semantic configuration table, readable code blocks, and accessible responsive behavior. The primary navigation now points directly to `/manual/`.
 
-The Hero uses the local, approved asset at `public/assets/home/hero.mp4`. The only homepage browser-side JavaScript controls background-video playback and respects the user's reduced-motion preference.
+The original Manual remains unchanged at `website/old-site/manual/index.html` and continues to be available in the generated compatibility site at `/legacy/manual/index.html`.
 
-Expeditions, Challenges, Statistics, and Manual remain compatibility routes below `/legacy/`. Leaflet and all map behavior remain in the frozen legacy implementation. The Python data-generation pipeline and Netlify configuration remain unchanged.
+Expeditions, Challenges, and Statistics remain compatibility routes below `/legacy/`. Leaflet and all map behavior remain in the frozen legacy implementation. The Python data-generation pipeline and Netlify configuration remain unchanged.
 
 ## Target repository structure
 
@@ -27,22 +27,25 @@ AKT-Mamut-Website/
 ├── src/
 │   ├── components/
 │   │   ├── home/
-│   │   │   ├── AboutProjectSection.astro
-│   │   │   ├── FeaturedDirectionsSection.astro
-│   │   │   ├── HomeHero.astro
-│   │   │   ├── ProjectModulesSection.astro
-│   │   │   └── ProjectStatementSection.astro
 │   │   ├── SiteHeader.astro
 │   │   └── SiteFooter.astro
+│   ├── content/
+│   │   └── manual/
+│   │       └── index.md
+│   ├── content.config.ts
 │   ├── data/
 │   │   ├── homepage.ts
 │   │   ├── navigation.ts
 │   │   └── routes.ts
 │   ├── layouts/
-│   │   └── BaseLayout.astro
+│   │   ├── BaseLayout.astro
+│   │   └── ContentLayout.astro
 │   ├── pages/
+│   │   ├── manual/
+│   │   │   └── index.astro
 │   │   └── index.astro
 │   └── styles/
+│       ├── content.css
 │       └── global.css
 ├── scripts/
 │   ├── lib/
@@ -51,15 +54,12 @@ AKT-Mamut-Website/
 │   └── validate-legacy.mjs
 ├── public/
 │   ├── assets/
-│   │   ├── brand/
-│   │   │   └── M256.webp
-│   │   └── home/
-│   │       └── hero.mp4
 │   └── legacy/                  # generated, ignored
 ├── data/
 ├── docs/
 │   ├── homepage-audit.md
-│   └── homepage-component-plan.md
+│   ├── homepage-component-plan.md
+│   └── manual-audit.md
 ├── assets/
 ├── website/
 │   └── old-site/
@@ -76,9 +76,10 @@ AKT-Mamut-Website/
 
 - `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
 - `src/` is the Astro application source directory.
-- `src/components/home/` owns homepage-specific semantic sections and scoped styles.
-- `src/data/routes.ts` owns current compatibility destinations and future canonical routes.
-- `src/data/homepage.ts` contains typed editorial homepage data, not presentation markup.
+- `src/content/` contains authored Markdown managed through Astro Content Collections.
+- `src/content.config.ts` defines collection loaders and metadata validation.
+- `src/layouts/ContentLayout.astro` owns the shared editorial document frame, while `src/styles/content.css` styles rendered Markdown content.
+- `src/data/routes.ts` owns current compatibility destinations and canonical Astro routes.
 - `public/assets/` contains approved static assets required directly by Astro pages.
 - `public/legacy/` is generated, path-adjusted for temporary compatibility, ignored by Git, and never authoritative.
 - `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
@@ -96,12 +97,12 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 8
+## Out of scope for Sprint 9
 
-- Migrating Expeditions, Challenges, Statistics, or Manual to Astro.
+- Migrating Expeditions, Challenges, or Statistics to Astro.
 - Migrating Leaflet or changing map logic.
 - Modifying the Python data pipeline.
 - Adding frontend dependencies or external fonts.
-- Adding new homepage claims, modules, metrics, or destination links.
+- Changing the legacy Manual source.
 - Configuring Netlify.
 - Publishing or deploying the Astro website.
