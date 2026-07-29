@@ -8,17 +8,17 @@ The project is moving from a manually maintained static website to an Astro-base
 
 ## Current phase
 
-### SPRINT 10 — Statistics Audit and Data Contract
+### SPRINT 11 — Restore AKT Mamut Legacy Typography
 
 Status: **Completed**
 
-The legacy Statistics module and its complete 524-feature Expeditions GeoJSON source have been audited. The audit identifies the runtime sequence, four source properties actually consumed by Statistics, browser-side calculations, table behavior, accessibility limitations, responsive behavior, and coupling to the map-oriented GeoJSON.
+The original AKT Mamut typography has been restored across the native Astro shell, homepage and Manual. The audited system uses Inter for body and interface text, Oswald for brand and headings, and Roboto Mono for technical content.
 
-The proposed target contract is defined in `src/data/statistics.types.ts`. Deterministic, read-only Node scripts audit the complete source dataset and verify that all current records can be normalized without missing fields, invalid values, or duplicate identifiers.
+Typography is treated as a functional design dependency. The legacy Expeditions map places four-digit numeric identifiers inside fixed 24 px markers, and Oswald's compact proportional digits preserve that established geometry. The numeric-width audit and implementation mapping are recorded in `docs/typography-audit.md`; ADR 0002 preserves the decision and explicitly separates AKT Mamut typography from the CS3C design system.
 
-The selected long-term architecture is a dedicated `statistics.json` generated and validated by Python, then consumed statically by Astro. This sprint defines that boundary only: no Python generator, Astro Statistics page, Leaflet migration, or runtime routing change has been implemented.
+Native pages load only the required Inter, Oswald and Roboto Mono weights through the shared `BaseLayout.astro`. Semantic font tokens and robust system fallbacks are centralized in `src/styles/global.css`.
 
-Statistics remains live at `/legacy/statistics/index.html` and remains marked as unmigrated. The frozen legacy source, GeoJSON, Python pipeline, Leaflet implementation, Manual, homepage, and Netlify configuration are unchanged.
+No map component or Statistics page was migrated. The frozen legacy source, Python pipeline, GeoJSON, Leaflet implementation, dependencies and Netlify configuration are unchanged.
 
 ## Target repository structure
 
@@ -64,7 +64,11 @@ AKT-Mamut-Website/
 │   ├── homepage-component-plan.md
 │   ├── manual-audit.md
 │   ├── statistics-audit.md
-│   └── statistics-data-contract.md
+│   ├── statistics-data-contract.md
+│   ├── typography-audit.md
+│   └── decisions/
+│       ├── 0001-astro-migration.md
+│       └── 0002-akt-mamut-typography.md
 ├── assets/
 ├── website/
 │   └── old-site/
@@ -102,14 +106,14 @@ AKT-Mamut-Website/
 7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
 8. Use small, reviewable migration increments.
 
-## Out of scope for Sprint 10
+## Out of scope for Sprint 11
 
+- Migrating map-marker or Leaflet components.
 - Creating an Astro `/statistics/` page.
-- Changing the live Statistics route or migrated navigation state.
-- Writing the production Python Statistics generator.
-- Generating or committing `statistics.json`.
+- Changing the Python data-generation pipeline.
 - Modifying Expeditions GeoJSON or other geographic data.
-- Migrating Leaflet or changing map logic.
-- Adding charting or frontend dependencies.
-- Configuring Netlify.
-- Publishing or deploying the Astro website.
+- Downloading, redistributing or committing font binaries.
+- Adding font packages or frontend dependencies.
+- Reusing CS3C typography or design-system assumptions.
+- Redesigning page content, spacing or color.
+- Configuring Netlify or deploying the website.

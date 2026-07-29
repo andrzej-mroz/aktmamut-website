@@ -6,6 +6,10 @@
   --color-border: #d7ded9;
   --color-accent: #1f6f4a;
   --color-accent-hover: #17583b;
+  --font-family-body: "Inter", Arial, sans-serif;
+  --font-family-heading: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-family-interface: "Inter", Arial, sans-serif;
+  --font-family-code: "Roboto Mono", Consolas, "Courier New", monospace;
   --container-width: 72rem;
   --header-height: 4.5rem;
   --space-1: 0.25rem;
@@ -28,12 +32,7 @@
 html {
   background: var(--color-background);
   color: var(--color-text);
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
+  font-family: var(--font-family-body);
   font-size: 100%;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
@@ -45,12 +44,16 @@ body {
   margin: 0;
   background: var(--color-background);
   color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-weight: 400;
 }
 
 h1,
 h2,
 h3 {
   margin-block: 0;
+  font-family: var(--font-family-heading);
+  font-weight: 500;
   line-height: 1.15;
   text-wrap: balance;
 }
@@ -76,6 +79,7 @@ input,
 select,
 textarea {
   font: inherit;
+  font-family: var(--font-family-interface);
 }
 
 img,
@@ -118,4 +122,3 @@ svg {
     transition-duration: 0.01ms;
   }
 }
-

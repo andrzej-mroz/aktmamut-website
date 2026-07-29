@@ -81,14 +81,9 @@ const { currentPath = "/" } = Astro.props;
   }
 
   .brand-name {
-    font-family:
-      "Arial Narrow",
-      "Aptos Narrow",
-      system-ui,
-      sans-serif;
+    font-family: var(--font-family-heading);
     font-size: 1.5rem;
-    font-stretch: condensed;
-    font-weight: 600;
+    font-weight: 400;
     letter-spacing: 0.01em;
     line-height: 1;
   }
@@ -112,6 +107,7 @@ const { currentPath = "/" } = Astro.props;
     align-items: center;
     border-radius: var(--radius-small);
     color: var(--color-text-muted);
+    font-family: var(--font-family-interface);
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;

@@ -55,8 +55,10 @@ AKT-Mamut-Website/
 │   ├── statistics-audit.md
 │   ├── statistics-data-contract.md
 │   ├── target-architecture.md
+│   ├── typography-audit.md
 │   └── decisions/
-│       └── 0001-astro-migration.md
+│       ├── 0001-astro-migration.md
+│       └── 0002-akt-mamut-typography.md
 ├── website/
 │   └── old-site/
 ├── assets/
@@ -174,6 +176,23 @@ Astro Content Collections provide validated frontmatter and a stable source mode
 
 The shared content layout supplies document metadata, semantic structure, controlled measure, and the global site shell. The content stylesheet is scoped to rendered editorial content and covers headings, paragraphs, lists, blockquotes, code blocks, tables, links, and media without affecting the rest of the application.
 
+## Typography
+
+Native Astro pages preserve the typography established by the AKT Mamut legacy site:
+
+- **Inter** for body text and interface controls;
+- **Oswald** for the brand and headings, and as the documented requirement for future map markers;
+- **Roboto Mono** for Manual prose, code and future dense Statistics interfaces.
+
+The families are loaded once from Google Fonts in `src/layouts/BaseLayout.astro`. `src/styles/global.css` owns the semantic `--font-family-body`, `--font-family-heading`, `--font-family-interface`, and `--font-family-code` tokens. Arial, Arial Narrow, Consolas, Courier New and generic families keep the pages readable if the remote fonts are unavailable.
+
+Typography is treated as a functional dependency because Oswald's compact proportional digits preserve the established fit of four-digit labels in the 24 px legacy map markers. AKT Mamut's typography remains independent from the CS3C design system.
+
+See:
+
+- [Typography Audit](docs/typography-audit.md)
+- [ADR 0002 — Preserve AKT Mamut legacy typography](docs/decisions/0002-akt-mamut-typography.md)
+
 ## Data factory
 
 `data/` contains the existing local Python-based data workflow. It remains responsible for importing, validating, preprocessing, and generating the JSON and GeoJSON consumed by the website.
@@ -199,8 +218,10 @@ Local credentials are intentionally excluded from Git. Never stage or commit:
 - `docs/manual-audit.md` records the Manual source inventory, content model, semantic adaptations, anchors, accessibility findings, and migration decisions.
 - `docs/statistics-audit.md` records the complete legacy Statistics runtime, data inventory, calculations, semantics, responsiveness, and migration classification.
 - `docs/statistics-data-contract.md` defines the selected data architecture, version 1 contract, ownership boundaries, and Sprint 11 scope.
+- `docs/typography-audit.md` records the legacy font sources, role assignments, marker constraints, numeric-width measurements, loading strategy, and native Astro mapping.
+- `docs/decisions/0002-akt-mamut-typography.md` preserves the typography decision and keeps the AKT Mamut and CS3C visual systems separate.
 - `docs/decisions/` contains Architecture Decision Records.
 
 ## Repository status
 
-Sprint 10 defines and validates the proposed Statistics data boundary while keeping the live Statistics page on the unchanged legacy route. The Python pipeline, GeoJSON, Leaflet modules, homepage, Manual, and Netlify deployment remain unchanged.
+Sprint 11 restores the audited AKT Mamut typography across the native Astro homepage, Manual and shared shell. It does not migrate maps or Statistics, modify Python or GeoJSON, change the frozen legacy implementation, or add a font package.
