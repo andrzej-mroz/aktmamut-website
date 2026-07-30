@@ -1,119 +1,274 @@
-# AKT Mamut Website Migration
+# AKT Mamut Website
 
-## Purpose
+## Vision
 
-This repository is the migration workspace for AKTMamut.eu.
+AKT Mamut is a long-term digital platform dedicated to mountain expeditions, geographic exploration and outdoor knowledge, with a primary focus on the Carpathians.
 
-The project is moving from a manually maintained static website to an Astro-based static architecture while preserving the existing public site, data-generation workflows, URLs, and interactive map behavior throughout the transition.
+The project combines editorial content, interactive maps, structured geographic data and expedition statistics into a single static website.
 
-## Current phase
+The long-term objective is to create a maintainable architecture where:
 
-### SPRINT 11 — Restore AKT Mamut Legacy Typography
+- Python owns data generation.
+- Astro owns presentation.
+- Leaflet owns interactive maps.
+- Static generation is preferred over runtime processing.
 
-Status: **Completed**
+---
 
-The original AKT Mamut typography has been restored across the native Astro shell, homepage and Manual. The audited system uses Inter for body and interface text, Oswald for brand and headings, and Roboto Mono for technical content.
+# Current Status
 
-Typography is treated as a functional design dependency. The legacy Expeditions map places four-digit numeric identifiers inside fixed 24 px markers, and Oswald's compact proportional digits preserve that established geometry. The numeric-width audit and implementation mapping are recorded in `docs/typography-audit.md`; ADR 0002 preserves the decision and explicitly separates AKT Mamut typography from the CS3C design system.
+Current phase:
 
-Native pages load only the required Inter, Oswald and Roboto Mono weights through the shared `BaseLayout.astro`. Semantic font tokens and robust system fallbacks are centralized in `src/styles/global.css`.
+> Incremental migration from the legacy website to Astro.
 
-No map component or Statistics page was migrated. The frozen legacy source, Python pipeline, GeoJSON, Leaflet implementation, dependencies and Netlify configuration are unchanged.
+Completed foundations include:
 
-## Target repository structure
+- Astro project
+- shared layouts
+- shared navigation
+- typography restoration
+- legacy compatibility layer
+- Manual migrated to Astro Content Collections
+- Desktop UI foundation
+- Field UI foundation
+
+Interactive maps and Statistics remain in the legacy implementation until dedicated migration sprints.
+
+---
+
+# Project Principles
+
+The project follows several permanent principles.
+
+## Preserve before replacing
+
+The existing public website remains the reference implementation until the corresponding Astro page reaches functional parity.
+
+---
+
+## Incremental migration
+
+Large rewrites are intentionally avoided.
+
+Every sprint should produce a reviewable improvement while keeping the project deployable.
+
+---
+
+## Separation of responsibilities
+
+Python
+
+- imports source data
+- validates data
+- generates JSON / GeoJSON
+
+Astro
+
+- layouts
+- pages
+- metadata
+- routing
+- editorial content
+
+Leaflet
+
+- interactive maps only
+
+---
+
+## Desktop and Field UI
+
+Desktop and mobile are not intended to become identical interfaces.
+
+Desktop supports:
+
+- planning
+- exploration
+- reading
+- analysis
+
+Field UI supports:
+
+- expeditions
+- quick navigation
+- outdoor usage
+- one-handed interaction
+
+Both experiences share the same data model.
+
+---
+
+# Repository Roadmap
+
+## Foundation
+
+- [x] Repository created
+- [x] Astro initialized
+- [x] Global layout
+- [x] Navigation
+- [x] Legacy compatibility layer
+
+---
+
+## Content
+
+- [x] Manual
+- [x] Homepage architecture
+- [ ] Remaining static pages
+
+---
+
+## Maps
+
+- [ ] Expeditions
+- [ ] Challenges
+- [ ] Statistics
+- [ ] Shared map components
+
+---
+
+## Data
+
+- [ ] Statistics JSON generator
+- [ ] Additional data contracts
+- [ ] Validation improvements
+
+---
+
+## UX
+
+- [x] Desktop foundation
+- [x] Field UI foundation
+- [ ] Shared design system
+- [ ] Accessibility review
+
+---
+
+# Completed Milestones
+
+## Sprint 1
+
+Repository foundation
+
+---
+
+## Sprint 2
+
+Astro initialization
+
+---
+
+## Sprint 3
+
+Global layout
+
+---
+
+## Sprint 4
+
+Navigation
+
+---
+
+## Sprint 5
+
+Legacy compatibility
+
+---
+
+## Sprint 6
+
+Homepage architecture
+
+---
+
+## Sprint 7
+
+Manual migration
+
+---
+
+## Sprint 8
+
+Homepage migration
+
+---
+
+## Sprint 9
+
+Desktop / Field UI split
+
+---
+
+## Sprint 10
+
+Statistics architecture
+
+---
+
+## Sprint 11
+
+Typography restoration
+
+---
+
+## Sprint 12
+
+Desktop and Field UI refinement
+
+---
+
+## Sprint 13
+
+Documentation refactoring
+
+---
+
+# Backlog
+
+Future work includes:
+
+- Expeditions migration
+- Challenges migration
+- Statistics migration
+- Map performance optimisation
+- Image optimisation
+- Search
+- Offline support
+- Progressive Web App evaluation
+
+Items move into the roadmap only when implementation begins.
+
+---
+
+# Future Vision
+
+The final architecture should consist of four clearly separated layers.
 
 ```text
-AKT-Mamut-Website/
-├── src/
-│   ├── components/
-│   │   ├── home/
-│   │   ├── SiteHeader.astro
-│   │   └── SiteFooter.astro
-│   ├── content/
-│   │   └── manual/
-│   │       └── index.md
-│   ├── content.config.ts
-│   ├── data/
-│   │   ├── homepage.ts
-│   │   ├── navigation.ts
-│   │   ├── routes.ts
-│   │   └── statistics.types.ts
-│   ├── layouts/
-│   │   ├── BaseLayout.astro
-│   │   └── ContentLayout.astro
-│   ├── pages/
-│   │   ├── manual/
-│   │   │   └── index.astro
-│   │   └── index.astro
-│   └── styles/
-│       ├── content.css
-│       └── global.css
-├── scripts/
-│   ├── lib/
-│   │   └── legacy-paths.mjs
-│   ├── audit-statistics-data.mjs
-│   ├── sync-legacy.mjs
-│   ├── validate-legacy.mjs
-│   └── validate-statistics-contract.mjs
-├── public/
-│   ├── assets/
-│   └── legacy/                  # generated, ignored
-├── data/
-├── docs/
-│   ├── homepage-audit.md
-│   ├── homepage-component-plan.md
-│   ├── manual-audit.md
-│   ├── statistics-audit.md
-│   ├── statistics-data-contract.md
-│   ├── typography-audit.md
-│   └── decisions/
-│       ├── 0001-astro-migration.md
-│       └── 0002-akt-mamut-typography.md
-├── assets/
-├── website/
-│   └── old-site/
-├── astro.config.mjs
-├── package.json
-├── package-lock.json
-├── tsconfig.json
-├── README.md
-├── PROJECT.md
-└── .gitignore
+Sources
+    │
+    ▼
+Python Data Factory
+    │
+    ▼
+JSON / GeoJSON Contracts
+    │
+    ▼
+Astro Website
+    │
+    ▼
+Leaflet Interactive Maps
 ```
 
-## Architectural boundaries
+The public website should remain fully static wherever possible while providing rich interactive geographic experiences only where they genuinely add value.
 
-- `website/old-site/` is the frozen legacy implementation and permanent reference during migration.
-- `src/` is the Astro application source directory.
-- `src/content/` contains authored Markdown managed through Astro Content Collections.
-- `src/data/statistics.types.ts` defines only the proposed normalized Statistics contract and does not power the live page.
-- `scripts/audit-statistics-data.mjs` and `scripts/validate-statistics-contract.mjs` inspect the legacy GeoJSON without modifying it.
-- `src/data/routes.ts` owns current compatibility destinations and canonical future routes.
-- `public/assets/` contains approved static assets required directly by Astro pages.
-- `public/legacy/` is generated, path-adjusted for temporary compatibility, ignored by Git, and never authoritative.
-- `data/` contains the local Python data-generation pipeline. Its full contents remain outside Git, while Python remains responsible for producing the JSON and GeoJSON consumed by the website.
-- `docs/` records architecture, migration strategy, audits, contracts, component plans, and engineering decisions.
-- `assets/` is reserved for shared migration and brand assets.
+---
 
-## Migration principles
+# Next Sprint
 
-1. Preserve public behavior before improving it.
-2. Keep the existing site available until replacement routes are verified.
-3. Separate editorial content, generated data, and interactive presentation.
-4. Keep Python as the data-generation layer unless a later decision explicitly changes that boundary.
-5. Migrate static pages before interactive maps.
-6. Avoid changing URLs without redirects and a documented SEO decision.
-7. Do not commit credentials, private keys, tokens, or files from `data/creds/`.
-8. Use small, reviewable migration increments.
+To be updated at the beginning of each sprint.
 
-## Out of scope for Sprint 11
+Current objective:
 
-- Migrating map-marker or Leaflet components.
-- Creating an Astro `/statistics/` page.
-- Changing the Python data-generation pipeline.
-- Modifying Expeditions GeoJSON or other geographic data.
-- Downloading, redistributing or committing font binaries.
-- Adding font packages or frontend dependencies.
-- Reusing CS3C typography or design-system assumptions.
-- Redesigning page content, spacing or color.
-- Configuring Netlify or deploying the website.
+> Continue the incremental migration while preserving architectural simplicity and maintaining production parity with the legacy website.

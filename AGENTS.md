@@ -1,60 +1,241 @@
-# AKT Mamut — instrukcje dla Codex
+# AGENTS
 
-## Struktura projektu
+AI Development Guide for the AKT Mamut Website
 
-Ten lokalny projekt ma dwa główne katalogi:
+This document defines how AI assistants should work within this repository.
 
-- `data/` — fabryka AKT Mamut: dane robocze, skrypty Python, GPX, GeoJSON, backupy i credentials lokalne.
-- `site/` — strona publikowana jako aktmamut.eu przez GitHub/Netlify.
+The goal is not only to generate code, but to help preserve the long-term architecture of the project.
 
-## Najważniejsza zasada
+---
 
-Codex ma działać ostrożnie i małymi krokami.
+# Project Philosophy
 
-Najpierw analizuj, potem proponuj zmianę. Nie przebudowuj całego projektu naraz.
+AKT Mamut is a long-term engineering project.
 
-## Czego nie wolno bez wyraźnej zgody
+Every change should improve the project without making the architecture more complicated.
 
-- Nie usuwaj plików z `data/`.
-- Nie usuwaj GPX, GeoJSON, backupów, zdjęć ani plików HTML.
-- Nie zmieniaj struktury katalogów.
-- Nie zmieniaj konfiguracji Netlify.
-- Nie dodawaj sekretów do repozytorium.
-- Nie commituj plików `.env`, kluczy API, tokenów ani plików z `data/creds/`.
-- Nie wykonuj automatycznego `git push`.
-- Nie publikuj produkcji samodzielnie.
-- Nie przebudowuj całej strony naraz.
+When several solutions are possible, prefer the one that is:
 
-## Obecny sposób pracy
+- simpler,
+- easier to maintain,
+- easier to understand,
+- more explicit,
+- easier to review.
 
-Praca odbywa się lokalnie w VS Code.
+Small, incremental improvements are preferred over large rewrites.
 
-Typowy przepływ:
+---
 
-1. edycja skryptów i danych lokalnie,
-2. uruchamianie skryptów Python,
-3. generowanie plików wynikowych do `site/`,
-4. ręczne sprawdzenie strony,
-5. synchronizacja z GitHub,
-6. publikacja przez Netlify.
+# Architectural Principles
 
-## Rola Codex
+The project is built around four independent responsibilities.
 
-Codex ma pomagać w:
+## Python
 
-- tworzeniu i poprawianiu skryptów Python,
-- porządkowaniu pojedynczych plików,
-- wykrywaniu błędów,
-- refaktoryzacji małych fragmentów,
-- dodawaniu prostych testów,
-- przygotowywaniu zmian do ręcznego sprawdzenia.
+Python owns data generation.
 
-## Styl zmian
+Python is responsible for:
 
-Każda zmiana powinna mieć:
+- importing source data,
+- validation,
+- preprocessing,
+- JSON generation,
+- GeoJSON generation.
 
-- krótki opis, co zostało zmienione,
-- listę dotkniętych plików,
-- instrukcję, jak sprawdzić wynik lokalnie.
+Python never generates HTML.
 
-Preferuj małe zmiany zamiast dużych przebudów.
+---
+
+## Astro
+
+Astro owns presentation.
+
+Astro is responsible for:
+
+- layouts,
+- pages,
+- routing,
+- metadata,
+- editorial content,
+- static rendering.
+
+Astro should not duplicate Python responsibilities.
+
+---
+
+## Leaflet
+
+Leaflet owns interactive maps.
+
+Interactive behaviour belongs here.
+
+Leaflet should not become responsible for page layout or editorial content.
+
+---
+
+## Netlify
+
+Netlify deploys the website.
+
+Deployment services must not become data-processing platforms.
+
+---
+
+# Repository Rules
+
+The repository contains two independent worlds.
+
+## Website
+
+The repository contains the public website.
+
+Everything inside `src/` belongs to Astro.
+
+---
+
+## Data Factory
+
+The local Python data factory remains outside Git.
+
+Never redesign the Python workflow unless explicitly requested.
+
+---
+
+# Coding Principles
+
+Prefer:
+
+- readable code,
+- explicit names,
+- small functions,
+- isolated components,
+- deterministic behaviour.
+
+Avoid:
+
+- unnecessary abstraction,
+- speculative architecture,
+- hidden side effects,
+- duplicated logic,
+- framework complexity.
+
+---
+
+# UI Philosophy
+
+Desktop and Field UI intentionally have different goals.
+
+Desktop is designed for:
+
+- exploration,
+- planning,
+- analysis,
+- reading.
+
+Field UI is designed for:
+
+- expeditions,
+- outdoor usage,
+- quick interaction,
+- one-handed operation.
+
+Do not force both interfaces to become visually identical.
+
+---
+
+# Documentation Rules
+
+The documentation has four responsibilities.
+
+README.md
+
+Project overview.
+
+PROJECT.md
+
+Roadmap and current status.
+
+docs/architecture.md
+
+Technical architecture.
+
+AGENTS.md
+
+Development principles.
+
+Avoid creating new standalone documentation unless it introduces genuinely new knowledge.
+
+Whenever possible, extend the existing documents instead.
+
+---
+
+# Git Rules
+
+Never:
+
+- commit credentials,
+- commit secrets,
+- commit generated local data,
+- commit files from `data/`,
+- rewrite repository history,
+- perform automatic pushes.
+
+Commits should remain small and reviewable.
+
+---
+
+# Forbidden Changes
+
+Do not perform the following without explicit approval:
+
+- redesign the whole website,
+- replace the Python pipeline,
+- replace Leaflet,
+- restructure the repository,
+- remove legacy pages,
+- change deployment,
+- introduce large frameworks,
+- introduce unnecessary dependencies.
+
+---
+
+# Preferred Workflow
+
+When solving a task:
+
+1. Understand the problem.
+2. Inspect the existing architecture.
+3. Propose the smallest reasonable solution.
+4. Explain the reasoning.
+5. Implement only the agreed change.
+
+Architecture should always evolve deliberately.
+
+---
+
+# Decision Making
+
+When multiple implementations are possible:
+
+1. Preserve existing behaviour.
+2. Minimize complexity.
+3. Prefer static generation.
+4. Reduce runtime JavaScript.
+5. Keep responsibilities separated.
+6. Leave the project easier to understand than before.
+
+---
+
+# Long-Term Goal
+
+The finished repository should remain understandable after many years.
+
+Every change should move the project closer to:
+
+- a simple architecture,
+- explicit ownership,
+- maintainable code,
+- minimal dependencies,
+- excellent documentation.
+
+The project should be pleasant for both humans and AI assistants to maintain.
