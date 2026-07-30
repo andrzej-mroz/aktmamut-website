@@ -1,0 +1,470 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+
+<div class="expeditions-map-frame">
+  <div class="expeditions-topbar">
+    <span id="expeditions-version"></span>
+  </div>
+
+  <div id="expeditions-map" class="expeditions-map" aria-label="Interactive map of AKT Mamut expeditions"></div>
+</div>
+
+<script is:inline>
+  const loadLeaflet = () =>
+    new Promise((resolve, reject) => {
+      if (window.L) {
+        resolve(window.L);
+        return;
+      }
+
+      const existingScript = document.querySelector('script[data-leaflet-script]');
+
+      if (existingScript) {
+        existingScript.addEventListener('load', () => resolve(window.L), {
+          once: true,
+        });
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js';
+      script.dataset.leafletScript = 'true';
+
+      script.addEventListener('load', () => resolve(window.L), {
+        once: true,
+      });
+
+      script.addEventListener('error', () => reject(new Error('Leaflet could not be loaded.')), { once: true });
+
+      document.head.appendChild(script);
+    });
+
+  const initializeExpeditionsMap = async () => {
+    const container = document.getElementById('expeditions-map');
+
+    if (!container || container.dataset.mapReady === 'true') {
+      return;
+    }
+
+    try {
+      const L = await loadLeaflet();
+
+      const map = L.map(container, {
+        center: [48.88524522540481, 20.563185152538292],
+        zoom: 9,
+        zoomControl: false,
+        preferCanvas: true,
+      });
+
+      map.attributionControl.setPrefix(false);
+
+      const osmLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        minZoom: 0,
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      });
+
+      const osmDeLayer = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+        minZoom: 0,
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, tiles by openstreetmap.de',
+      });
+
+      const topoLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        minZoom: 0,
+        maxZoom: 17,
+        subdomains: ['a', 'b', 'c'],
+        attribution: 'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; OpenTopoMap',
+      });
+
+      // Warstwa: MapTiler Outdoor
+      const maptilerLayer = L.tileLayer('https://api.maptiler.com/maps/outdoor/{z}/{x}/{y}.png?key=bMbOwauRVWZIi3aajhra', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.maptiler.com/">MapTiler</a> & OpenStreetMap contributors',
+        tileSize: 512,
+        zoomOffset: -1,
+        crossOrigin: true,
+      });
+
+      // Warstwa: MapTiler Topo
+      const maptilerTopoLayer = L.tileLayer('https://api.maptiler.com/maps/topo/{z}/{x}/{y}.png?key=bMbOwauRVWZIi3aajhra', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.maptiler.com/">MapTiler</a> & OpenStreetMap contributors',
+        tileSize: 512,
+        zoomOffset: -1,
+        crossOrigin: true,
+      });
+
+      // Warstwa: MapTiler Hybrid
+      const maptilerHybridLayer = L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=bMbOwauRVWZIi3aajhra', {
+        minZoom: 0,
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://www.maptiler.com/">MapTiler</a> & OpenStreetMap contributors',
+        tileSize: 512,
+        zoomOffset: -1,
+        crossOrigin: true,
+      });
+
+      // Warstwa: Tracestrack Topo
+      const tracestrackTopoLayer = L.tileLayer('https://tile.tracestrack.com/topo__/{z}/{x}/{y}.webp?key=98a25989268be3eb15a4369c05eda018', {
+        minZoom: 0,
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://tracestrack.com">Tracestrack</a> & OpenStreetMap contributors',
+        tileSize: 256,
+        crossOrigin: true,
+      });
+
+      osmLayer.addTo(map);
+
+      const baseLayers = {
+        OpenStreetMap: osmLayer,
+        'OSM DE': osmDeLayer,
+        OpenTopoMap: topoLayer,
+        'MapTiler Outdoor': maptilerLayer,
+        'MapTiler Topo': maptilerTopoLayer,
+        'MapTiler Hybrid': maptilerHybridLayer,
+        'Tracestrack Topo': tracestrackTopoLayer,
+      };
+
+      L.control
+        .layers(
+          baseLayers,
+          {},
+          {
+            position: 'topright',
+            collapsed: true,
+            autoZIndex: true,
+          }
+        )
+        .addTo(map);
+
+      const response = await fetch('/expeditions/expeditions.geojson');
+
+      if (!response.ok) {
+        throw new Error(`Expeditions GeoJSON could not be loaded: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const latestExpedition = data.features?.at(-1);
+      const latestDate = latestExpedition?.properties?.date || '';
+
+      const versionElement = document.getElementById('expeditions-version');
+
+      if (versionElement) {
+        versionElement.textContent = latestDate;
+      }
+      const escapeHtml = (value) =>
+        String(value ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+
+      const getSafeExternalUrl = (value) => {
+        if (!value) return null;
+
+        try {
+          const url = new URL(String(value), window.location.origin);
+
+          return ['http:', 'https:'].includes(url.protocol) ? url.href : null;
+        } catch {
+          return null;
+        }
+      };
+
+      const markersLayer = L.layerGroup().addTo(map);
+
+      const routesLayer = L.geoJSON(data, {
+        filter: (feature) => feature.geometry?.type === 'LineString',
+
+        style: (feature) => ({
+          color: feature.properties?.color || '#800000',
+          weight: 3,
+          opacity: 0.8,
+        }),
+
+        onEachFeature: (feature, routeLayer) => {
+          const properties = feature.properties || {};
+
+          const trailNumber = properties.nr || '';
+          const trailName = properties.name || '';
+          const trailColor = properties.color || '#800000';
+
+          const latitude = Number.parseFloat(properties.lat);
+          const longitude = Number.parseFloat(properties.lon);
+
+          const tooltipText = `${trailNumber} ${trailName}`.trim();
+
+          routeLayer.bindTooltip(escapeHtml(tooltipText), {
+            sticky: true,
+          });
+
+          routeLayer.on({
+            mouseover: () => {
+              routeLayer.setStyle({
+                weight: 6,
+                color: '#111111',
+              });
+
+              routeLayer.bringToFront();
+            },
+
+            mouseout: () => {
+              routesLayer.resetStyle(routeLayer);
+            },
+          });
+
+          if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
+            return;
+          }
+
+          const markerIcon = L.divIcon({
+            className: 'expedition-number-icon',
+            html: `
+        <span
+          class="expedition-number"
+          style="--route-color: ${escapeHtml(trailColor)}"
+        >
+          ${escapeHtml(trailNumber)}
+        </span>
+      `,
+            iconSize: [24, 24],
+            iconAnchor: [12, 12],
+            popupAnchor: [0, -14],
+          });
+
+          const marker = L.marker([latitude, longitude], {
+            icon: markerIcon,
+            title: tooltipText,
+          });
+
+          marker.bindTooltip(escapeHtml(tooltipText), {
+            sticky: true,
+          });
+
+          const gpxUrl = getSafeExternalUrl(properties.gpx_url);
+
+          const popupHtml = `
+      <article class="expedition-popup">
+        <h2>
+          ${escapeHtml(trailNumber)}
+          ${escapeHtml(trailName)}
+        </h2>
+
+        <dl>
+          <div>
+            <dt>Date</dt>
+            <dd>${escapeHtml(properties.date)}</dd>
+          </div>
+
+          <div>
+            <dt>Mountains</dt>
+            <dd>${escapeHtml(properties.mountains)}</dd>
+          </div>
+
+          <div>
+            <dt>Country</dt>
+            <dd>${escapeHtml(properties.country)}</dd>
+          </div>
+
+          <div>
+            <dt>Distance</dt>
+            <dd>${escapeHtml(properties.distance_km)} km</dd>
+          </div>
+
+          <div>
+            <dt>Ascent</dt>
+            <dd>${escapeHtml(properties.ascent_m)} m</dd>
+          </div>
+
+          <div>
+            <dt>Time</dt>
+            <dd>${escapeHtml(properties.duration_h)} h</dd>
+          </div>
+
+          <div>
+            <dt>GOT</dt>
+            <dd>${escapeHtml(properties.got)}</dd>
+          </div>
+
+          <div>
+            <dt>Participants</dt>
+            <dd>${escapeHtml(properties.participants)}</dd>
+          </div>
+        </dl>
+
+        ${
+          gpxUrl
+            ? `
+              <a
+                class="expedition-popup-link"
+                href="${escapeHtml(gpxUrl)}"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open route in Wikiloc
+              </a>
+            `
+            : ''
+        }
+      </article>
+    `;
+
+          marker.bindPopup(popupHtml, {
+            maxWidth: 340,
+          });
+
+          marker.on({
+            mouseover: () => {
+              routeLayer.setStyle({
+                weight: 6,
+                color: '#111111',
+              });
+
+              routeLayer.bringToFront();
+            },
+
+            mouseout: () => {
+              routesLayer.resetStyle(routeLayer);
+            },
+          });
+
+          marker.addTo(markersLayer);
+        },
+      }).addTo(map);
+
+      L.control
+        .scale({
+          position: 'bottomleft',
+          imperial: false,
+        })
+        .addTo(map);
+
+      container.dataset.mapReady = 'true';
+
+      requestAnimationFrame(() => {
+        map.invalidateSize();
+      });
+    } catch (error) {
+      console.error('Expeditions map initialization failed:', error);
+    }
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeExpeditionsMap, {
+      once: true,
+    });
+  } else {
+    initializeExpeditionsMap();
+  }
+</script>
+
+<style>
+  .expeditions-map {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #dfe7e3;
+  }
+  .expeditions-map :global(.leaflet-container),
+  .expeditions-map :global(.leaflet-control),
+  .expeditions-map :global(.leaflet-tooltip),
+  .expeditions-map :global(.leaflet-popup-content) {
+    font-family: var(--font-family-heading);
+  }
+  .expeditions-map :global(.expedition-number-icon) {
+    border: 0;
+    background: transparent;
+  }
+
+  .expeditions-map :global(.expedition-number) {
+    display: grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    border: 1.3px solid white;
+    border-radius: 50%;
+    background: var(--route-color, #800000);
+    box-shadow: 0 2px 8px rgb(0 0 0 / 35%);
+    color: white;
+    font-family: var(--font-family-heading);
+    font-size: 0.6rem;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .expeditions-map :global(.leaflet-popup-content-wrapper) {
+    border-radius: 0.75rem;
+  }
+
+  .expeditions-map :global(.leaflet-popup-content) {
+    min-width: 240px;
+    margin: 1rem;
+  }
+
+  .expeditions-map :global(.expedition-popup h2) {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-family-heading);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .expeditions-map :global(.expedition-popup dl) {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+  }
+
+  .expeditions-map :global(.expedition-popup dl div) {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .expeditions-map :global(.expedition-popup dt) {
+    color: var(--color-text-muted);
+    font-weight: 500;
+  }
+
+  .expeditions-map :global(.expedition-popup dd) {
+    margin: 0;
+  }
+
+  .expeditions-map :global(.expedition-popup-link) {
+    display: inline-flex;
+    margin-top: 0.9rem;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+  .expeditions-map-frame {
+    position: absolute;
+    inset: 0;
+  }
+
+  .expeditions-topbar {
+    position: absolute;
+    z-index: 500;
+    bottom: 20px;
+    right: 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 0.55rem;
+    background: rgb(255 255 255 / 90%);
+    box-shadow: 0 3px 10px rgb(0 0 0 / 14%);
+    backdrop-filter: blur(6px);
+  }
+
+  .expeditions-topbar span {
+    color: var(--color-text-muted);
+    font-family: var(--font-family-heading);
+    font-size: 0.72rem;
+    line-height: 1;
+  }
+</style>

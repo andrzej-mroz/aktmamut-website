@@ -1,0 +1,40 @@
+---
+import MobileHeader from "../../components/mobile/MobileHeader.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ExpeditionsMap from "../../components/expeditions/ExpeditionsMap.astro";
+---
+
+<BaseLayout
+  title="Expeditions"
+  description="Interactive map of AKT Mamut mountain expeditions."
+  lang="en"
+  showFooter={false}
+>
+  <div class="expeditions-page">
+    <MobileHeader />
+
+    <section class="expeditions-map-shell" aria-label="Expeditions map">
+        <ExpeditionsMap />
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .expeditions-page {
+    display: flex;
+    min-height: calc(100dvh - var(--header-height));
+    flex-direction: column;
+  }
+
+  .expeditions-map-shell {
+    position: relative;
+    min-height: 0;
+    flex: 1;
+  }
+
+  @media (max-width: 48rem) {
+    .expeditions-page {
+      min-height: 100dvh;
+    }
+  }
+</style>
