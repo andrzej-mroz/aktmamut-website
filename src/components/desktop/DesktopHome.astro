@@ -6,7 +6,6 @@ import ProjectModulesSection from "../home/ProjectModulesSection.astro";
 import ProjectStatementSection from "../home/ProjectStatementSection.astro";
 import {
   homepageFeatures,
-  homepageHeroActions,
   homepageHeroVideo,
   homepageMetrics,
   homepageModules,
@@ -14,7 +13,7 @@ import {
 ---
 
 <div class="desktop-home">
-  <HomeHero actions={homepageHeroActions} video={homepageHeroVideo} />
+  <HomeHero video={homepageHeroVideo} />
   <ProjectStatementSection />
   <ProjectModulesSection modules={homepageModules} />
   <FeaturedDirectionsSection features={homepageFeatures} />

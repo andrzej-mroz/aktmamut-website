@@ -59,17 +59,6 @@ export const homepageHeroVideo = {
   durationSeconds: 14.3143,
 } as const;
 
-export const homepageHeroActions: HomepageLink[] = [
-  {
-    label: "Explore Expeditions",
-    ...expeditionsDestination,
-  },
-  {
-    label: "Open Challenges",
-    ...challengesDestination,
-  },
-];
-
 export const homepageModules: HomepageModule[] = [
   {
     title: "Expeditions",
@@ -82,8 +71,7 @@ export const homepageModules: HomepageModule[] = [
   },
   {
     title: "Challenges",
-    description:
-      "Peak collections, regional challenges and progress tracking.",
+    description: "Peak collections, regional challenges and progress tracking.",
     symbol: "🏔",
     meta: "Open challenges →",
     status: "live",
@@ -100,8 +88,7 @@ export const homepageModules: HomepageModule[] = [
   },
   {
     title: "Carpathian Flowers",
-    description:
-      "A future atlas of mountain plants and field observations.",
+    description: "A future atlas of mountain plants and field observations.",
     symbol: "🌸",
     meta: "Planned module",
     status: "planned",

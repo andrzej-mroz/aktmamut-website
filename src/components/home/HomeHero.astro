@@ -1,6 +1,4 @@
 ---
-import type { HomepageLink } from "../../data/homepage";
-
 interface HeroVideo {
   readonly src: string;
   readonly type: string;
@@ -10,17 +8,17 @@ interface HeroVideo {
 }
 
 interface Props {
-  actions: readonly HomepageLink[];
   video: HeroVideo;
 }
 
-const { actions, video } = Astro.props;
+const { video } = Astro.props;
 ---
 
 <section class="hero" aria-labelledby="home-title" data-home-hero>
   <video
     class="hero-video"
     muted
+    autoplay
     playsinline
     loop
     preload="metadata"
@@ -47,76 +45,9 @@ const { actions, video } = Astro.props;
         It brings together years of routes, maps and mountain observations,
         gradually forming a growing archive of places explored across the range.
       </p>
-
-      <div class="hero-actions">
-        {
-          actions.map((action, index) => (
-            <a
-              class:list={[
-                "hero-action",
-                index === 0 ? "hero-action-primary" : "hero-action-secondary",
-              ]}
-              href={action.href}
-            >
-              {action.label}
-            </a>
-          ))
-        }
-      </div>
-
-      <button
-        class="video-control"
-        type="button"
-        aria-pressed="true"
-        hidden
-        data-hero-video-control
-      >
-        Play background video
-      </button>
     </div>
   </div>
 </section>
-
-<script is:inline type="module">
-  const hero = document.querySelector("[data-home-hero]");
-  const video = hero?.querySelector("[data-hero-video]");
-  const control = hero?.querySelector("[data-hero-video-control]");
-
-  if (video instanceof HTMLVideoElement && control instanceof HTMLButtonElement) {
-    const motionPreference = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    );
-
-    const updateControl = () => {
-      const isPaused = video.paused;
-      control.textContent = isPaused
-        ? "Play background video"
-        : "Pause background video";
-      control.setAttribute("aria-pressed", String(isPaused));
-    };
-
-    control.hidden = false;
-    updateControl();
-
-    if (!motionPreference.matches) {
-      video.play().catch(updateControl);
-    }
-
-    control.addEventListener("click", () => {
-      if (video.paused) {
-        video.play().catch(updateControl);
-      } else {
-        video.pause();
-      }
-    });
-
-    video.addEventListener("play", updateControl);
-    video.addEventListener("pause", updateControl);
-    motionPreference.addEventListener("change", (event) => {
-      if (event.matches) video.pause();
-    });
-  }
-</script>
 
 <style>
   .hero {
