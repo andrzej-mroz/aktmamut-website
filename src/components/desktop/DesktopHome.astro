@@ -1,0 +1,34 @@
+---
+import AboutProjectSection from "../home/AboutProjectSection.astro";
+import FeaturedDirectionsSection from "../home/FeaturedDirectionsSection.astro";
+import HomeHero from "../home/HomeHero.astro";
+import ProjectModulesSection from "../home/ProjectModulesSection.astro";
+import ProjectStatementSection from "../home/ProjectStatementSection.astro";
+import {
+  homepageFeatures,
+  homepageHeroActions,
+  homepageHeroVideo,
+  homepageMetrics,
+  homepageModules,
+} from "../../data/homepage";
+---
+
+<div class="desktop-home">
+  <HomeHero actions={homepageHeroActions} video={homepageHeroVideo} />
+  <ProjectStatementSection />
+  <ProjectModulesSection modules={homepageModules} />
+  <FeaturedDirectionsSection features={homepageFeatures} />
+  <AboutProjectSection metrics={homepageMetrics} />
+</div>
+
+<style>
+  .desktop-home {
+    display: block;
+  }
+
+  @media (max-width: 48rem) {
+    .desktop-home {
+      display: none;
+    }
+  }
+</style>

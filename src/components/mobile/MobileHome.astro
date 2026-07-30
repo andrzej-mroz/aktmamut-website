@@ -1,0 +1,23 @@
+---
+import MobileHeader from "./MobileHeader.astro";
+---
+
+<div class="mobile-home">
+  <MobileHeader />
+
+  <h1>📱 Field UI</h1>
+  <p>AKT Mamut Mobile</p>
+</div>
+
+<style>
+  .mobile-home {
+    display: none;
+    padding: 2rem;
+  }
+
+  @media (max-width: 48rem) {
+    .mobile-home {
+      display: block;
+    }
+  }
+</style>

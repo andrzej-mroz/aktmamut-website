@@ -1,16 +1,6 @@
 ---
-import AboutProjectSection from "../components/home/AboutProjectSection.astro";
-import FeaturedDirectionsSection from "../components/home/FeaturedDirectionsSection.astro";
-import HomeHero from "../components/home/HomeHero.astro";
-import ProjectModulesSection from "../components/home/ProjectModulesSection.astro";
-import ProjectStatementSection from "../components/home/ProjectStatementSection.astro";
-import {
-  homepageFeatures,
-  homepageHeroActions,
-  homepageHeroVideo,
-  homepageMetrics,
-  homepageModules,
-} from "../data/homepage";
+import DesktopHome from "../components/desktop/DesktopHome.astro";
+import MobileHome from "../components/mobile/MobileHome.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
@@ -18,10 +8,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   title="AKT Mamut"
   description="AKT Mamut — expeditions, mountain challenges and geographic exploration."
   lang="en"
+  showFooter={true}
 >
-  <HomeHero actions={homepageHeroActions} video={homepageHeroVideo} />
-  <ProjectStatementSection />
-  <ProjectModulesSection modules={homepageModules} />
-  <FeaturedDirectionsSection features={homepageFeatures} />
-  <AboutProjectSection metrics={homepageMetrics} />
+<DesktopHome />
+<MobileHome />
 </BaseLayout>

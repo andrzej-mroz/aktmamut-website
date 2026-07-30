@@ -1,0 +1,150 @@
+---
+import { primaryNavigation } from "../../data/navigation";
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = "/" } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="container header-content">
+    <a class="brand" href="/" aria-label="AKT Mamut home">
+      <img
+        class="brand-mark"
+        src="/assets/brand/M256.webp"
+        alt="AKT Mamut mammoth mark"
+        width="256"
+        height="256"
+      />
+      <span class="brand-name">AKT MAMUT</span>
+    </a>
+
+    <nav class="primary-navigation" aria-label="Primary navigation">
+      <ul class="navigation-list">
+        {
+          primaryNavigation.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={
+                  item.migrated && currentPath === item.href ? "page" : null
+                }
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    z-index: 100;
+    top: 0;
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
+    backdrop-filter: blur(0.75rem);
+  }
+
+  .header-content {
+    display: flex;
+    min-height: var(--header-height);
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-2);
+    padding-block: var(--space-2);
+  }
+
+  .brand {
+    display: inline-flex;
+    width: fit-content;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--color-accent);
+  }
+
+  .brand-mark {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+  }
+
+  .brand-name {
+    font-family: var(--font-family-heading);
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+
+  .primary-navigation {
+    min-width: 0;
+  }
+
+  .navigation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navigation-list a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    border-radius: var(--radius-small);
+    color: var(--color-text-muted);
+    font-family: var(--font-family-interface);
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .navigation-list a:hover,
+  .navigation-list a[aria-current="page"] {
+    color: var(--color-accent);
+  }
+
+  @media (min-width: 48rem) {
+    .header-content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-6);
+      padding-block: 0;
+    }
+
+    .brand-mark {
+      width: 2.75rem;
+      height: 2.75rem;
+    }
+
+    .brand-name {
+      font-size: 2rem;
+    }
+
+    .navigation-list {
+      justify-content: flex-end;
+      gap: var(--space-6);
+    }
+  }
+  @media (max-width: 48rem) {
+    .site-header {
+      display: none;
+    }
+  }
+</style>
+

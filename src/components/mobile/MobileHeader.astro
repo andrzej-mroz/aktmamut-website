@@ -1,0 +1,46 @@
+<header class="mobile-header">
+  <a class="mobile-brand" href="/" aria-label="AKT Mamut home">
+    <img
+      class="mobile-brand-mark"
+      src="/assets/brand/M256.webp"
+      alt="AKT Mamut mammoth mark"
+      width="256"
+      height="256"
+    />
+    <span class="mobile-brand-name">AKT MAMUT</span>
+  </a>
+</header>
+<style>
+  .mobile-header {
+    display: none;
+  }
+
+  @media (max-width: 48rem) {
+    .mobile-header {
+      display: block;
+      padding: 1rem;
+      border-bottom: 1px solid var(--color-border);
+      background: var(--color-surface);
+    }
+
+    .mobile-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    .mobile-brand-mark {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .mobile-brand-name {
+      font-family: var(--font-family-heading);
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1;
+    }
+  }
+</style>
