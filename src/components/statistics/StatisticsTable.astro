@@ -402,6 +402,58 @@
 
         table.appendChild(tableBody);
         container.appendChild(table);
+
+        const tableWrap = root.querySelector('.table-wrap');
+        const mobileLayout = window.matchMedia('(max-width: 48rem)');
+
+        const fitTableToMobile = () => {
+          table.style.removeProperty('width');
+          table.style.removeProperty('transform');
+          table.style.removeProperty('transform-origin');
+
+          container.style.removeProperty('height');
+          container.classList.remove('is-mobile-fitted');
+
+          if (!mobileLayout.matches || !tableWrap) {
+            return;
+          }
+
+          const naturalWidth = table.scrollWidth;
+          const naturalHeight = table.offsetHeight;
+
+          const wrapStyles = window.getComputedStyle(tableWrap);
+
+          const horizontalPadding =
+          Number.parseFloat(wrapStyles.paddingLeft) +
+          Number.parseFloat(wrapStyles.paddingRight);
+
+          const availableWidth =
+          tableWrap.clientWidth - horizontalPadding - 2;
+
+          if (!naturalWidth || !naturalHeight || !availableWidth) {
+            return;
+          }
+
+          const scale = Math.min(1, availableWidth / naturalWidth);
+
+          table.style.width = `${naturalWidth}px`;
+          table.style.transformOrigin = 'top left';
+          table.style.transform = `scale(${scale})`;
+
+          container.style.height = `${Math.ceil(naturalHeight * scale)}px`;
+
+          container.classList.add('is-mobile-fitted');
+        };
+
+        const scheduleMobileFit = () => {
+          window.requestAnimationFrame(fitTableToMobile);
+        };
+
+        scheduleMobileFit();
+
+        mobileLayout.addEventListener('change', scheduleMobileFit);
+
+        window.addEventListener('orientationchange', scheduleMobileFit);
       } catch (error) {
         container.textContent = 'Błąd wczytywania danych.';
 
@@ -567,33 +619,40 @@
     border-bottom: 0;
   }
 
-  @media (max-width: 48rem) {
-    .statistics-table {
-      --stats-label-column: 4.5rem;
-      --stats-table-min-width: 45rem;
-    }
+@media (max-width: 48rem) {
+  .statistics-table {
+    --stats-label-column: 4.5rem;
+    --stats-table-min-width: 45rem;
+  }
 
-    .table-card {
-      border-radius: 1rem;
-    }
+  .table-card {
+    border-radius: 1rem;
+  }
 
-    .table-wrap {
-      max-height: calc(100dvh - 8rem);
-      padding: 0.6rem;
-    }
+  .table-wrap {
+    max-height: none;
+    overflow: hidden;
+    padding: 0.6rem;
+  }
 
-    .monotable {
-      font-size: 0.7rem;
-    }
+  .table-container.is-mobile-fitted {
+    width: 100%;
+    min-width: 0;
+  }
 
-    .monotable :global(th),
-    .monotable :global(td) {
-      padding: 0.25rem;
-    }
+  .statistics-table :global(.monotable) {
+    font-size: 0.7rem;
+  }
 
-    .table-note {
-      padding: 0 0.7rem 0.7rem;
-      font-size: 0.72rem;
-    }
+  .statistics-table :global(.monotable th),
+  .statistics-table :global(.monotable td) {
+    padding: 0.25rem;
+  }
+
+  .table-note {
+    padding: 0 0.7rem 0.7rem;
+    font-size: 0.72rem;
+  }
+}
   }
 </style>
