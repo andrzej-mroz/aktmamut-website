@@ -1,0 +1,246 @@
+---
+import { readFile } from 'node:fs/promises';
+import { basename, join } from 'node:path';
+
+interface ChallengeMeta {
+  key: string;
+  name: string;
+  icon: string;
+}
+
+interface ChallengePeak {
+  status?: string;
+  date?: string | number;
+}
+
+const dataDirectory = join(process.cwd(), 'public', 'challenges', 'data');
+
+const indexPath = join(dataDirectory, 'challenges-index.json');
+
+const challengeIndex = JSON.parse(await readFile(indexPath, 'utf8')) as ChallengeMeta[];
+
+const challenges = await Promise.all(
+  challengeIndex.map(async (challenge) => {
+    const dataPath = join(dataDirectory, `challenges-${challenge.key}.json`);
+
+    const peaks = JSON.parse(await readFile(dataPath, 'utf8')) as ChallengePeak[];
+
+    const total = peaks.length;
+
+    const done = peaks.filter((peak) => peak.status === 'done' || (!peak.status && Boolean(peak.date))).length;
+
+    const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+    return {
+      ...challenge,
+      iconUrl: challenge.icon ? `/assets/challenges/${basename(challenge.icon)}` : '',
+      total,
+      done,
+      percent,
+    };
+  })
+);
+---
+
+<section class="challenges-list container" aria-label="Mountain challenges">
+  <div class="challenges-grid">
+    {
+      challenges.map((challenge) => (
+        <article class="challenge-card">
+          <div class="challenge-heading">
+            {challenge.iconUrl && <img class="challenge-icon" src={challenge.iconUrl} alt="" width="40" height="40" />}
+
+            <h2>{challenge.name}</h2>
+          </div>
+
+          <div class="challenge-metrics">
+            <div class="challenge-metric">
+              <span>Peaks</span>
+              <strong>{challenge.total}</strong>
+            </div>
+
+            <div class="challenge-metric">
+              <span>Completed</span>
+              <strong>{challenge.done}</strong>
+            </div>
+          </div>
+
+          <div class="challenge-progress">
+            <div class="challenge-progress-labels">
+              <span>
+                {challenge.done} / {challenge.total}
+              </span>
+
+              <strong>{challenge.percent}%</strong>
+            </div>
+
+            <div class="challenge-progress-track" role="progressbar" aria-label={`${challenge.name} progress`} aria-valuemin="0" aria-valuemax="100" aria-valuenow={challenge.percent}>
+              <span style={`width: ${challenge.percent}%`} />
+            </div>
+          </div>
+
+          <a class="challenge-link" href={`/challenges/${challenge.key}`}>
+            Open challenge
+          </a>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .challenges-list {
+    padding-bottom: 4rem;
+  }
+
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .challenge-card {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    background: var(--color-surface);
+    box-shadow: 0 6px 18px rgb(0 0 0 / 6%);
+  }
+
+  .challenge-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 26px rgb(0 0 0 / 9%);
+  }
+
+  .challenge-heading {
+    display: flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .challenge-icon {
+    width: 2rem;
+    height: 2rem;
+    flex: none;
+    object-fit: contain;
+  }
+
+  .challenge-heading h2 {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .challenge-metrics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .challenge-metric {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.7rem;
+    background: var(--color-surface-subtle);
+  }
+
+  .challenge-metric span {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+  }
+
+  .challenge-metric strong {
+    font-family: var(--font-family-heading);
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .challenge-progress {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .challenge-progress-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+
+  .challenge-progress-labels span {
+    color: var(--color-text-muted);
+  }
+
+  .challenge-progress-track {
+    height: 0.5rem;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #e2e7e4;
+  }
+
+  .challenge-progress-track span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: #287f50;
+  }
+
+  .challenge-link {
+    display: inline-flex;
+    width: fit-content;
+    min-height: 2.4rem;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
+    padding-inline: 0.9rem;
+    border-radius: 0.6rem;
+    background: #287f50;
+    color: white;
+    font-family: var(--font-family-heading);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .challenge-link:hover {
+    background: #1f6840;
+  }
+
+  .challenge-link:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 64rem) {
+    .challenges-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 48rem) {
+    .challenges-list {
+      padding-top: 0.25rem;
+      padding-bottom: 2rem;
+    }
+
+    .challenges-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .challenge-card {
+      padding: 1.25rem;
+    }
+  }
+</style>

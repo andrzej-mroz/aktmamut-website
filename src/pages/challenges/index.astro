@@ -1,0 +1,68 @@
+---
+import ChallengesList from '../../components/challenges/ChallengesList.astro';
+import MobileHeader from '../../components/mobile/MobileHeader.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Challenges" description="AKT Mamut mountain challenges and peak completion progress." lang="en" showFooter={false}>
+  <div class="challenges-page">
+    <MobileHeader />
+
+    <header class="challenges-intro container">
+      <p class="challenges-kicker">AKT MAMUT</p>
+
+      <h1>Challenges</h1>
+
+      <p>Choose a challenge and explore the progress of completed mountain peaks.</p>
+    </header>
+
+    <ChallengesList />
+  </div>
+</BaseLayout>
+
+<style>
+  .challenges-page {
+    min-height: calc(100dvh - var(--header-height));
+    background: radial-gradient(circle at 80% 5%, rgb(40 127 80 / 10%), transparent 25rem), var(--color-surface-subtle);
+  }
+
+  .challenges-intro {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+  }
+
+  .challenges-kicker {
+    margin: 0 0 0.5rem;
+    color: #287f50;
+    font-family: var(--font-family-heading);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+
+  .challenges-intro h1 {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+
+  .challenges-intro > p:last-child {
+    max-width: 42rem;
+    margin: 0.8rem 0 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .challenges-page {
+      min-height: 100dvh;
+    }
+
+    .challenges-intro {
+      padding-top: 2rem;
+      padding-bottom: 1.5rem;
+    }
+  }
+</style>
