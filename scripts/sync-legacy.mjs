@@ -1,5 +1,13 @@
-import { cp, mkdir, mkdtemp, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
+import {
+  cp,
+  mkdir,
+  mkdtemp,
+  readFile,
+  rename,
+  rm,
+  stat,
+  writeFile,
+} from "node:fs/promises";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -38,7 +46,15 @@ if (!source.isDirectory()) {
 
 const sourceFiles = await listFiles(sourceDirectory);
 const sourceManifestBefore = await createFileManifest(sourceDirectory);
-const temporaryRoot = await mkdtemp(join(tmpdir(), "akt-mamut-legacy-"));
+
+const temporaryParent = resolve(repositoryRoot, ".astro");
+
+await mkdir(temporaryParent, {
+  recursive: true,
+});
+
+const temporaryRoot = await mkdtemp(join(temporaryParent, "legacy-sync-"));
+
 const temporarySite = join(temporaryRoot, "legacy");
 
 let rewrittenFiles = 0;
