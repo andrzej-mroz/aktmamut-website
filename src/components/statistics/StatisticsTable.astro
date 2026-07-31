@@ -1,0 +1,599 @@
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+
+<link rel="stylesheet" href="https://unpkg.com/tippy.js@6/themes/light-border.css" />
+
+<section class="statistics-table" data-statistics-table>
+  <div class="table-card">
+    <div class="table-wrap">
+      <div class="table-container" data-table-container>Data input...</div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const root = document.querySelector('[data-statistics-table]:not([data-initialized])');
+
+    if (!root) {
+      return;
+    }
+
+    root.dataset.initialized = 'true';
+
+    const container = root.querySelector('[data-table-container]');
+
+    if (!container) {
+      return;
+    }
+
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+    const dayLabels = ['10', '20', '30'];
+
+    const gotColorPalette = [
+      {
+        max: 0,
+        background: '#ffffff',
+        color: '#111111',
+      },
+      {
+        max: 100,
+        background: '#eef7eb',
+        color: '#111111',
+      },
+      {
+        max: 200,
+        background: '#d9ead3',
+        color: '#111111',
+      },
+      {
+        max: 400,
+        background: '#b6d7a8',
+        color: '#111111',
+      },
+      {
+        max: 600,
+        background: '#93c47d',
+        color: '#111111',
+      },
+      {
+        max: 800,
+        background: '#6aa84f',
+        color: '#111111',
+      },
+      {
+        max: 1000,
+        background: '#38761d',
+        color: '#ffffff',
+      },
+      {
+        max: Infinity,
+        background: '#274e13',
+        color: '#ffffff',
+      },
+    ];
+
+    const escapeHtml = (value) => {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+    };
+
+    const loadScript = (src, libraryName) => {
+      return new Promise((resolve, reject) => {
+        const existingScript = document.querySelector(`script[data-statistics-library="${libraryName}"]`);
+
+        if (existingScript) {
+          if (existingScript.dataset.loaded === 'true') {
+            resolve();
+            return;
+          }
+
+          existingScript.addEventListener('load', resolve, {
+            once: true,
+          });
+
+          existingScript.addEventListener('error', reject, {
+            once: true,
+          });
+
+          return;
+        }
+
+        const script = document.createElement('script');
+
+        script.src = src;
+        script.async = true;
+        script.dataset.statisticsLibrary = libraryName;
+
+        script.addEventListener(
+          'load',
+          () => {
+            script.dataset.loaded = 'true';
+            resolve();
+          },
+          {
+            once: true,
+          }
+        );
+
+        script.addEventListener('error', reject, {
+          once: true,
+        });
+
+        document.head.appendChild(script);
+      });
+    };
+
+    const initializeStatistics = async () => {
+      let tippyInstance = null;
+
+      try {
+        await loadScript('https://unpkg.com/@popperjs/core@2', 'popper');
+
+        await loadScript('https://unpkg.com/tippy.js@6', 'tippy');
+
+        tippyInstance = window.tippy;
+      } catch (error) {
+        console.warn('Statistics tooltip library failed to load:', error);
+      }
+
+      try {
+        const response = await fetch('/expeditions/expeditions.geojson');
+
+        if (!response.ok) {
+          throw new Error(`Statistics data request failed: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const features = Array.isArray(data.features) ? data.features : [];
+
+        const dataYears = features
+          .map((feature) => {
+            const date = feature.properties?.date;
+
+            if (!date) {
+              return null;
+            }
+
+            const year = Number.parseInt(String(date).split('-')[0], 10);
+
+            return Number.isFinite(year) ? year : null;
+          })
+          .filter((year) => year !== null);
+
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+
+        const minYear = dataYears.length ? Math.min(...dataYears) : currentYear;
+
+        const maxYear = dataYears.length ? Math.max(...dataYears) : currentYear;
+
+        const years = Array.from(
+          {
+            length: maxYear - minYear + 1,
+          },
+          (_, index) => minYear + index
+        );
+
+        const decadalGot = {};
+
+        years.forEach((year) => {
+          decadalGot[year] = Array.from(
+            {
+              length: 36,
+            },
+            () => ({
+              sum: 0,
+              records: [],
+            })
+          );
+        });
+
+        features.forEach((feature) => {
+          const properties = feature.properties ?? {};
+
+          const got = Number.parseFloat(properties.got ?? '0');
+
+          const date = properties.date;
+
+          if (!date || Number.isNaN(got)) {
+            return;
+          }
+
+          const [yearString, monthString, dayString] = String(date).split('-');
+
+          const year = Number.parseInt(yearString, 10);
+          const month = Number.parseInt(monthString, 10) - 1;
+          const day = Number.parseInt(dayString, 10);
+
+          if (!decadalGot[year] || month < 0 || month > 11 || day < 1 || day > 31) {
+            return;
+          }
+
+          const decade = day <= 10 ? 0 : day <= 20 ? 1 : 2;
+
+          const index = month * 3 + decade;
+
+          decadalGot[year][index].sum += got;
+
+          decadalGot[year][index].records.push({
+            nr: properties.nr || '???',
+            date,
+            name: properties.name || '',
+            got,
+          });
+        });
+
+        const currentMonth = currentDate.getMonth();
+        const currentDay = currentDate.getDate();
+
+        let maxCurrentIndex = 35;
+
+        if (years.includes(currentYear)) {
+          const currentDecade = currentDay <= 10 ? 0 : currentDay <= 20 ? 1 : 2;
+
+          maxCurrentIndex = currentMonth * 3 + currentDecade;
+        }
+
+        years.forEach((year) => {
+          for (let index = 1; index < 36; index += 1) {
+            if (year === currentYear && index > maxCurrentIndex) {
+              decadalGot[year][index].sum = null;
+              continue;
+            }
+
+            const previousEntry = decadalGot[year][index - 1];
+
+            const currentEntry = decadalGot[year][index];
+
+            if (previousEntry.sum !== null && currentEntry.sum !== null) {
+              currentEntry.sum += previousEntry.sum;
+            }
+          }
+        });
+
+        container.innerHTML = '';
+
+        container.style.setProperty('--years-count', years.length);
+
+        const table = document.createElement('table');
+        table.className = 'monotable';
+
+        const columnGroup = document.createElement('colgroup');
+
+        const labelColumn = document.createElement('col');
+
+        labelColumn.className = 'label-column';
+        columnGroup.appendChild(labelColumn);
+
+        years.forEach(() => {
+          const yearColumn = document.createElement('col');
+
+          columnGroup.appendChild(yearColumn);
+        });
+
+        table.appendChild(columnGroup);
+
+        const tableHead = document.createElement('thead');
+
+        const headerRow = document.createElement('tr');
+
+        headerRow.appendChild(document.createElement('th'));
+
+        years.forEach((year) => {
+          const heading = document.createElement('th');
+
+          heading.textContent = String(year);
+          headerRow.appendChild(heading);
+        });
+
+        tableHead.appendChild(headerRow);
+        table.appendChild(tableHead);
+
+        const tableBody = document.createElement('tbody');
+
+        for (let index = 0; index < 36; index += 1) {
+          const month = months[Math.floor(index / 3)];
+
+          const decadeLabel = dayLabels[index % 3];
+
+          const row = document.createElement('tr');
+
+          const labelCell = document.createElement('td');
+
+          labelCell.textContent = `${month} ${decadeLabel}`;
+
+          row.appendChild(labelCell);
+
+          years.forEach((year) => {
+            const entry = decadalGot[year][index];
+            const value = entry?.sum;
+
+            const cell = document.createElement('td');
+
+            if (value !== null && value !== undefined) {
+              const roundedGot = Math.round(value);
+
+              const palette = gotColorPalette.find((item) => roundedGot <= item.max) ?? gotColorPalette.at(-1);
+
+              cell.style.backgroundColor = palette.background;
+
+              cell.style.color = palette.color;
+              if (palette.color === '#ffffff') {
+                cell.classList.add('dark-cell');
+              }
+
+              const wrapper = document.createElement('span');
+              wrapper.className = 'cell-value';
+
+              const marker = document.createElement('span');
+              marker.className = 'cell-marker';
+              marker.textContent = '✳';
+
+              const result = document.createElement('span');
+              result.className = 'cell-number';
+              result.textContent = String(roundedGot);
+
+              if (entry.records.length > 0) {
+                marker.tabIndex = 0;
+
+                const tooltipHtml = `
+    <table class="statistics-tooltip-table">
+      <thead>
+        <tr>
+          <th>Nr</th>
+          <th>Date</th>
+          <th>Name</th>
+          <th>GOT</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        ${entry.records
+          .map(
+            (record) => `
+              <tr>
+                <td>${escapeHtml(record.nr)}</td>
+                <td>${escapeHtml(record.date)}</td>
+                <td>${escapeHtml(record.name)}</td>
+                <td>${Number(record.got).toFixed(2)}</td>
+              </tr>
+            `
+          )
+          .join('')}
+      </tbody>
+    </table>
+  `;
+
+                if (typeof tippyInstance === 'function') {
+                  tippyInstance(marker, {
+                    content: tooltipHtml,
+                    allowHTML: true,
+                    interactive: true,
+                    placement: 'top',
+                    theme: 'statistics-dark',
+                    maxWidth: 500,
+                    appendTo: () => document.body,
+                  });
+                } else {
+                  marker.title = entry.records.map((record) => `${record.nr} | ${record.date} | ${record.name} | ${Number(record.got).toFixed(2)} GOT`).join('\n');
+                }
+              } else {
+                marker.classList.add('is-empty');
+                marker.setAttribute('aria-hidden', 'true');
+              }
+
+              wrapper.appendChild(marker);
+              wrapper.appendChild(result);
+              cell.appendChild(wrapper);
+            } else {
+              cell.textContent = '';
+            }
+
+            row.appendChild(cell);
+          });
+
+          tableBody.appendChild(row);
+        }
+
+        table.appendChild(tableBody);
+        container.appendChild(table);
+      } catch (error) {
+        container.textContent = 'Błąd wczytywania danych.';
+
+        console.error('Statistics initialization failed:', error);
+      }
+    };
+
+    initializeStatistics();
+  })();
+</script>
+
+<style>
+  .statistics-table {
+    --stats-label-column: 5.5rem;
+    --stats-table-min-width: 60rem;
+
+    width: 100%;
+  }
+
+  .table-card {
+    overflow: hidden;
+    border-radius: 1.25rem;
+    background: var(--color-surface, #ffffff);
+    box-shadow: var(--shadow);
+  }
+
+  .table-wrap {
+    max-height: calc(100dvh - 9rem);
+    overflow: auto;
+    padding: 1rem;
+  }
+
+  .table-container {
+    min-width: var(--stats-table-min-width);
+  }
+
+  .statistics-table :global(.monotable) {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    font-family: var(--font-family-heading, Oswald, sans-serif);
+    font-size: 0.8rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .statistics-table :global(.monotable .label-column) {
+    width: var(--stats-label-column);
+  }
+
+  .statistics-table :global(.monotable th),
+  .statistics-table :global(.monotable td) {
+    padding: 0.28rem 0.4rem;
+    border-right: 1px solid #222222;
+    border-bottom: 1px solid #222222;
+    background: var(--color-surface, #ffffff);
+    text-align: right;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .statistics-table :global(.monotable thead th) {
+    position: sticky;
+    z-index: 20;
+    top: 0;
+    border-top: 1px solid #222222;
+    background: #eeeeee;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .statistics-table :global(.monotable thead th:first-child) {
+    z-index: 30;
+    left: 0;
+    background: #f8f8f8;
+  }
+
+  .statistics-table :global(.monotable th:first-child),
+  .statistics-table :global(.monotable td:first-child) {
+    position: sticky;
+    z-index: 10;
+    left: 0;
+    width: var(--stats-label-column);
+    min-width: var(--stats-label-column);
+    max-width: var(--stats-label-column);
+    border-left: 1px solid #222222;
+    background: #f8f8f8;
+    color: var(--color-text, #111111);
+    font-weight: 500;
+    text-align: left;
+  }
+
+  .statistics-table :global(.cell-value) {
+    display: grid;
+    grid-template-columns: 0.9rem minmax(2.5ch, 1fr);
+    width: 100%;
+    align-items: center;
+    column-gap: 0.15rem;
+  }
+
+  .statistics-table :global(.cell-marker) {
+    display: block;
+    width: 0.9rem;
+    opacity: 0.55;
+    cursor: help;
+    text-align: center;
+  }
+
+  .statistics-table :global(.cell-marker.is-empty) {
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .statistics-table :global(.cell-number) {
+    display: block;
+    min-width: 0;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .statistics-table :global(.monotable td.dark-cell .cell-number) {
+    font-size: 0.94em;
+    font-weight: 400;
+  }
+
+  .statistics-table :global(.cell-marker:focus-visible) {
+    border-radius: 0.2rem;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+
+  .table-note {
+    margin: 0;
+    padding: 0 1rem 1rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-family-heading, Oswald, sans-serif);
+    font-size: 0.82rem;
+  }
+
+  :global(.statistics-tooltip-table) {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-family-heading, Oswald, sans-serif);
+    font-size: 0.85rem;
+  }
+
+  :global(.statistics-tooltip-table th),
+  :global(.statistics-tooltip-table td) {
+    padding: 0.3rem 0.45rem;
+    border-bottom: 1px solid rgb(0 0 0 / 10%);
+    background: #f0f0f0;
+    color: #111111;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  :global(.statistics-tooltip-table th:last-child),
+  :global(.statistics-tooltip-table td:last-child) {
+    text-align: right;
+  }
+
+  :global(.statistics-tooltip-table tbody tr:last-child td) {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 48rem) {
+    .statistics-table {
+      --stats-label-column: 4.5rem;
+      --stats-table-min-width: 45rem;
+    }
+
+    .table-card {
+      border-radius: 1rem;
+    }
+
+    .table-wrap {
+      max-height: calc(100dvh - 8rem);
+      padding: 0.6rem;
+    }
+
+    .monotable {
+      font-size: 0.7rem;
+    }
+
+    .monotable :global(th),
+    .monotable :global(td) {
+      padding: 0.25rem;
+    }
+
+    .table-note {
+      padding: 0 0.7rem 0.7rem;
+      font-size: 0.72rem;
+    }
+  }
+</style>
