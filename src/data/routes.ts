@@ -6,9 +6,9 @@ export const legacyRoutes = {
 
 export const routes = {
   home: "/",
-  expeditions: `${legacyBasePath}/expeditions/index.html`,
-  challenges: `${legacyBasePath}/challenges/list.html`,
-  statistics: `${legacyBasePath}/statistics/index.html`,
+  expeditions: "/expeditions/",
+  challenges: "/challenges/",
+  statistics: "/statistics/",
   manual: "/manual/",
 } as const;
 

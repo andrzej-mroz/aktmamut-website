@@ -36,19 +36,19 @@ export interface HomepageMetric {
 const expeditionsDestination: HomepageDestination = {
   href: routes.expeditions,
   futureHref: futureRoutes.expeditions,
-  migrated: false,
+  migrated: true,
 };
 
 const challengesDestination: HomepageDestination = {
   href: routes.challenges,
   futureHref: futureRoutes.challenges,
-  migrated: false,
+  migrated: true,
 };
 
 const statisticsDestination: HomepageDestination = {
   href: routes.statistics,
   futureHref: futureRoutes.statistics,
-  migrated: false,
+  migrated: true,
 };
 
 export const homepageHeroVideo = {
