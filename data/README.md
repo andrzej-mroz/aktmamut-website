@@ -6,6 +6,6 @@ The full contents are intentionally excluded from Git because they include large
 
 The local data factory is preserved on the development machine and remains the source for generating the JSON and GeoJSON files consumed by the website.
 
-Only this README is tracked in Git.
+Only this README and the Python generator scripts are tracked in Git.
 
 Credentials, secrets and environment files must never be committed.
