@@ -1,7 +1,7 @@
 ---
-import SiteFooter from "../components/SiteFooter.astro";
-import DesktopHeader from "../components/desktop/DesktopHeader.astro";
-import "../styles/global.css";
+import SiteFooter from '../components/SiteFooter.astro';
+import DesktopHeader from '../components/desktop/DesktopHeader.astro';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -10,14 +10,9 @@ interface Props {
   showFooter?: boolean;
 }
 
-const {
-  title,
-  description = "AKT Mamut — expeditions, mountain challenges and geographic exploration.",
-  lang = "en",
-  showFooter = false,
-} = Astro.props;
+const { title, description = 'AKT Mamut — expeditions, mountain challenges and geographic exploration.', lang = 'en', showFooter = false } = Astro.props;
 
-const documentTitle = title === "AKT Mamut" ? title : `${title} | AKT Mamut`;
+const documentTitle = title === 'AKT Mamut' ? title : `${title} | AKT Mamut`;
 ---
 
 <!doctype html>
@@ -27,14 +22,10 @@ const documentTitle = title === "AKT Mamut" ? title : `${title} | AKT Mamut`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" type="image/webp" href="/assets/brand/M32.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@400;500&family=Roboto+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Oswald:wght@400;500&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <title>{documentTitle}</title>
   </head>
   <body>
