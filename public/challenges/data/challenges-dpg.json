@@ -725,11 +725,11 @@
     "region": "Zewnętrzne Karpaty Zachodnie\nMagura",
     "subregion": "Pieniny\nDE Pieninen - SK Pieniny",
     "height": 982,
-    "expedition": "",
-    "date": "",
+    "expedition": "2441",
+    "date": "2024-10-10",
     "lat": 49.4137625,
     "lon": 20.4142633,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 249,
