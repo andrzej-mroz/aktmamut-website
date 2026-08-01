@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const datasetPath = resolve(
   process.cwd(),
-  "website/old-site/expeditions/expeditions.geojson",
+  "public/expeditions/expeditions.geojson",
 );
 const requiredStatisticsFields = ["nr", "date", "name", "got"];
 
@@ -83,9 +83,7 @@ function summarizeProperty(features, propertyName) {
     nullCount,
     emptyStringCount,
     inferredTypes: Object.fromEntries(
-      [...types.entries()].sort(([left], [right]) =>
-        left.localeCompare(right),
-      ),
+      [...types.entries()].sort(([left], [right]) => left.localeCompare(right)),
     ),
     uniqueValueCount: uniqueValues.size,
     sampleValues: [...uniqueValues.values()].slice(0, 3),
@@ -141,10 +139,7 @@ try {
     }
 
     const geometryType = feature.geometry?.type ?? "missing";
-    geometryTypes.set(
-      geometryType,
-      (geometryTypes.get(geometryType) ?? 0) + 1,
-    );
+    geometryTypes.set(geometryType, (geometryTypes.get(geometryType) ?? 0) + 1);
 
     const properties =
       feature.properties && typeof feature.properties === "object"
@@ -213,7 +208,7 @@ try {
 
   const report = {
     dataset: {
-      path: "website/old-site/expeditions/expeditions.geojson",
+      path: "public/expeditions/expeditions.geojson",
       bytes: statSync(datasetPath).size,
       topLevelType: data.type ?? null,
       featureCount: features.length,

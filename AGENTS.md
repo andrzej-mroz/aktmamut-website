@@ -192,7 +192,7 @@ Do not perform the following without explicit approval:
 - replace the Python pipeline,
 - replace Leaflet,
 - restructure the repository,
-- remove legacy pages,
+- remove production pages or datasets,
 - change deployment,
 - introduce large frameworks,
 - introduce unnecessary dependencies.

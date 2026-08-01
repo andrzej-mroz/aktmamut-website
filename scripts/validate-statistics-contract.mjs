@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 
 const datasetPath = resolve(
   process.cwd(),
-  "website/old-site/expeditions/expeditions.geojson",
+  "public/expeditions/expeditions.geojson",
 );
 
 function isValidIsoDate(value) {
@@ -122,8 +122,7 @@ try {
   );
 
   const report = {
-    source:
-      "website/old-site/expeditions/expeditions.geojson",
+    source: "public/expeditions/expeditions.geojson",
     sourceFeatureCount: data.features.length,
     validRecordCount: validRecords.length,
     invalidRecordCount: invalidRecords.length,
@@ -147,10 +146,7 @@ try {
 
   console.log(JSON.stringify(report, null, 2));
 
-  if (
-    invalidRecords.length > 0 ||
-    duplicateIdentifiers.length > 0
-  ) {
+  if (invalidRecords.length > 0 || duplicateIdentifiers.length > 0) {
     process.exitCode = 1;
   }
 } catch (error) {

@@ -1,56 +1,8 @@
 # AKT Mamut Website
 
-Repository for the incremental migration of **AKTMamut.eu** from a manually maintained static website to a modern Astro-based architecture.
+Source repository for **AKTMamut.eu** — a static website documenting mountain expeditions, geographic challenges and statistics, with a primary focus on the Carpathians.
 
-The migration preserves the existing public website, the Python data-generation pipeline, interactive Leaflet maps and public URLs while progressively replacing only the presentation layer.
-
----
-
-# Project Overview
-
-AKT Mamut is a long-term project documenting mountain expeditions, challenges and geographic knowledge, with a primary focus on the Carpathians.
-
-The website combines:
-
-- editorial content,
-- expedition data,
-- interactive maps,
-- statistics,
-- technical documentation.
-
-The project is intentionally built as a **static website** with a separate data-generation pipeline.
-
----
-
-# Technology Stack
-
-## Presentation
-
-- Astro
-- TypeScript
-- HTML
-- CSS
-
-## Data pipeline
-
-- Python
-- Google Sheets
-- GPX
-- JSON
-- GeoJSON
-
-## Maps
-
-- Leaflet
-
-## Hosting
-
-- GitHub
-- Netlify
-
----
-
-# High-Level Architecture
+## Architecture
 
 ```text
 Google Sheets / GPX
@@ -68,118 +20,101 @@ Astro
 Leaflet
           │
           ▼
-Static Website
-          │
-          ▼
-GitHub
+Static website
           │
           ▼
 Netlify
 ```
 
-The governing architectural rule is simple:
+Responsibilities are intentionally separated:
 
-> **Replace the presentation layer only.**
+- Python imports, validates and generates data.
+- Astro renders pages and content.
+- Leaflet provides interactive maps.
+- Netlify publishes the static build.
 
-Python remains responsible for importing, validating and generating data.
+## Technology
 
-Astro is responsible only for rendering the website.
+- Astro
+- TypeScript
+- HTML and CSS
+- Python
+- JSON and GeoJSON
+- Leaflet
+- GitHub
+- Netlify
 
----
-
-# Repository Structure
+## Repository structure
 
 ```text
 AKT-Mamut-Website/
-│
-├── src/                Astro application
-├── public/             Static public assets
-├── website/old-site/   Frozen legacy implementation
-├── scripts/            Migration and validation tools
-├── docs/               Architecture documentation
-├── data/               Local Python data factory (not tracked)
-│
-├── README.md
-├── PROJECT.md
+├── data/       Python generators and local data factory
+├── docs/       Architecture and maintenance documentation
+├── public/     Static assets and generated JSON / GeoJSON
+├── scripts/    Data validation and audit tools
+├── src/        Astro application
 ├── AGENTS.md
+├── PROJECT.md
+├── README.md
 └── package.json
 ```
 
----
+## Main routes
 
-# Development Workflow
+```text
+/
+├── expeditions/
+├── challenges/
+├── statistics/
+└── manual/
+```
+
+## Development
 
 Install dependencies:
 
-```bash
+```powershell
 npm install
 ```
 
-Start the development server:
+Start the local development server:
 
-```bash
+```powershell
 npm run dev
 ```
 
 Create a production build:
 
-```bash
+```powershell
 npm run build
 ```
 
 Preview the production build:
 
-```bash
+```powershell
 npm run preview
 ```
 
----
+## Data validation
 
-# Project Principles
+Audit the Expeditions dataset used by Statistics:
 
-The migration follows several core principles.
+```powershell
+npm run audit:statistics
+```
 
-- Preserve public behaviour before improving it.
-- Migrate incrementally.
+Validate the Statistics data contract:
+
+```powershell
+npm run validate:statistics-contract
+```
+
+## Project principles
+
 - Keep Python as the data-generation layer.
-- Keep Leaflet as the map engine until a separate decision changes it.
-- Prefer static rendering whenever possible.
-- Add browser JavaScript only when interaction requires it.
-- Keep architecture simple and explicit.
-
----
-
-# Documentation
-
-The repository intentionally keeps documentation compact.
-
-| File                   | Purpose                                              |
-| ---------------------- | ---------------------------------------------------- |
-| `README.md`            | Project overview and getting started                 |
-| `PROJECT.md`           | Roadmap, sprint history and current status           |
-| `docs/architecture.md` | Complete technical architecture and design decisions |
-| `AGENTS.md`            | Guidelines for AI-assisted development               |
-
----
-
-# Current Status
-
-The repository already contains:
-
-- Astro application foundation
-- shared layouts
-- shared navigation
-- legacy compatibility layer
-- Manual migrated to Astro Content Collections
-- desktop and Field UI foundations
-- typography restored from the legacy implementation
-
-Interactive maps, Statistics and remaining legacy pages will migrate incrementally.
-
----
-
-# License
-
-This repository contains the source code for the AKT Mamut website migration.
-
-Data sources, generated geographic datasets and local Python workflows are maintained separately from the public website repository.
+- Keep Astro responsible for presentation.
+- Use Leaflet for interactive maps.
+- Prefer static generation.
+- Keep production routes stable.
+- Do not commit credentials or local source data.
+- Review and test changes before committing.

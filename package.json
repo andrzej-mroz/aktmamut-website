@@ -7,13 +7,11 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "sync:legacy": "node scripts/sync-legacy.mjs",
-    "validate:legacy": "node scripts/validate-legacy.mjs",
     "audit:statistics": "node scripts/audit-statistics-data.mjs",
     "validate:statistics-contract": "node scripts/validate-statistics-contract.mjs",
-    "dev": "npm run sync:legacy && npm run validate:legacy && astro dev",
+    "dev": "astro dev",
     "start": "npm run dev",
-    "build": "npm run sync:legacy && npm run validate:legacy && astro build",
+    "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },

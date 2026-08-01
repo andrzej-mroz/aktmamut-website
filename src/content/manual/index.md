@@ -3,7 +3,6 @@ title: "Manual: EXPEDITIONS + CHALLENGES"
 description: "Aktualny workflow AKT MAMUT dla Expeditions i Challenges, obejmujący dane, generowanie, test lokalny i publikację."
 lang: "pl"
 updated: 2026-03-10
-legacyPath: "/legacy/manual/index.html"
 eyebrow: "AKT MAMUT"
 ---
 
@@ -162,13 +161,13 @@ https://aktmamut.eu
 
 Challenges są generowane z Google Sheets. Zakładka `CONFIG` zawiera tabelę:
 
-| key | sheet | name | active |
-| --- | --- | --- | ---: |
-| ro | RO | Romanian Peak Challenge | 1 |
-| sk | SK | Slovakian Peak Challenge | 1 |
-| hu | HU | Hungarian Peak Challenge | 1 |
-| cz | CZ | Czech Peak Challenge | 1 |
-| … | … | … | … |
+| key | sheet | name                     | active |
+| --- | ----- | ------------------------ | -----: |
+| ro  | RO    | Romanian Peak Challenge  |      1 |
+| sk  | SK    | Slovakian Peak Challenge |      1 |
+| hu  | HU    | Hungarian Peak Challenge |      1 |
+| cz  | CZ    | Czech Peak Challenge     |      1 |
+| …   | …     | …                        |      … |
 
 Znaczenie kolumn:
 

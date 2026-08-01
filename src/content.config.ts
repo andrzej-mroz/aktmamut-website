@@ -12,7 +12,6 @@ const manual = defineCollection({
     description: z.string(),
     lang: z.string().min(2),
     updated: z.coerce.date(),
-    legacyPath: z.string(),
     eyebrow: z.string().optional(),
   }),
 });

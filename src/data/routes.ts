@@ -1,9 +1,3 @@
-export const legacyBasePath = "/legacy";
-
-export const legacyRoutes = {
-  manual: `${legacyBasePath}/manual/index.html`,
-} as const;
-
 export const routes = {
   home: "/",
   expeditions: "/expeditions/",

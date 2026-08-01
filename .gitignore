@@ -3,15 +3,11 @@ node_modules/
 dist/
 .astro/
 
-# Generated copy of the frozen legacy website
-/public/legacy/
-
-# Preserved legacy Git repository
-/.legacy/
-
-# Local data factory — kept outside Git
+# Local data factory
 /data/*
 !/data/README.md
+!/data/generate_geojson.py
+!/data/generate_challenges.py
 
 # Local credentials and environment files
 data/creds/

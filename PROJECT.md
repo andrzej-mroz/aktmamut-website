@@ -4,271 +4,159 @@
 
 AKT Mamut is a long-term digital platform dedicated to mountain expeditions, geographic exploration and outdoor knowledge, with a primary focus on the Carpathians.
 
-The project combines editorial content, interactive maps, structured geographic data and expedition statistics into a single static website.
+The platform combines:
 
-The long-term objective is to create a maintainable architecture where:
+- expedition records,
+- geographic challenges,
+- interactive maps,
+- statistics,
+- editorial content,
+- technical documentation.
 
-- Python owns data generation.
-- Astro owns presentation.
-- Leaflet owns interactive maps.
-- Static generation is preferred over runtime processing.
+The website is designed as a static platform with a separate data-generation pipeline.
 
----
+## Architecture
 
-# Current Status
+Responsibilities are intentionally separated:
 
-Current phase:
+### Python
 
-> Incremental migration from the legacy website to Astro.
+- imports source data,
+- validates records,
+- generates JSON and GeoJSON,
+- prepares data for publication.
 
-Completed foundations include:
+### Astro
 
-- Astro project
-- shared layouts
-- shared navigation
-- typography restoration
-- legacy compatibility layer
-- Manual migrated to Astro Content Collections
-- Desktop UI foundation
-- Field UI foundation
+- renders pages,
+- manages layouts and routing,
+- presents editorial and geographic content,
+- produces the static website build.
 
-Interactive maps and Statistics remain in the legacy implementation until dedicated migration sprints.
+### Leaflet
 
----
+- provides interactive maps,
+- displays expeditions and challenge locations,
+- handles map interaction in the browser.
 
-# Project Principles
+### Netlify
 
-The project follows several permanent principles.
+- publishes the generated static website.
 
-## Preserve before replacing
+## Current Status
 
-The existing public website remains the reference implementation until the corresponding Astro page reaches functional parity.
+The Astro website is the production implementation.
 
----
-
-## Incremental migration
-
-Large rewrites are intentionally avoided.
-
-Every sprint should produce a reviewable improvement while keeping the project deployable.
-
----
-
-## Separation of responsibilities
-
-Python
-
-- imports source data
-- validates data
-- generates JSON / GeoJSON
-
-Astro
-
-- layouts
-- pages
-- metadata
-- routing
-- editorial content
-
-Leaflet
-
-- interactive maps only
-
----
-
-## Desktop and Field UI
-
-Desktop and mobile are not intended to become identical interfaces.
-
-Desktop supports:
-
-- planning
-- exploration
-- reading
-- analysis
-
-Field UI supports:
-
-- expeditions
-- quick navigation
-- outdoor usage
-- one-handed interaction
-
-Both experiences share the same data model.
-
----
-
-# Repository Roadmap
-
-## Foundation
-
-- [x] Repository created
-- [x] Astro initialized
-- [x] Global layout
-- [x] Navigation
-- [x] Legacy compatibility layer
-
----
-
-## Content
-
-- [x] Manual
-- [x] Homepage architecture
-- [ ] Remaining static pages
-
----
-
-## Maps
-
-- [ ] Expeditions
-- [ ] Challenges
-- [ ] Statistics
-- [ ] Shared map components
-
----
-
-## Data
-
-- [ ] Statistics JSON generator
-- [ ] Additional data contracts
-- [ ] Validation improvements
-
----
-
-## UX
-
-- [x] Desktop foundation
-- [x] Field UI foundation
-- [ ] Shared design system
-- [ ] Accessibility review
-
----
-
-# Completed Milestones
-
-## Sprint 1
-
-Repository foundation
-
----
-
-## Sprint 2
-
-Astro initialization
-
----
-
-## Sprint 3
-
-Global layout
-
----
-
-## Sprint 4
-
-Navigation
-
----
-
-## Sprint 5
-
-Legacy compatibility
-
----
-
-## Sprint 6
-
-Homepage architecture
-
----
-
-## Sprint 7
-
-Manual migration
-
----
-
-## Sprint 8
-
-Homepage migration
-
----
-
-## Sprint 9
-
-Desktop / Field UI split
-
----
-
-## Sprint 10
-
-Statistics architecture
-
----
-
-## Sprint 11
-
-Typography restoration
-
----
-
-## Sprint 12
-
-Desktop and Field UI refinement
-
----
-
-## Sprint 13
-
-Documentation refactoring
-
----
-
-# Backlog
-
-Future work includes:
-
-- Expeditions migration
-- Challenges migration
-- Statistics migration
-- Map performance optimisation
-- Image optimisation
-- Search
-- Offline support
-- Progressive Web App evaluation
-
-Items move into the roadmap only when implementation begins.
-
----
-
-# Future Vision
-
-The final architecture should consist of four clearly separated layers.
+Available routes:
 
 ```text
-Sources
-    │
-    ▼
-Python Data Factory
-    │
-    ▼
-JSON / GeoJSON Contracts
-    │
-    ▼
-Astro Website
-    │
-    ▼
-Leaflet Interactive Maps
+/
+├── expeditions/
+├── challenges/
+├── statistics/
+└── manual/
 ```
 
-The public website should remain fully static wherever possible while providing rich interactive geographic experiences only where they genuinely add value.
+Implemented modules:
 
----
+- Homepage
+- Expeditions
+- Challenges
+- Statistics
+- Manual
+- Shared navigation
+- Desktop presentation
+- Mobile and Field UI
+- Leaflet maps
+- Python data generators
+- Statistics dataset validation
+- Netlify deployment
 
-# Next Sprint
+The production build currently generates 21 static pages.
 
-To be updated at the beginning of each sprint.
+## Data Pipeline
 
-Current objective:
+```text
+Google Sheets / GPX
+          │
+          ▼
+Python generators
+          │
+          ▼
+JSON / GeoJSON
+          │
+          ▼
+Astro
+          │
+          ▼
+Leaflet
+          │
+          ▼
+Static website
+```
 
-> Continue the incremental migration while preserving architectural simplicity and maintaining production parity with the legacy website.
+Generated production data is stored under:
+
+```text
+public/expeditions/
+public/challenges/data/
+```
+
+Local source data, credentials and intermediate processing files remain outside Git.
+
+## Repository Structure
+
+```text
+AKT-Mamut-Website/
+├── data/       Python generators and local data factory
+├── docs/       Architecture and maintenance documentation
+├── public/     Static assets and generated JSON / GeoJSON
+├── scripts/    Validation and audit tools
+├── src/        Astro application
+├── AGENTS.md
+├── PROJECT.md
+├── README.md
+└── package.json
+```
+
+## Development Principles
+
+- Keep Python responsible for data generation.
+- Keep Astro responsible for presentation.
+- Use Leaflet for interactive maps.
+- Prefer static generation over runtime processing.
+- Preserve stable public routes.
+- Keep architecture simple and explicit.
+- Avoid unnecessary dependencies.
+- Test production builds before committing.
+- Do not commit credentials or local source data.
+- Do not rewrite repository history without explicit approval.
+
+## Validation
+
+Statistics dataset audit:
+
+```powershell
+npm run audit:statistics
+```
+
+Statistics contract validation:
+
+```powershell
+npm run validate:statistics-contract
+```
+
+Production build:
+
+```powershell
+npm run build
+```
+
+## Current Priorities
+
+- Maintain reliable data-generation workflows.
+- Improve documentation for Expeditions and Challenges.
+- Improve mobile and Field UI presentation.
+- Review accessibility.
+- Optimize map and asset performance.
+- Evaluate offline support when it provides practical value.

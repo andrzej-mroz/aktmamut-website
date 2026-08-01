@@ -194,19 +194,16 @@ src/
     Astro application
 
 public/
-    Static assets
-
-website/old-site/
-    Frozen legacy implementation
+    Static assets and generated JSON / GeoJSON
 
 docs/
     Project documentation
 
 scripts/
-    Helper scripts
+    Validation and audit tools
 
 data/
-    Local Python data factory (ignored by Git)
+    Python generators and local data factory
 ```
 
 ---
@@ -228,7 +225,7 @@ Desktop and Field UI evolve independently while sharing the same data.
 
 # Typography
 
-Typography is intentionally preserved from the legacy website.
+Typography follows the established AKT Mamut visual identity.
 
 Primary fonts:
 
@@ -242,7 +239,7 @@ Future redesigns should preserve readability before aesthetics.
 
 # Content
 
-Editorial content is migrated to Astro Content Collections.
+Editorial content is managed through Astro Content Collections.
 
 Benefits include:
 
@@ -285,15 +282,15 @@ Avoid:
 
 ---
 
-# Migration Strategy
+# Development Strategy
 
-Migration is incremental.
-
-The legacy implementation remains the functional reference until an Astro page reaches feature parity.
+Development is incremental.
 
 Large rewrites are intentionally avoided.
 
-Every sprint should produce a deployable repository.
+Every sprint should produce a reviewable and deployable repository.
+
+Production routes, data contracts and working functionality should remain stable.
 
 ---
 
@@ -331,9 +328,9 @@ Desktop and Field UI are separate user experiences sharing the same data model.
 
 ---
 
-## Progressive Migration
+## Incremental Development
 
-Replace one page at a time.
+Implement one focused change at a time.
 
 Never redesign the whole project in a single step.
 

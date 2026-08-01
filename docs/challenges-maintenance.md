@@ -13,13 +13,12 @@ Moduł Challenges prezentuje:
 - bordowe markery `todo`,
 - informacje o szczycie w tooltipie i popupie.
 
-Nowy frontend działa w Astro.
+```markdown
+Frontend działa w Astro.
 
-Nie należy ręcznie modyfikować wersji archiwalnej:
+Dane produkcyjne są generowane bezpośrednio do katalogu `public/`.
 
-```text
-website/old-site/
-public/legacy/
+Aktualna wersja korzysta z plików w:
 ```
 
 Aktualna wersja korzysta z plików w:
@@ -148,18 +147,18 @@ Przykładowy rekord:
 
 Znaczenie pól:
 
-| Pole | Znaczenie |
-|---|---|
-| `number` | numer szczytu w challenge’u |
-| `peak` | nazwa szczytu, opcjonalnie w kilku językach |
-| `region` | główny region górski |
-| `subregion` | pasmo lub podregion |
-| `height` | wysokość w metrach |
-| `expedition` | numer ekspedycji AKT Mamut |
-| `date` | data wejścia albo numer daty Excela |
-| `lat` | szerokość geograficzna |
-| `lon` | długość geograficzna |
-| `status` | `done` albo `todo` |
+| Pole         | Znaczenie                                   |
+| ------------ | ------------------------------------------- |
+| `number`     | numer szczytu w challenge’u                 |
+| `peak`       | nazwa szczytu, opcjonalnie w kilku językach |
+| `region`     | główny region górski                        |
+| `subregion`  | pasmo lub podregion                         |
+| `height`     | wysokość w metrach                          |
+| `expedition` | numer ekspedycji AKT Mamut                  |
+| `date`       | data wejścia albo numer daty Excela         |
+| `lat`        | szerokość geograficzna                      |
+| `lon`        | długość geograficzna                        |
+| `status`     | `done` albo `todo`                          |
 
 ---
 
@@ -287,7 +286,7 @@ Przykład:
 challenges-ro.json
 ```
 
-### Krok 3 — przeniesienie danych do nowego frontendu
+### Krok 3 — kontrola danych wyjściowych
 
 Nowy frontend czyta pliki z:
 
@@ -295,20 +294,10 @@ Nowy frontend czyta pliki z:
 public/challenges/data/
 ```
 
-Jeżeli generator nadal zapisuje dane do starego katalogu, skopiuj wygenerowane pliki:
+Generator zapisuje dane bezpośrednio do:
 
-```powershell
-Copy-Item `
-  .\website\old-site\challenges\data\*.json `
-  .\public\challenges\data\ `
-  -Force
-```
-
-Docelowo generator powinien zostać zmieniony tak, aby zapisywał dane bezpośrednio do:
-
-```text
+````text
 public/challenges/data/
-```
 
 ### Krok 4 — kontrola
 
@@ -316,7 +305,7 @@ Uruchom:
 
 ```powershell
 npm run dev
-```
+````
 
 Sprawdź:
 
@@ -370,14 +359,14 @@ Dodaj nowy wiersz w zakładce `CONFIG`.
 
 Przykładowe pola:
 
-| Pole | Przykład |
-|---|---|
-| `key` | `tatry` |
-| `sheet` | `TATRY` |
-| `name` | `Korona Tatr` |
-| `icon` | `/assets/img/tatry.svg` |
-| `active` | `1` |
-| `order` | `17` |
+| Pole     | Przykład                |
+| -------- | ----------------------- |
+| `key`    | `tatry`                 |
+| `sheet`  | `TATRY`                 |
+| `name`   | `Korona Tatr`           |
+| `icon`   | `/assets/img/tatry.svg` |
+| `active` | `1`                     |
+| `order`  | `17`                    |
 
 Zasady dla `key`:
 
@@ -413,18 +402,7 @@ challenges-index.json
 challenges-tatry.json
 ```
 
-### Krok 4 — przeniesienie JSON-ów
-
-Jeżeli generator nadal zapisuje do starego katalogu:
-
-```powershell
-Copy-Item `
-  .\website\old-site\challenges\data\*.json `
-  .\public\challenges\data\ `
-  -Force
-```
-
-### Krok 5 — dodanie ikony
+### Krok 4 — dodanie ikony
 
 Skopiuj ikonę do:
 
@@ -460,7 +438,7 @@ Obsługiwane formaty:
 .jpeg
 ```
 
-### Krok 6 — sprawdzenie indeksu
+### Krok 5 — sprawdzenie indeksu
 
 Nowa pozycja w `challenges-index.json`:
 
@@ -472,7 +450,7 @@ Nowa pozycja w `challenges-index.json`:
 }
 ```
 
-### Krok 7 — build
+### Krok 6 — build
 
 Dynamiczna strona `[key].astro` generuje osobną statyczną stronę dla każdego wpisu znajdującego się w:
 
