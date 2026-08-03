@@ -12598,5 +12598,29 @@
     "accomodation": "Konské Chata Pramienok",
     "trail_counter": "525",
     "exp_counter": "156"
+  },
+  {
+    "nr": "2634",
+    "date": "2026-08-03",
+    "name": "Lysec",
+    "mountains": "Velka Fatra",
+    "country": "SK",
+    "distance_km": 15.01,
+    "ascent_m": 888,
+    "duration_min": 495,
+    "duration_text": "8:15",
+    "got": 23.89,
+    "got_total": 598.13,
+    "lat": 48.9963542,
+    "lon": 19.0692217,
+    "participants": "AM, BM, DS, MS",
+    "only_mountain": true,
+    "gpx": "2026-08-03-07-29-lysec.gpx",
+    "gpx_url": "https://www.wikiloc.com/hiking-trails/2026-08-03-07-29-lysec-277579618",
+    "photo_album_url": "",
+    "photo_stamp_url": "",
+    "accomodation": "Konské Chata Pramienok",
+    "trail_counter": "526",
+    "exp_counter": "156"
   }
 ]
