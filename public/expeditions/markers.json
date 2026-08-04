@@ -12622,5 +12622,29 @@
     "accomodation": "Konské Chata Pramienok",
     "trail_counter": "526",
     "exp_counter": "156"
+  },
+  {
+    "nr": "2635",
+    "date": "2026-08-04",
+    "name": "Hlavna Dolina Klak",
+    "mountains": "Velka Fatra",
+    "country": "SK",
+    "distance_km": 14.98,
+    "ascent_m": 875,
+    "duration_min": 474,
+    "duration_text": "7:54",
+    "got": 23.73,
+    "got_total": 621.86,
+    "lat": 49.046575,
+    "lon": 19.1122575,
+    "participants": "AM, BM, DS, MS",
+    "only_mountain": true,
+    "gpx": "2026-08-04-06-46-hlavna-dolina-klak.gpx",
+    "gpx_url": "https://www.wikiloc.com/hiking-trails/2026-08-04-06-46-hlavna-dolina-klak-277743315",
+    "photo_album_url": "",
+    "photo_stamp_url": "",
+    "accomodation": "Konské Chata Pramienok",
+    "trail_counter": "527",
+    "exp_counter": "156"
   }
 ]
