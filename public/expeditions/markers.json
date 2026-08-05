@@ -12646,5 +12646,29 @@
     "accomodation": "Konské Chata Pramienok",
     "trail_counter": "527",
     "exp_counter": "156"
+  },
+  {
+    "nr": "2636",
+    "date": "2026-08-05",
+    "name": "Katova Skala",
+    "mountains": "Velka Fatra",
+    "country": "SK",
+    "distance_km": 9.24,
+    "ascent_m": 430,
+    "duration_min": 205,
+    "duration_text": "3:25",
+    "got": 13.54,
+    "got_total": 635.4,
+    "lat": 49.0561989,
+    "lon": 19.0445072,
+    "participants": "AM, BM, DS, MS",
+    "only_mountain": true,
+    "gpx": "2026-08-05-06-56-katova-skala.gpx",
+    "gpx_url": "https://www.wikiloc.com/hiking-trails/2026-08-05-06-56-katova-skala-277998163",
+    "photo_album_url": "",
+    "photo_stamp_url": "",
+    "accomodation": "Konské Chata Pramienok",
+    "trail_counter": "528",
+    "exp_counter": "156"
   }
 ]
