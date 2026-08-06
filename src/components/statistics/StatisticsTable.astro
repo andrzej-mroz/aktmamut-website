@@ -423,12 +423,9 @@
 
           const wrapStyles = window.getComputedStyle(tableWrap);
 
-          const horizontalPadding =
-          Number.parseFloat(wrapStyles.paddingLeft) +
-          Number.parseFloat(wrapStyles.paddingRight);
+          const horizontalPadding = Number.parseFloat(wrapStyles.paddingLeft) + Number.parseFloat(wrapStyles.paddingRight);
 
-          const availableWidth =
-          tableWrap.clientWidth - horizontalPadding - 2;
+          const availableWidth = tableWrap.clientWidth - horizontalPadding - 2;
 
           if (!naturalWidth || !naturalHeight || !availableWidth) {
             return;
@@ -466,6 +463,8 @@
 </script>
 
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;500;600;700&display=swap');
+
   .statistics-table {
     --stats-label-column: 5.5rem;
     --stats-table-min-width: 60rem;
@@ -495,8 +494,9 @@
     border-collapse: separate;
     border-spacing: 0;
     table-layout: fixed;
-    font-family: var(--font-family-heading, Oswald, sans-serif);
+    font-family: 'Inconsolata', monospace;
     font-size: 0.8rem;
+    font-weight: 600;
     font-variant-numeric: tabular-nums;
   }
 
@@ -619,40 +619,51 @@
     border-bottom: 0;
   }
 
-@media (max-width: 48rem) {
-  .statistics-table {
-    --stats-label-column: 4.5rem;
-    --stats-table-min-width: 45rem;
+  :global(.tippy-box[data-theme~='statistics-dark']),
+  :global(.statistics-tooltip-table) {
+    font-family: 'Inconsolata', monospace;
+    font-weight: 500;
   }
 
-  .table-card {
-    border-radius: 1rem;
+  :global(.statistics-tooltip-table) {
+    border-collapse: collapse;
+    font-size: 0.74rem;
+    font-variant-numeric: tabular-nums;
   }
 
-  .table-wrap {
-    max-height: none;
-    overflow: hidden;
-    padding: 0.6rem;
-  }
+  @media (max-width: 48rem) {
+    .statistics-table {
+      --stats-label-column: 4.5rem;
+      --stats-table-min-width: 45rem;
+    }
 
-  .table-container.is-mobile-fitted {
-    width: 100%;
-    min-width: 0;
-  }
+    .table-card {
+      border-radius: 1rem;
+    }
 
-  .statistics-table :global(.monotable) {
-    font-size: 0.7rem;
-  }
+    .table-wrap {
+      max-height: none;
+      overflow: hidden;
+      padding: 0.6rem;
+    }
 
-  .statistics-table :global(.monotable th),
-  .statistics-table :global(.monotable td) {
-    padding: 0.25rem;
-  }
+    .table-container.is-mobile-fitted {
+      width: 100%;
+      min-width: 0;
+    }
 
-  .table-note {
-    padding: 0 0.7rem 0.7rem;
-    font-size: 0.72rem;
-  }
-}
+    .statistics-table :global(.monotable) {
+      font-size: 0.7rem;
+    }
+
+    .statistics-table :global(.monotable th),
+    .statistics-table :global(.monotable td) {
+      padding: 0.25rem;
+    }
+
+    .table-note {
+      padding: 0 0.7rem 0.7rem;
+      font-size: 0.72rem;
+    }
   }
 </style>
