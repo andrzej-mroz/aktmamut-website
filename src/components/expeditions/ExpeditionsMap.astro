@@ -139,21 +139,6 @@
         )
         .addTo(map);
 
-      const response = await fetch('/expeditions/expeditions.geojson');
-
-      if (!response.ok) {
-        throw new Error(`Expeditions GeoJSON could not be loaded: ${response.status}`);
-      }
-
-      const data = await response.json();
-      const latestExpedition = data.features?.at(-1);
-      const latestDate = latestExpedition?.properties?.date || '';
-
-      const versionElement = document.getElementById('expeditions-version');
-
-      if (versionElement) {
-        versionElement.textContent = latestDate;
-      }
       const escapeHtml = (value) =>
         String(value ?? '')
           .replaceAll('&', '&amp;')
@@ -174,9 +159,187 @@
         }
       };
 
-      const markersLayer = L.layerGroup().addTo(map);
+      const markersResponse = await fetch('/expeditions/markers.json');
 
-      const routesLayer = L.geoJSON(data, {
+      if (!markersResponse.ok) {
+        throw new Error(`Expedition markers could not be loaded: ${markersResponse.status}`);
+      }
+
+      const markersData = await markersResponse.json();
+
+      if (!Array.isArray(markersData)) {
+        throw new Error('Invalid markers.json format.');
+      }
+
+      const latestExpedition = markersData.at(-1);
+      const latestDate = latestExpedition?.date || '';
+
+      const versionElement = document.getElementById('expeditions-version');
+
+      if (versionElement) {
+        versionElement.textContent = latestDate;
+      }
+
+      const markersLayer = L.layerGroup().addTo(map);
+      const routesByNumber = new Map();
+
+      let routesLayer = null;
+
+      const highlightRoute = (trailNumber) => {
+        const selectedRoute = routesByNumber.get(String(trailNumber));
+
+        if (!selectedRoute) {
+          return;
+        }
+
+        selectedRoute.setStyle({
+          weight: 6,
+          color: '#111111',
+        });
+
+        selectedRoute.bringToFront();
+      };
+
+      const resetRoute = (trailNumber) => {
+        const selectedRoute = routesByNumber.get(String(trailNumber));
+
+        if (!selectedRoute || !routesLayer) {
+          return;
+        }
+
+        routesLayer.resetStyle(selectedRoute);
+      };
+
+      markersData.forEach((properties) => {
+        const trailNumber = properties.nr || '';
+        const trailName = properties.name || '';
+        const trailColor = properties.color || '#800000';
+
+        const latitude = Number.parseFloat(properties.lat);
+        const longitude = Number.parseFloat(properties.lon);
+
+        if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
+          return;
+        }
+
+        const tooltipText = `${trailNumber} ${trailName}`.trim();
+
+        const markerIcon = L.divIcon({
+          className: 'expedition-number-icon',
+          html: `
+            <span
+              class="expedition-number"
+              style="--route-color: ${escapeHtml(trailColor)}"
+            >
+              ${escapeHtml(trailNumber)}
+            </span>
+          `,
+          iconSize: [24, 24],
+          iconAnchor: [12, 12],
+          popupAnchor: [0, -14],
+        });
+
+        const marker = L.marker([latitude, longitude], {
+          icon: markerIcon,
+          title: tooltipText,
+        });
+
+        marker.bindTooltip(escapeHtml(tooltipText), {
+          sticky: true,
+        });
+
+        const gpxUrl = getSafeExternalUrl(properties.gpx_url);
+
+        const popupHtml = `
+          <article class="expedition-popup">
+            <h2>
+              ${escapeHtml(trailNumber)}
+              ${escapeHtml(trailName)}
+            </h2>
+
+            <dl>
+              <div>
+                <dt>Date</dt>
+                <dd>${escapeHtml(properties.date)}</dd>
+              </div>
+
+              <div>
+                <dt>Mountains</dt>
+                <dd>${escapeHtml(properties.mountains)}</dd>
+              </div>
+
+              <div>
+                <dt>Country</dt>
+                <dd>${escapeHtml(properties.country)}</dd>
+              </div>
+
+              <div>
+                <dt>Distance</dt>
+                <dd>${escapeHtml(properties.distance_km)} km</dd>
+              </div>
+
+              <div>
+                <dt>Ascent</dt>
+                <dd>${escapeHtml(properties.ascent_m)} m</dd>
+              </div>
+
+              <div>
+                <dt>Time</dt>
+                <dd>${escapeHtml(properties.duration_text)}</dd>
+              </div>
+
+              <div>
+                <dt>GOT</dt>
+                <dd>${escapeHtml(properties.got)}</dd>
+              </div>
+
+              <div>
+                <dt>Participants</dt>
+                <dd>${escapeHtml(properties.participants)}</dd>
+              </div>
+            </dl>
+
+            ${
+              gpxUrl
+                ? `
+                  <a
+                    class="expedition-popup-link"
+                    href="${escapeHtml(gpxUrl)}"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open route in Wikiloc
+                  </a>
+                `
+                : ''
+            }
+          </article>
+        `;
+
+        marker.bindPopup(popupHtml, {
+          maxWidth: 340,
+        });
+
+        marker.on({
+          mouseover: () => highlightRoute(trailNumber),
+          mouseout: () => resetRoute(trailNumber),
+        });
+
+        marker.addTo(markersLayer);
+      });
+
+      // Pozwala przeglądarce wyświetlić markery przed obróbką dużego GeoJSON.
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+
+      const routesResponse = await fetch('/expeditions/expeditions.geojson');
+
+      if (!routesResponse.ok) {
+        throw new Error(`Expeditions GeoJSON could not be loaded: ${routesResponse.status}`);
+      }
+
+      const routesData = await routesResponse.json();
+
+      routesLayer = L.geoJSON(routesData, {
         filter: (feature) => feature.geometry?.type === 'LineString',
 
         style: (feature) => ({
@@ -190,148 +353,18 @@
 
           const trailNumber = properties.nr || '';
           const trailName = properties.name || '';
-          const trailColor = properties.color || '#800000';
-
-          const latitude = Number.parseFloat(properties.lat);
-          const longitude = Number.parseFloat(properties.lon);
-
           const tooltipText = `${trailNumber} ${trailName}`.trim();
+
+          routesByNumber.set(String(trailNumber), routeLayer);
 
           routeLayer.bindTooltip(escapeHtml(tooltipText), {
             sticky: true,
           });
 
           routeLayer.on({
-            mouseover: () => {
-              routeLayer.setStyle({
-                weight: 6,
-                color: '#111111',
-              });
-
-              routeLayer.bringToFront();
-            },
-
-            mouseout: () => {
-              routesLayer.resetStyle(routeLayer);
-            },
+            mouseover: () => highlightRoute(trailNumber),
+            mouseout: () => resetRoute(trailNumber),
           });
-
-          if (Number.isNaN(latitude) || Number.isNaN(longitude)) {
-            return;
-          }
-
-          const markerIcon = L.divIcon({
-            className: 'expedition-number-icon',
-            html: `
-        <span
-          class="expedition-number"
-          style="--route-color: ${escapeHtml(trailColor)}"
-        >
-          ${escapeHtml(trailNumber)}
-        </span>
-      `,
-            iconSize: [24, 24],
-            iconAnchor: [12, 12],
-            popupAnchor: [0, -14],
-          });
-
-          const marker = L.marker([latitude, longitude], {
-            icon: markerIcon,
-            title: tooltipText,
-          });
-
-          marker.bindTooltip(escapeHtml(tooltipText), {
-            sticky: true,
-          });
-
-          const gpxUrl = getSafeExternalUrl(properties.gpx_url);
-
-          const popupHtml = `
-      <article class="expedition-popup">
-        <h2>
-          ${escapeHtml(trailNumber)}
-          ${escapeHtml(trailName)}
-        </h2>
-
-        <dl>
-          <div>
-            <dt>Date</dt>
-            <dd>${escapeHtml(properties.date)}</dd>
-          </div>
-
-          <div>
-            <dt>Mountains</dt>
-            <dd>${escapeHtml(properties.mountains)}</dd>
-          </div>
-
-          <div>
-            <dt>Country</dt>
-            <dd>${escapeHtml(properties.country)}</dd>
-          </div>
-
-          <div>
-            <dt>Distance</dt>
-            <dd>${escapeHtml(properties.distance_km)} km</dd>
-          </div>
-
-          <div>
-            <dt>Ascent</dt>
-            <dd>${escapeHtml(properties.ascent_m)} m</dd>
-          </div>
-
-          <div>
-            <dt>Time</dt>
-            <dd>${escapeHtml(properties.duration_h)} h</dd>
-          </div>
-
-          <div>
-            <dt>GOT</dt>
-            <dd>${escapeHtml(properties.got)}</dd>
-          </div>
-
-          <div>
-            <dt>Participants</dt>
-            <dd>${escapeHtml(properties.participants)}</dd>
-          </div>
-        </dl>
-
-        ${
-          gpxUrl
-            ? `
-              <a
-                class="expedition-popup-link"
-                href="${escapeHtml(gpxUrl)}"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open route in Wikiloc
-              </a>
-            `
-            : ''
-        }
-      </article>
-    `;
-
-          marker.bindPopup(popupHtml, {
-            maxWidth: 340,
-          });
-
-          marker.on({
-            mouseover: () => {
-              routeLayer.setStyle({
-                weight: 6,
-                color: '#111111',
-              });
-
-              routeLayer.bringToFront();
-            },
-
-            mouseout: () => {
-              routesLayer.resetStyle(routeLayer);
-            },
-          });
-
-          marker.addTo(markersLayer);
         },
       }).addTo(map);
 
