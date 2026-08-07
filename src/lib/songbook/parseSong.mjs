@@ -51,6 +51,9 @@ export function parseSong(source, fallbackId = 'song') {
     key: metadata.key || 'C',
     capo: Number.isFinite(capo) ? capo : 0,
     ...(Number.isFinite(tempo) ? { tempo } : {}),
+    ...(metadata.time ? { time: metadata.time } : {}),
+    ...(metadata.version ? { version: metadata.version } : {}),
+    ...(metadata.strumming ? { strumming: metadata.strumming } : {}),
     sections,
   };
 }
