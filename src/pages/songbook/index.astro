@@ -33,7 +33,7 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
         <div class="brand">
           <div class="brand-kicker">aktmamut.eu</div>
           <div class="brand-title">Guitar Lab</div>
-          <div class="brand-subtitle">SongBook · Astro</div>
+          <div class="brand-subtitle">SongBook · Stage 2.1</div>
         </div>
 
         <div class="search-wrap">
@@ -43,7 +43,7 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
         <ul class="song-list" id="songList"></ul>
 
         <div class="sidebar-footer">
-          Utwory są zwykłymi plikami <strong>.song</strong> w <strong>data/songbook</strong>. Edytujesz je w VS Code lub dowolnym edytorze tekstu.
+          Utwory są zwykłymi plikami <strong>.song</strong> w <strong>data/songbook</strong>.
         </div>
       </aside>
 
@@ -52,21 +52,48 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
       <main class="main">
         <header class="topbar">
           <div class="title-row">
-            <button class="btn menu-btn" id="menuBtn" aria-label="Pokaż lub ukryj bibliotekę" title="Pokaż / ukryj bibliotekę">☰</button>
+            <button class="btn menu-btn" id="menuBtn" aria-label="Pokaż lub ukryj bibliotekę">☰</button>
             <div class="song-heading">
               <h1 id="songTitle">—</h1>
               <div class="artist" id="songArtist">—</div>
             </div>
           </div>
 
-          <div class="toolbar">
+          <div class="header-meta">
             <span class="meta-pill">Key <strong id="songKey">—</strong></span>
             <span class="meta-pill">Capo <strong id="songCapo">—</strong></span>
+            <button class="btn setup-toggle" id="setupToggle" aria-expanded="true">Setup ▾</button>
+          </div>
+        </header>
 
-            <div class="control-group" aria-label="Transpozycja">
-              <button id="transposeDown" title="Transpose -1">−</button>
-              <span class="value" id="transposeValue">Transpose 0</span>
-              <button id="transposeUp" title="Transpose +1">+</button>
+        <section class="setup-panel" id="setupPanel">
+          <div class="setup-inner">
+            <div class="setup-block">
+              <div class="setup-label">Song setup</div>
+              <div class="setup-facts">
+                <span><small>Tempo</small><strong id="setupTempo">—</strong></span>
+                <span><small>Time</small><strong id="setupTime">—</strong></span>
+                <span><small>Version</small><strong id="setupVersion">—</strong></span>
+                <span><small>Pattern</small><strong id="setupStrumming">—</strong></span>
+              </div>
+            </div>
+            <div class="setup-block chords-block">
+              <div class="setup-label">Chords in this song</div>
+              <div class="chord-chips" id="chordChips"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="reader" id="reader">
+          <article class="song-sheet mode-all" id="songSheet"></article>
+        </section>
+
+        <footer class="stagebar">
+          <div class="stage-controls">
+            <div class="control-group compact" aria-label="Rozmiar tekstu">
+              <button id="fontDown" title="Mniejszy tekst">A−</button>
+              <span class="value" id="fontValue">20 px</span>
+              <button id="fontUp" title="Większy tekst">A+</button>
             </div>
 
             <div class="segmented" id="viewModes" aria-label="Tryb wyświetlania">
@@ -76,36 +103,28 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
               <button data-mode="ipa">IPA</button>
             </div>
 
-            <div class="control-group" aria-label="Rozmiar tekstu">
-              <button id="fontDown" title="Mniejszy tekst">A−</button>
-              <span class="value" id="fontValue">20 px</span>
-              <button id="fontUp" title="Większy tekst">A+</button>
+            <div class="control-group compact" aria-label="Transpozycja">
+              <button id="transposeDown" title="Transpose -1">−</button>
+              <span class="value" id="transposeValue">0</span>
+              <button id="transposeUp" title="Transpose +1">+</button>
             </div>
-          </div>
-        </header>
 
-        <section class="reader" id="reader">
-          <article class="song-sheet mode-all" id="songSheet"></article>
-        </section>
-
-        <footer class="playerbar">
-          <div class="player-actions">
             <button class="btn primary" id="scrollToggle">▶ Auto-scroll</button>
+            <button class="btn" id="performanceToggle">Performance</button>
+          </div>
+
+          <div class="stage-secondary">
             <label class="file-label" title="Plik pozostaje lokalnie w przeglądarce">
-              ♪ Wybierz audio
+              ♪ Audio
               <input id="audioFile" type="file" accept="audio/*,video/webm,video/mp4" />
             </label>
+            <audio id="audio" controls preload="metadata"></audio>
+            <div class="slider-group">
+              <span>Scroll</span>
+              <input id="scrollSpeed" type="range" min="1" max="12" step="1" value="4" />
+              <strong id="scrollSpeedValue">4</strong>
+            </div>
           </div>
-
-          <audio id="audio" controls preload="metadata"></audio>
-
-          <div class="slider-group">
-            <span>Scroll</span>
-            <input id="scrollSpeed" type="range" min="1" max="12" step="1" value="4" />
-            <strong id="scrollSpeedValue">4</strong>
-          </div>
-
-          <div class="hint">Spacja: start/stop scroll · Esc: schowaj bibliotekę</div>
         </footer>
       </main>
     </div>

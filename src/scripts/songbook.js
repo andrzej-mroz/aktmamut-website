@@ -25,7 +25,15 @@ const els = {
   scrollSpeed: document.getElementById('scrollSpeed'),
   scrollSpeedValue: document.getElementById('scrollSpeedValue'),
   audioFile: document.getElementById('audioFile'),
-  audio: document.getElementById('audio')
+  audio: document.getElementById('audio'),
+  setupToggle: document.getElementById('setupToggle'),
+  setupPanel: document.getElementById('setupPanel'),
+  setupTempo: document.getElementById('setupTempo'),
+  setupTime: document.getElementById('setupTime'),
+  setupVersion: document.getElementById('setupVersion'),
+  setupStrumming: document.getElementById('setupStrumming'),
+  chordChips: document.getElementById('chordChips'),
+  performanceToggle: document.getElementById('performanceToggle')
 };
 
 let currentSongId = localStorage.getItem('gl.song') || SONGS[0]?.id || '';
@@ -37,6 +45,8 @@ let scrollRAF = 0;
 let lastTs = 0;
 let audioObjectUrl = null;
 let desktopSidebarCollapsed = localStorage.getItem('gl.sidebarCollapsed') === '1';
+let setupOpen = localStorage.getItem('gl.setupOpen') !== '0';
+let performanceMode = false;
 
 function escapeHtml(text) {
   return String(text)
@@ -84,6 +94,23 @@ function renderLyricLine(line) {
   }).join('');
 }
 
+function extractChords(song) {
+  const seen = new Set();
+  const chords = [];
+  for (const section of song.sections) {
+    for (const line of section.lines) {
+      for (const match of line.lyric.matchAll(/\[([^\]]+)\]/g)) {
+        const chord = match[1].trim();
+        if (!seen.has(chord)) {
+          seen.add(chord);
+          chords.push(chord);
+        }
+      }
+    }
+  }
+  return chords;
+}
+
 function renderSongList(filter = '') {
   const q = filter.trim().toLowerCase();
   const items = SONGS.filter(song => `${song.title} ${song.artist}`.toLowerCase().includes(q));
@@ -112,6 +139,18 @@ function currentSong() {
   return SONGS.find(song => song.id === currentSongId) || SONGS[0];
 }
 
+function renderSetup(song) {
+  els.setupTempo.textContent = song.tempo ? `${song.tempo} bpm` : '—';
+  els.setupTime.textContent = song.time || '—';
+  els.setupVersion.textContent = song.version || '—';
+  els.setupStrumming.textContent = song.strumming || '—';
+
+  const chords = extractChords(song);
+  els.chordChips.innerHTML = chords.length
+    ? chords.map(chord => `<span class="chord-chip">${escapeHtml(transposeChord(chord, transpose))}</span>`).join('')
+    : '<span class="setup-empty">No chords entered yet</span>';
+}
+
 function renderSong() {
   const song = currentSong();
   if (!song) {
@@ -123,7 +162,9 @@ function renderSong() {
   els.artist.textContent = song.artist;
   els.key.textContent = transposeChord(song.key, transpose);
   els.capo.textContent = song.capo;
-  els.transposeValue.textContent = `Transpose ${transpose > 0 ? '+' : ''}${transpose}`;
+  els.transposeValue.textContent = `${transpose > 0 ? '+' : ''}${transpose}`;
+
+  renderSetup(song);
 
   els.sheet.className = `song-sheet mode-${mode}`;
   els.sheet.innerHTML = song.sections.map(section => `
@@ -240,6 +281,30 @@ function collapseDesktopSidebar() {
   applyDesktopSidebarState();
 }
 
+function applySetupState() {
+  els.setupPanel.classList.toggle('collapsed', !setupOpen);
+  els.setupToggle.setAttribute('aria-expanded', String(setupOpen));
+  els.setupToggle.textContent = setupOpen ? 'Setup ▾' : 'Setup ▸';
+}
+
+function toggleSetup() {
+  setupOpen = !setupOpen;
+  localStorage.setItem('gl.setupOpen', setupOpen ? '1' : '0');
+  applySetupState();
+}
+
+function applyPerformanceMode() {
+  els.app.classList.toggle('performance-mode', performanceMode);
+  els.performanceToggle.classList.toggle('active', performanceMode);
+  els.performanceToggle.textContent = performanceMode ? 'Exit performance' : 'Performance';
+  if (performanceMode) closeSidebar();
+}
+
+function togglePerformanceMode() {
+  performanceMode = !performanceMode;
+  applyPerformanceMode();
+}
+
 document.getElementById('transposeDown').addEventListener('click', () => changeTranspose(-1));
 document.getElementById('transposeUp').addEventListener('click', () => changeTranspose(1));
 document.getElementById('fontDown').addEventListener('click', () => { fontSize--; applyFontSize(); });
@@ -253,6 +318,8 @@ els.scrollSpeed.addEventListener('input', () => {
 });
 els.menuBtn.addEventListener('click', toggleSidebar);
 els.backdrop.addEventListener('click', closeSidebar);
+els.setupToggle.addEventListener('click', toggleSetup);
+els.performanceToggle.addEventListener('click', togglePerformanceMode);
 
 els.audioFile.addEventListener('change', () => {
   const file = els.audioFile.files?.[0];
@@ -269,7 +336,14 @@ window.addEventListener('keydown', e => {
     e.preventDefault();
     toggleAutoScroll();
   }
-  if (e.key === 'Escape') isMobileSidebar() ? closeSidebar() : collapseDesktopSidebar();
+  if (e.key === 'Escape') {
+    if (performanceMode) {
+      performanceMode = false;
+      applyPerformanceMode();
+    } else {
+      isMobileSidebar() ? closeSidebar() : collapseDesktopSidebar();
+    }
+  }
 });
 
 window.addEventListener('resize', () => {
@@ -281,5 +355,7 @@ const savedSpeed = localStorage.getItem('gl.scrollSpeed');
 if (savedSpeed) els.scrollSpeed.value = savedSpeed;
 els.scrollSpeedValue.textContent = els.scrollSpeed.value;
 
+applySetupState();
 applyDesktopSidebarState();
+applyPerformanceMode();
 renderAll();
