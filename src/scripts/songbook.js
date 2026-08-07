@@ -4,6 +4,7 @@ const SONGS = JSON.parse(dataElement?.textContent || '[]');
 const CHROMATIC_SHARP = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
 const FLAT_TO_SHARP = { Db:'C#', Eb:'D#', Gb:'F#', Ab:'G#', Bb:'A#' };
 const NOTE_RE = /^([A-G])([#b]?)(.*)$/;
+const TAB_STRINGS = ['e', 'B', 'G', 'D', 'A', 'E'];
 
 const els = {
   app: document.getElementById('app'),
@@ -96,6 +97,67 @@ function renderLyricLine(line) {
   }).join('');
 }
 
+function parseTabEvent(token) {
+  if (token === '|') return { bar: true, notes: {} };
+  if (token === '-' || token === '_') return { rest: true, notes: {} };
+
+  const notes = {};
+  for (const part of token.split('+')) {
+    const match = part.match(/^([eEADGB])(\d{1,2})$/);
+    if (!match) continue;
+    notes[match[1]] = match[2];
+  }
+  return { notes };
+}
+
+function buildAsciiTab(sequence) {
+  const tokens = String(sequence || '').trim().split(/\s+/).filter(Boolean);
+  const events = tokens.map(parseTabEvent);
+  const rows = Object.fromEntries(TAB_STRINGS.map(string => [string, `${string}|`]));
+
+  for (const event of events) {
+    if (event.bar) {
+      for (const string of TAB_STRINGS) rows[string] += '|';
+      continue;
+    }
+
+    const frets = Object.values(event.notes || {});
+    const cellWidth = Math.max(4, ...frets.map(fret => fret.length + 2));
+    for (const string of TAB_STRINGS) {
+      const fret = event.notes?.[string];
+      if (fret !== undefined) {
+        const left = 1;
+        const right = Math.max(1, cellWidth - fret.length - left);
+        rows[string] += `${'-'.repeat(left)}${fret}${'-'.repeat(right)}`;
+      } else {
+        rows[string] += '-'.repeat(cellWidth);
+      }
+    }
+  }
+
+  for (const string of TAB_STRINGS) rows[string] += '|';
+  return TAB_STRINGS.map(string => rows[string]).join('\n');
+}
+
+function renderTabBlock(block) {
+  const repeat = block.repeat > 1 ? `<span class="tab-repeat">×${block.repeat}</span>` : '';
+  return `
+    <div class="tab-block">
+      <div class="tab-heading"><strong>${escapeHtml(block.title || 'Tab')}</strong>${repeat}</div>
+      <pre class="tablature">${escapeHtml(buildAsciiTab(block.sequence))}</pre>
+    </div>
+  `;
+}
+
+function renderLineBlock(line) {
+  return `
+    <div class="line-block">
+      <div class="lyric-line">${renderLyricLine(line.lyric)}</div>
+      ${line.ipa ? `<div class="ipa">${escapeHtml(line.ipa)}</div>` : ''}
+    </div>
+  `;
+}
+
 function extractChords(song) {
   const seen = new Set();
   const chords = [];
@@ -185,17 +247,16 @@ function renderSong() {
   renderSetup(song);
 
   els.sheet.className = `song-sheet mode-${mode}`;
-  els.sheet.innerHTML = song.sections.map(section => `
-    <section class="section">
-      <h2 class="section-title">${escapeHtml(section.title)}</h2>
-      ${section.lines.map(line => `
-        <div class="line-block">
-          <div class="lyric-line">${renderLyricLine(line.lyric)}</div>
-          ${line.ipa ? `<div class="ipa">${escapeHtml(line.ipa)}</div>` : ''}
-        </div>
-      `).join('')}
-    </section>
-  `).join('');
+  els.sheet.innerHTML = song.sections.map(section => {
+    const blocks = section.blocks?.length ? section.blocks : section.lines;
+    const hasTab = blocks.some(block => block.type === 'tab');
+    return `
+      <section class="section ${hasTab ? 'has-tab' : ''}">
+        <h2 class="section-title">${escapeHtml(section.title)}</h2>
+        ${blocks.map(block => block.type === 'tab' ? renderTabBlock(block) : renderLineBlock(block)).join('')}
+      </section>
+    `;
+  }).join('');
 
   els.modeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
   applyColumnMode();
