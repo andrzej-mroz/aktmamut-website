@@ -114,11 +114,12 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
           </div>
 
           <div class="stage-secondary">
-            <label class="file-label" title="Plik pozostaje lokalnie w przeglądarce">
+            <!-- Audio stays wired in for a future stage, but is intentionally hidden for now. -->
+            <label class="file-label" title="Plik pozostaje lokalnie w przeglądarce" hidden>
               ♪ Audio
               <input id="audioFile" type="file" accept="audio/*,video/webm,video/mp4" />
             </label>
-            <audio id="audio" controls preload="metadata"></audio>
+            <audio id="audio" controls preload="metadata" hidden></audio>
             <div class="slider-group">
               <span>Scroll</span>
               <input id="scrollSpeed" type="range" min="1" max="12" step="1" value="4" />
