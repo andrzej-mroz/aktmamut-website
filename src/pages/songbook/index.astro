@@ -74,6 +74,11 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
               <button data-mode="tab">Tab</button>
             </div>
 
+            <div class="segmented tab-notation-switch" id="tabNotationSwitch" aria-label="Sposób zapisu tabulatury">
+              <button data-tab-notation="pattern" class="active">Pattern</button>
+              <button data-tab-notation="ascii">TAB</button>
+            </div>
+
             <button class="btn columns-toggle" id="columnsToggle" aria-pressed="false" title="Przełącz układ jednej / dwóch kolumn">2 Col</button>
 
             <div class="control-group compact" aria-label="Transpozycja">
@@ -119,7 +124,6 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
           <article class="song-sheet mode-all" id="songSheet"></article>
         </section>
 
-        <!-- Audio remains implemented for a future stage, but is intentionally hidden. -->
         <div hidden>
           <label class="file-label" title="Plik pozostaje lokalnie w przeglądarce">
             ♪ Audio
