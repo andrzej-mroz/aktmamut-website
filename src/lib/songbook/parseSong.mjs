@@ -1,9 +1,11 @@
 export function parseSong(source, fallbackId = 'song') {
   const metadata = {};
   const sections = [];
+  const fingerings = [];
   let currentSection = null;
   let currentLine = null;
   let currentTab = null;
+  let currentFingering = null;
 
   const ensureSection = () => {
     if (!currentSection) {
@@ -20,9 +22,26 @@ export function parseSong(source, fallbackId = 'song') {
     currentTab = null;
   };
 
+  const finishFingering = () => {
+    if (!currentFingering) return;
+    fingerings.push(currentFingering);
+    currentFingering = null;
+  };
+
   for (const rawLine of String(source).replace(/\r\n?/g, '\n').split('\n')) {
     const line = rawLine.trimEnd();
     const trimmed = line.trim();
+
+    if (currentFingering) {
+      if (trimmed === '@endfingering') {
+        finishFingering();
+        continue;
+      }
+      if (!trimmed || trimmed.startsWith('//')) continue;
+      const field = trimmed.match(/^([a-zA-Z][\w-]*):\s*(.*)$/);
+      if (field) currentFingering[field[1].toLowerCase()] = field[2].trim();
+      continue;
+    }
 
     if (currentTab) {
       if (trimmed === '@endtab') {
@@ -35,6 +54,13 @@ export function parseSong(source, fallbackId = 'song') {
     }
 
     if (!trimmed || trimmed.startsWith('//')) continue;
+
+    const fingeringStart = trimmed.match(/^@fingering\s+(.+)$/i);
+    if (fingeringStart) {
+      currentFingering = { title: fingeringStart[1].trim(), notes: '', lh: '', rh: '', used: '' };
+      currentLine = null;
+      continue;
+    }
 
     if (trimmed.startsWith('# ')) {
       currentSection = { title: trimmed.slice(2).trim(), lines: [], blocks: [] };
@@ -76,6 +102,7 @@ export function parseSong(source, fallbackId = 'song') {
   }
 
   if (currentTab) finishTab();
+  if (currentFingering) finishFingering();
 
   const capo = Number.parseInt(metadata.capo ?? '0', 10);
   const tempo = metadata.tempo ? Number.parseInt(metadata.tempo, 10) : undefined;
@@ -90,6 +117,7 @@ export function parseSong(source, fallbackId = 'song') {
     ...(metadata.time ? { time: metadata.time } : {}),
     ...(metadata.version ? { version: metadata.version } : {}),
     ...(metadata.strumming ? { strumming: metadata.strumming } : {}),
+    fingerings,
     sections,
   };
 }
