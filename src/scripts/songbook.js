@@ -33,7 +33,8 @@ const els = {
   setupVersion: document.getElementById('setupVersion'),
   setupStrumming: document.getElementById('setupStrumming'),
   chordChips: document.getElementById('chordChips'),
-  performanceToggle: document.getElementById('performanceToggle')
+  performanceToggle: document.getElementById('performanceToggle'),
+  columnsToggle: document.getElementById('columnsToggle')
 };
 
 let currentSongId = localStorage.getItem('gl.song') || SONGS[0]?.id || '';
@@ -47,6 +48,7 @@ let audioObjectUrl = null;
 let desktopSidebarCollapsed = localStorage.getItem('gl.sidebarCollapsed') === '1';
 let setupOpen = localStorage.getItem('gl.setupOpen') !== '0';
 let performanceMode = false;
+let twoColumns = localStorage.getItem('gl.twoColumns') === '1';
 
 function escapeHtml(text) {
   return String(text)
@@ -151,6 +153,22 @@ function renderSetup(song) {
     : '<span class="setup-empty">No chords entered yet</span>';
 }
 
+function applyColumnMode() {
+  const canUseTwoColumns = window.matchMedia('(min-width: 761px)').matches;
+  const active = twoColumns && canUseTwoColumns;
+  els.sheet.classList.toggle('columns-2', active);
+  els.columnsToggle.classList.toggle('active', active);
+  els.columnsToggle.setAttribute('aria-pressed', String(active));
+  els.columnsToggle.textContent = active ? '1 Col' : '2 Col';
+}
+
+function toggleColumns() {
+  twoColumns = !twoColumns;
+  localStorage.setItem('gl.twoColumns', twoColumns ? '1' : '0');
+  applyColumnMode();
+  els.reader.scrollTop = 0;
+}
+
 function renderSong() {
   const song = currentSong();
   if (!song) {
@@ -180,6 +198,7 @@ function renderSong() {
   `).join('');
 
   els.modeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+  applyColumnMode();
   els.reader.scrollTop = 0;
   document.title = `${song.title} — Guitar Lab`;
 }
@@ -312,6 +331,7 @@ document.getElementById('fontUp').addEventListener('click', () => { fontSize++; 
 els.modeButtons.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
 els.search.addEventListener('input', e => renderSongList(e.target.value));
 els.scrollToggle.addEventListener('click', toggleAutoScroll);
+els.columnsToggle.addEventListener('click', toggleColumns);
 els.scrollSpeed.addEventListener('input', () => {
   els.scrollSpeedValue.textContent = els.scrollSpeed.value;
   localStorage.setItem('gl.scrollSpeed', els.scrollSpeed.value);
@@ -349,6 +369,7 @@ window.addEventListener('keydown', e => {
 window.addEventListener('resize', () => {
   closeSidebar();
   applyDesktopSidebarState();
+  applyColumnMode();
 });
 
 const savedSpeed = localStorage.getItem('gl.scrollSpeed');
