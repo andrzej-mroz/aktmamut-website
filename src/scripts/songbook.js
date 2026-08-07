@@ -1,0 +1,285 @@
+const dataElement = document.getElementById('song-data');
+const SONGS = JSON.parse(dataElement?.textContent || '[]');
+
+const CHROMATIC_SHARP = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const FLAT_TO_SHARP = { Db:'C#', Eb:'D#', Gb:'F#', Ab:'G#', Bb:'A#' };
+const NOTE_RE = /^([A-G])([#b]?)(.*)$/;
+
+const els = {
+  app: document.getElementById('app'),
+  sidebar: document.getElementById('sidebar'),
+  backdrop: document.getElementById('backdrop'),
+  menuBtn: document.getElementById('menuBtn'),
+  list: document.getElementById('songList'),
+  search: document.getElementById('songSearch'),
+  title: document.getElementById('songTitle'),
+  artist: document.getElementById('songArtist'),
+  key: document.getElementById('songKey'),
+  capo: document.getElementById('songCapo'),
+  transposeValue: document.getElementById('transposeValue'),
+  sheet: document.getElementById('songSheet'),
+  reader: document.getElementById('reader'),
+  modeButtons: [...document.querySelectorAll('#viewModes button')],
+  fontValue: document.getElementById('fontValue'),
+  scrollToggle: document.getElementById('scrollToggle'),
+  scrollSpeed: document.getElementById('scrollSpeed'),
+  scrollSpeedValue: document.getElementById('scrollSpeedValue'),
+  audioFile: document.getElementById('audioFile'),
+  audio: document.getElementById('audio')
+};
+
+let currentSongId = localStorage.getItem('gl.song') || SONGS[0]?.id || '';
+let transpose = Number(localStorage.getItem('gl.transpose') || 0);
+let mode = localStorage.getItem('gl.mode') || 'all';
+let fontSize = Number(localStorage.getItem('gl.fontSize') || 20);
+let autoScrollOn = false;
+let scrollRAF = 0;
+let lastTs = 0;
+let audioObjectUrl = null;
+let desktopSidebarCollapsed = localStorage.getItem('gl.sidebarCollapsed') === '1';
+
+function escapeHtml(text) {
+  return String(text)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function transposeChord(chord, delta) {
+  const m = chord.match(NOTE_RE);
+  if (!m) return chord;
+  let [, root, accidental, suffix] = m;
+  let normalized = root + accidental;
+  normalized = FLAT_TO_SHARP[normalized] || normalized;
+  let idx = CHROMATIC_SHARP.indexOf(normalized);
+  if (idx < 0) return chord;
+  idx = (idx + delta + 120) % 12;
+  return CHROMATIC_SHARP[idx] + suffix;
+}
+
+function parseChordProLine(line) {
+  const parts = [];
+  const re = /\[([^\]]+)\]([^\[]*)/g;
+  let match;
+  let cursor = 0;
+
+  while ((match = re.exec(line)) !== null) {
+    if (match.index > cursor) parts.push({ chord: '', text: line.slice(cursor, match.index) });
+    parts.push({ chord: transposeChord(match[1], transpose), text: match[2] });
+    cursor = re.lastIndex;
+  }
+
+  if (cursor < line.length) parts.push({ chord: '', text: line.slice(cursor) });
+  if (!parts.length) parts.push({ chord: '', text: line });
+  return parts;
+}
+
+function renderLyricLine(line) {
+  return parseChordProLine(line).map(part => {
+    const chord = part.chord ? escapeHtml(part.chord) : '&nbsp;';
+    const text = escapeHtml(part.text || ' ');
+    return `<span class="unit"><span class="chord">${chord}</span><span class="word">${text}</span></span>`;
+  }).join('');
+}
+
+function renderSongList(filter = '') {
+  const q = filter.trim().toLowerCase();
+  const items = SONGS.filter(song => `${song.title} ${song.artist}`.toLowerCase().includes(q));
+  els.list.innerHTML = items.map(song => `
+    <li class="song-item ${song.id === currentSongId ? 'active' : ''}">
+      <button data-song-id="${escapeHtml(song.id)}">
+        <div class="song-title-small">${escapeHtml(song.title)}</div>
+        <div class="song-artist-small">${escapeHtml(song.artist)}</div>
+      </button>
+    </li>
+  `).join('') || '<li class="empty">Brak wyników</li>';
+
+  els.list.querySelectorAll('[data-song-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentSongId = btn.dataset.songId;
+      transpose = 0;
+      localStorage.setItem('gl.song', currentSongId);
+      localStorage.setItem('gl.transpose', '0');
+      renderAll();
+      closeSidebar();
+    });
+  });
+}
+
+function currentSong() {
+  return SONGS.find(song => song.id === currentSongId) || SONGS[0];
+}
+
+function renderSong() {
+  const song = currentSong();
+  if (!song) {
+    els.sheet.innerHTML = '<div class="empty">Brak utworów w data/songbook.</div>';
+    return;
+  }
+
+  els.title.textContent = song.title;
+  els.artist.textContent = song.artist;
+  els.key.textContent = transposeChord(song.key, transpose);
+  els.capo.textContent = song.capo;
+  els.transposeValue.textContent = `Transpose ${transpose > 0 ? '+' : ''}${transpose}`;
+
+  els.sheet.className = `song-sheet mode-${mode}`;
+  els.sheet.innerHTML = song.sections.map(section => `
+    <section class="section">
+      <h2 class="section-title">${escapeHtml(section.title)}</h2>
+      ${section.lines.map(line => `
+        <div class="line-block">
+          <div class="lyric-line">${renderLyricLine(line.lyric)}</div>
+          ${line.ipa ? `<div class="ipa">${escapeHtml(line.ipa)}</div>` : ''}
+        </div>
+      `).join('')}
+    </section>
+  `).join('');
+
+  els.modeButtons.forEach(btn => btn.classList.toggle('active', btn.dataset.mode === mode));
+  els.reader.scrollTop = 0;
+  document.title = `${song.title} — Guitar Lab`;
+}
+
+function applyFontSize() {
+  fontSize = Math.max(14, Math.min(34, fontSize));
+  document.documentElement.style.setProperty('--song-size', `${fontSize}px`);
+  els.fontValue.textContent = `${fontSize} px`;
+  localStorage.setItem('gl.fontSize', String(fontSize));
+}
+
+function renderAll() {
+  renderSongList(els.search.value);
+  renderSong();
+  applyFontSize();
+}
+
+function setMode(nextMode) {
+  mode = nextMode;
+  localStorage.setItem('gl.mode', mode);
+  renderSong();
+}
+
+function changeTranspose(delta) {
+  transpose = Math.max(-11, Math.min(11, transpose + delta));
+  localStorage.setItem('gl.transpose', String(transpose));
+  renderSong();
+}
+
+function autoScrollFrame(ts) {
+  if (!autoScrollOn) return;
+  if (!lastTs) lastTs = ts;
+  const dt = Math.min(64, ts - lastTs);
+  lastTs = ts;
+  const speed = Number(els.scrollSpeed.value);
+  els.reader.scrollTop += speed * 6 * (dt / 1000);
+
+  if (els.reader.scrollTop + els.reader.clientHeight >= els.reader.scrollHeight - 3) {
+    stopAutoScroll();
+    return;
+  }
+  scrollRAF = requestAnimationFrame(autoScrollFrame);
+}
+
+function startAutoScroll() {
+  autoScrollOn = true;
+  lastTs = 0;
+  els.scrollToggle.textContent = '⏸ Auto-scroll';
+  scrollRAF = requestAnimationFrame(autoScrollFrame);
+}
+
+function stopAutoScroll() {
+  autoScrollOn = false;
+  cancelAnimationFrame(scrollRAF);
+  lastTs = 0;
+  els.scrollToggle.textContent = '▶ Auto-scroll';
+}
+
+function toggleAutoScroll() {
+  autoScrollOn ? stopAutoScroll() : startAutoScroll();
+}
+
+function isMobileSidebar() {
+  return window.matchMedia('(max-width: 760px)').matches;
+}
+
+function applyDesktopSidebarState() {
+  const collapsed = desktopSidebarCollapsed && !isMobileSidebar();
+  els.app.classList.toggle('sidebar-collapsed', collapsed);
+  els.menuBtn.setAttribute('aria-expanded', String(!collapsed));
+}
+
+function openSidebar() {
+  els.sidebar.classList.add('open');
+  els.backdrop.classList.add('show');
+  els.menuBtn.setAttribute('aria-expanded', 'true');
+}
+
+function closeSidebar() {
+  els.sidebar.classList.remove('open');
+  els.backdrop.classList.remove('show');
+  if (isMobileSidebar()) els.menuBtn.setAttribute('aria-expanded', 'false');
+}
+
+function toggleSidebar() {
+  if (isMobileSidebar()) {
+    els.sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    return;
+  }
+  desktopSidebarCollapsed = !desktopSidebarCollapsed;
+  localStorage.setItem('gl.sidebarCollapsed', desktopSidebarCollapsed ? '1' : '0');
+  applyDesktopSidebarState();
+}
+
+function collapseDesktopSidebar() {
+  if (isMobileSidebar()) return;
+  desktopSidebarCollapsed = true;
+  localStorage.setItem('gl.sidebarCollapsed', '1');
+  applyDesktopSidebarState();
+}
+
+document.getElementById('transposeDown').addEventListener('click', () => changeTranspose(-1));
+document.getElementById('transposeUp').addEventListener('click', () => changeTranspose(1));
+document.getElementById('fontDown').addEventListener('click', () => { fontSize--; applyFontSize(); });
+document.getElementById('fontUp').addEventListener('click', () => { fontSize++; applyFontSize(); });
+els.modeButtons.forEach(btn => btn.addEventListener('click', () => setMode(btn.dataset.mode)));
+els.search.addEventListener('input', e => renderSongList(e.target.value));
+els.scrollToggle.addEventListener('click', toggleAutoScroll);
+els.scrollSpeed.addEventListener('input', () => {
+  els.scrollSpeedValue.textContent = els.scrollSpeed.value;
+  localStorage.setItem('gl.scrollSpeed', els.scrollSpeed.value);
+});
+els.menuBtn.addEventListener('click', toggleSidebar);
+els.backdrop.addEventListener('click', closeSidebar);
+
+els.audioFile.addEventListener('change', () => {
+  const file = els.audioFile.files?.[0];
+  if (!file) return;
+  if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
+  audioObjectUrl = URL.createObjectURL(file);
+  els.audio.src = audioObjectUrl;
+  els.audio.play().catch(() => {});
+});
+
+window.addEventListener('keydown', e => {
+  const typing = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName);
+  if (e.code === 'Space' && !typing) {
+    e.preventDefault();
+    toggleAutoScroll();
+  }
+  if (e.key === 'Escape') isMobileSidebar() ? closeSidebar() : collapseDesktopSidebar();
+});
+
+window.addEventListener('resize', () => {
+  closeSidebar();
+  applyDesktopSidebarState();
+});
+
+const savedSpeed = localStorage.getItem('gl.scrollSpeed');
+if (savedSpeed) els.scrollSpeed.value = savedSpeed;
+els.scrollSpeedValue.textContent = els.scrollSpeed.value;
+
+applyDesktopSidebarState();
+renderAll();
