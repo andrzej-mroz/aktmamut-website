@@ -10,4 +10,126 @@ const songFiles = (await readdir(songsDir))
   .sort((a, b) => a.localeCompare(b));
 
 const songs = await Promise.all(songFiles.map(async (fileName) => {
-  const source = await readFile(path.join(songsDir
+  const source = await readFile(path.join(songsDir, fileName), 'utf8');
+  const fallbackId = fileName.replace(/\.song$/i, '');
+  return parseSong(source, fallbackId);
+}));
+
+songs.sort((a, b) => a.title.localeCompare(b.title));
+const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
+---
+
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#111318" />
+    <title>Guitar Lab — SongBook</title>
+  </head>
+  <body>
+    <div class="app" id="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-kicker">aktmamut.eu</div>
+          <div class="brand-title">Guitar Lab</div>
+          <div class="brand-subtitle">SongBook · Stage 2.1</div>
+        </div>
+
+        <div class="search-wrap">
+          <input class="search" id="songSearch" type="search" placeholder="Szukaj utworu lub artysty…" autocomplete="off" />
+        </div>
+
+        <ul class="song-list" id="songList"></ul>
+
+        <div class="sidebar-footer">
+          Utwory są zwykłymi plikami <strong>.song</strong> w <strong>data/songbook</strong>.
+        </div>
+      </aside>
+
+      <div class="backdrop" id="backdrop"></div>
+
+      <main class="main">
+        <header class="topbar">
+          <div class="title-row">
+            <button class="btn menu-btn" id="menuBtn" aria-label="Pokaż lub ukryj bibliotekę">☰</button>
+            <div class="song-heading">
+              <h1 id="songTitle">—</h1>
+              <div class="artist" id="songArtist">—</div>
+            </div>
+          </div>
+
+          <div class="header-controls">
+            <div class="control-group compact" aria-label="Rozmiar tekstu">
+              <button id="fontDown" title="Mniejszy tekst">A−</button>
+              <span class="value" id="fontValue">20 px</span>
+              <button id="fontUp" title="Większy tekst">A+</button>
+            </div>
+
+            <div class="segmented" id="viewModes" aria-label="Tryb wyświetlania">
+              <button data-mode="all" class="active">All</button>
+              <button data-mode="lyrics">Lyrics</button>
+              <button data-mode="chords">Chords</button>
+              <button data-mode="ipa">IPA</button>
+            </div>
+
+            <div class="control-group compact" aria-label="Transpozycja">
+              <button id="transposeDown" title="Transpose -1">−</button>
+              <span class="value" id="transposeValue">0</span>
+              <button id="transposeUp" title="Transpose +1">+</button>
+            </div>
+
+            <button class="btn setup-toggle" id="setupToggle" aria-expanded="true">Setup ▾</button>
+            <button class="btn primary" id="scrollToggle">▶ Auto-scroll</button>
+
+            <div class="slider-group header-scroll">
+              <span>Scroll</span>
+              <input id="scrollSpeed" type="range" min="1" max="12" step="1" value="4" />
+              <strong id="scrollSpeedValue">4</strong>
+            </div>
+
+            <button class="btn" id="performanceToggle">Performance</button>
+          </div>
+        </header>
+
+        <section class="setup-panel" id="setupPanel">
+          <div class="setup-inner">
+            <div class="setup-block">
+              <div class="setup-label">Song setup</div>
+              <div class="setup-facts">
+                <span><small>Key</small><strong id="songKey">—</strong></span>
+                <span><small>Capo</small><strong id="songCapo">—</strong></span>
+                <span><small>Tempo</small><strong id="setupTempo">—</strong></span>
+                <span><small>Time</small><strong id="setupTime">—</strong></span>
+                <span><small>Version</small><strong id="setupVersion">—</strong></span>
+                <span><small>Pattern</small><strong id="setupStrumming">—</strong></span>
+              </div>
+            </div>
+            <div class="setup-block chords-block">
+              <div class="setup-label">Chords in this song</div>
+              <div class="chord-chips" id="chordChips"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="reader" id="reader">
+          <article class="song-sheet mode-all" id="songSheet"></article>
+        </section>
+
+        <!-- Audio remains implemented for a future stage, but is intentionally hidden. -->
+        <div hidden>
+          <label class="file-label" title="Plik pozostaje lokalnie w przeglądarce">
+            ♪ Audio
+            <input id="audioFile" type="file" accept="audio/*,video/webm,video/mp4" />
+          </label>
+          <audio id="audio" controls preload="metadata"></audio>
+        </div>
+      </main>
+    </div>
+
+    <script is:inline id="song-data" type="application/json" set:html={songData}></script>
+    <script>
+      import '../../scripts/songbook.js';
+    </script>
+  </body>
+</html>
