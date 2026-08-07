@@ -20,11 +20,44 @@
 [G]And there's no one to blame but the [Em]drink in my wandering [F]hands
 @ipa ⟦ən-ðɛrz-noʊ-wʌn-tə-bleɪm | bə-ðə-drɪŋk-ən-maɪ-ˈwɑndərɪŋ-hændz⟧
 
+// Frets below are counted from capo 4 as fret 0.
+@tab C — part 1
+A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 G0
+@endtab
+
+@tab Am — part 1
+A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 G2
+@endtab
+
+@tab G → Em — part 1
+E3 G0 E3 B0 E3 G0 E3 B0 E3 G0 E3 B0 | E0 G0 E0 G0
+@endtab
+
+@tab F — part 1
+E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
 [C]Forget what I said [Am]It's not what I meant
 @ipa ⟦fɚˈɡɛt-wʌɾ-aɪ-sɛd | ɪts-nɑt-wʌɾ-aɪ-mɛnt⟧
 
 [G]And I can't take it back, I can't [Em]unpack the baggage you [F]left
 @ipa ⟦ən-aɪ-kænt-teɪ-kɪt-bæk | aɪ-kænt-ʌnˈpæk-ðə-ˈbæɡɪdʒ-jə-lɛft⟧
+
+@tab C — part 2
+A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0
+@endtab
+
+@tab Am — part 2
+A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2
+@endtab
+
+@tab G → Em — part 2
+E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0
+@endtab
+
+@tab F — part 2
+E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
 
 # Chorus
 
@@ -37,6 +70,10 @@
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
 
+@tab Chorus — part 1
+A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B0 E3 G0 E3 B0 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
 [C]What if I'm down? What if I'm out?
 @ipa ⟦wʌɾ-ɪf-aɪm-daʊn | wʌɾ-ɪf-aɪm-aʊt⟧
 
@@ -45,6 +82,10 @@
 
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
+
+@tab Chorus — part 2
+A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
 
 # Verse 2
 
@@ -71,6 +112,10 @@
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
 
+@tab Chorus — part 1
+A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B0 E3 G0 E3 B0 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
 [C]What if I'm down? What if I'm out?
 @ipa ⟦wʌɾ-ɪf-aɪm-daʊn | wʌɾ-ɪf-aɪm-aʊt⟧
 
@@ -80,10 +125,18 @@
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
 
+@tab Chorus — part 2
+A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
 # Bridge
 
 [F]And I get the feeling that [Am]you'll never need me [C]again [Am] [G] [Em] [F]
 @ipa ⟦ən-aɪ-ɡɛt-ðə-ˈfilɪŋ | ðət-jəl-ˈnɛvɚ-nid-mi-əˈɡɛn⟧
+
+@tab Bridge
+E1 G2 E1 B1 E1 G2 E1 B1 | A0 G2 A0 B1 A0 G2 A0 B1 | A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
 
 # Final chorus
 
@@ -96,6 +149,10 @@
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
 
+@tab Final chorus — part 1
+A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B0 E3 G0 E3 B0 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
 [C]What if I'm down? What if I'm out?
 @ipa ⟦wʌɾ-ɪf-aɪm-daʊn | wʌɾ-ɪf-aɪm-aʊt⟧
 
@@ -104,3 +161,14 @@
 
 [G]I'm falling again, I'm falling [Em]again, I'm [F]falling
 @ipa ⟦aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ-əˈɡɛn | aɪm-ˈfɔlɪŋ⟧
+
+@tab Final chorus — part 2
+A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
+
+# Outro
+
+// Instrumental repeat of the second half of the chorus.
+@tab Outro — chorus part 2
+A3 G0 A3 e0 A3 G0 A3 B3 A3 G0 A3 B1 A3 G0 A3 G0 | A0 G2 A0 e0 A0 G2 A0 B3 A0 G2 A0 B1 A0 G2 A0 G2 | E3 G0 E3 B3 E3 G0 E3 B1 E3 G0 E3 B0 | E0 G0 E0 G0 | E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 B1 E1 G2 E1 G2
+@endtab
