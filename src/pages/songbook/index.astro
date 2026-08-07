@@ -73,6 +73,8 @@ const songData = JSON.stringify(songs).replaceAll('<', '\\u003c');
               <button data-mode="ipa">IPA</button>
             </div>
 
+            <button class="btn columns-toggle" id="columnsToggle" aria-pressed="false" title="Przełącz układ jednej / dwóch kolumn">2 Col</button>
+
             <div class="control-group compact" aria-label="Transpozycja">
               <button id="transposeDown" title="Transpose -1">−</button>
               <span class="value" id="transposeValue">0</span>
