@@ -5,17 +5,29 @@ dist/
 
 # Local data factory
 /data/*
+
+# Tracked data metadata and generators
 !/data/README.md
 !/data/generate_geojson.py
 !/data/generate_challenges.py
 
+# SongBook sources are versioned
+!/data/songbook/
+!/data/songbook/**
+
 # Local credentials and environment files
-data/creds/
+/data/creds/
 .env
 .env.*
 !.env.example
 *.pem
 *.key
+
+# Local backups
+/data/backups/
+
+# External GPX source (OneDrive link)
+/data/gpx/
 
 # Python-generated local state
 __pycache__/
@@ -25,3 +37,4 @@ __pycache__/
 # Local operating-system files
 Thumbs.db
 .DS_Store
+desktop.ini
