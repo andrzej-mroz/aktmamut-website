@@ -60,7 +60,6 @@ let currentSongId = localStorage.getItem("gl.song") || SONGS[0]?.id || "",
   scrollRAF = 0,
   lastTs = 0,
   audioObjectUrl = null,
-  desktopSidebarCollapsed = localStorage.getItem("gl.sidebarCollapsed") === "1",
   setupOpen = localStorage.getItem("gl.setupOpen") === "1",
   twoColumns = localStorage.getItem("gl.twoColumns") === "1",
   fingeringOpen = false;
@@ -353,31 +352,13 @@ function toggleAutoScroll() {
     scrollRAF = requestAnimationFrame(frame);
   }
 }
-function isMobileSidebar() {
-  return matchMedia("(max-width: 760px)").matches;
-}
 function closeSidebar() {
   els.sidebar.classList.remove("open");
   els.backdrop.classList.remove("show");
 }
-function applyDesktopSidebarState() {
-  els.app.classList.toggle(
-    "sidebar-collapsed",
-    desktopSidebarCollapsed && !isMobileSidebar(),
-  );
-}
 function toggleSidebar() {
-  if (isMobileSidebar()) {
-    els.sidebar.classList.toggle("open");
-    els.backdrop.classList.toggle("show");
-    return;
-  }
-  desktopSidebarCollapsed = !desktopSidebarCollapsed;
-  localStorage.setItem(
-    "gl.sidebarCollapsed",
-    desktopSidebarCollapsed ? "1" : "0",
-  );
-  applyDesktopSidebarState();
+  els.sidebar.classList.toggle("open");
+  els.backdrop.classList.toggle("show");
 }
 function applySetupState() {
   els.setupPanel.classList.toggle("collapsed", !setupOpen);
@@ -450,12 +431,10 @@ window.addEventListener("keydown", (e) => {
 });
 window.addEventListener("resize", () => {
   closeSidebar();
-  applyDesktopSidebarState();
   applyColumnMode();
 });
 const sp = localStorage.getItem("gl.scrollSpeed");
 if (sp) els.scrollSpeed.value = sp;
 els.scrollSpeedValue.textContent = els.scrollSpeed.value;
 applySetupState();
-applyDesktopSidebarState();
 renderAll();
