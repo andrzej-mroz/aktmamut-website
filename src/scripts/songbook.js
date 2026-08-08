@@ -317,7 +317,12 @@ function stopAutoScroll() {
   autoScrollOn = false;
   cancelAnimationFrame(scrollRAF);
   lastTs = 0;
-  els.scrollToggle.textContent = "▶ Auto-scroll";
+
+  const icon = els.scrollToggle.querySelector(".scroll-icon");
+  if (icon) icon.textContent = "▶";
+
+  els.scrollToggle.setAttribute("aria-label", "Auto-scroll");
+  els.scrollToggle.setAttribute("title", "Auto-scroll");
 }
 function frame(ts) {
   if (!autoScrollOn) return;
@@ -333,11 +338,18 @@ function frame(ts) {
   scrollRAF = requestAnimationFrame(frame);
 }
 function toggleAutoScroll() {
-  if (autoScrollOn) stopAutoScroll();
-  else {
+  if (autoScrollOn) {
+    stopAutoScroll();
+  } else {
     autoScrollOn = true;
     lastTs = 0;
-    els.scrollToggle.textContent = "⏸ Auto-scroll";
+
+    const icon = els.scrollToggle.querySelector(".scroll-icon");
+    if (icon) icon.textContent = "⏸";
+
+    els.scrollToggle.setAttribute("aria-label", "Stop auto-scroll");
+    els.scrollToggle.setAttribute("title", "Stop auto-scroll");
+
     scrollRAF = requestAnimationFrame(frame);
   }
 }
@@ -369,7 +381,7 @@ function toggleSidebar() {
 }
 function applySetupState() {
   els.setupPanel.classList.toggle("collapsed", !setupOpen);
-  els.setupToggle.textContent = setupOpen ? "Tools ▾" : "Tools ▸";
+  els.setupToggle.setAttribute("aria-expanded", String(setupOpen));
 }
 document.getElementById("transposeDown").onclick = () => changeTranspose(-1);
 document.getElementById("transposeUp").onclick = () => changeTranspose(1);
