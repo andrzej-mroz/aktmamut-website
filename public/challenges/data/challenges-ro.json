@@ -329,11 +329,11 @@
     "region": "Karpaty Wschodnie\nSzeklerland",
     "subregion": "Góry Baraolt\nRO Munţii Baraolt",
     "height": 1019,
-    "expedition": "",
-    "date": "",
+    "expedition": "2643",
+    "date": "2026-08-23",
     "lat": 45.8947,
     "lon": 25.6725,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 639,
@@ -461,11 +461,11 @@
     "region": "Karpaty Wschodnie\nBuzau",
     "subregion": "Góry Intorsurii\nRO Munţii Întorsurii",
     "height": 1222,
-    "expedition": "",
-    "date": "",
+    "expedition": "2642",
+    "date": "2026-08-23",
     "lat": 45.7092828,
     "lon": 25.9134247,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 651,
