@@ -533,11 +533,11 @@
     "region": "Karpaty Wschodnie\nPredeal",
     "subregion": "Góry Persani\nRO Munţii Persani",
     "height": 1294,
-    "expedition": "",
-    "date": "",
+    "expedition": "2644",
+    "date": "2026-08-24",
     "lat": 45.7111,
     "lon": 25.4047,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 657,
@@ -545,11 +545,11 @@
     "region": "Karpaty Wschodnie\nPredeal",
     "subregion": "Góry Persani\nRO Munţii Persani",
     "height": 1104,
-    "expedition": "",
-    "date": "",
+    "expedition": "2645",
+    "date": "2026-08-24",
     "lat": 45.8601,
     "lon": 25.4389,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 659,
