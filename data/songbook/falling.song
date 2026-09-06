@@ -67,7 +67,7 @@ used: Intro, Verse/Chorus, Bridge, Outro
 
 # Intro
 
-@tab Intro — Verse 1 part 1
+@tab Intro
 C:  (A3 G0 A3 B1)x3 + A3 G0 A3 G0
 Am: (A0 G2 A0 B1)x3 + A0 G2 A0 G2
 G:  (E3 G0 E3 B0)x3
@@ -134,10 +134,24 @@ F:  (E1 G2 E1 B1)x3 + E1 G2 E1 G2
 @ipa ⟦jə-sɛd-jə-kɛrd | ən-jə-mɪst-mi-tu⟧
 [G]And I'm well aware I write too many [Em]songs about [F]you
 @ipa ⟦ən-aɪm-wɛl-əˈwɛr | aɪ-raɪt-tə-ˈmɛni-sɔŋz-əˈbaʊt-jə⟧
+@tab Verse 2 — part 1
+C:  (A3 G0 A3 B1)x3 + A3 G0 A3 G0
+Am: (A0 G2 A0 B1)x3 + A0 G2 A0 G2
+G:  (E3 G0 E3 B0)x3
+Em: E0 G0 E0 G0
+F:  (E1 G2 E1 B1)x3 + E1 G2 E1 G2
+@endtab
 [C]And the coffee's out at the [Am]Beachwood Cafe
 @ipa ⟦ən-ðə-ˈkɔfiz-aʊt | ət-ðə-ˈbitʃwʊd-kæˈfeɪ⟧
 [G]And it kills me 'cause I know we've [Em]run out of things we can [F]say
 @ipa ⟦ən-ɪt-kɪlz-mi | kəz-aɪ-noʊ-wiv-rʌn-aʊɾ-əv-θɪŋz-wi-kən-seɪ⟧
+@tab Verse 2 — part 2
+C:  A3 G0 A3 e0 + A3 G0 A3 B3 + A3 G0 A3 B1 + A3 G0 A3 G0
+Am: A0 G2 A0 e0 + A0 G2 A0 B3 + A0 G2 A0 B1 + A0 G2 A0 G2
+G:  E3 G0 E3 B3 + E3 G0 E3 B1 + E3 G0 E3 B0
+Em: E0 G0 E0 G0
+F:  (E1 G2 E1 B1)x3 + E1 G2 E1 G2
+@endtab
 
 # Chorus
 [C]What am I now? What am I now?
