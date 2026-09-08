@@ -761,11 +761,11 @@
     "region": "Wewnętrzne Karpaty Zachodnie\nTatry i Fatra",
     "subregion": "SK Západné Tatry - Červené vrchy",
     "height": 2122,
-    "expedition": "",
-    "date": "",
+    "expedition": "2646",
+    "date": "2026-09-08",
     "lat": 49.2316997,
     "lon": 19.9102261,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 355,

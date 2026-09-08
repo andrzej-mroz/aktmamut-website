@@ -12886,5 +12886,29 @@
     "accomodation": "Ghimbav Premont Luxury",
     "trail_counter": "537",
     "exp_counter": "157"
+  },
+  {
+    "nr": "2646",
+    "date": "2026-09-08",
+    "name": "Krzesanica",
+    "mountains": "Tatry",
+    "country": "PL SK",
+    "distance_km": 21.29,
+    "ascent_m": 1311,
+    "duration_min": 669,
+    "duration_text": "11:09",
+    "got": 34.4,
+    "got_total": 828.01,
+    "lat": 49.2316647,
+    "lon": 19.9094917,
+    "participants": "AM, BM",
+    "only_mountain": true,
+    "gpx": "2026-09-08-06-51-krzesanica.gpx",
+    "gpx_url": "https://www.wikiloc.com/hiking-trails/2026-09-08-06-51-krzesanica-284685836",
+    "photo_album_url": "",
+    "photo_stamp_url": "",
+    "accomodation": "Zakopane Benita",
+    "trail_counter": "538",
+    "exp_counter": "158"
   }
 ]
