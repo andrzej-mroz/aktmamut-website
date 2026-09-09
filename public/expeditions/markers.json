@@ -12910,5 +12910,29 @@
     "accomodation": "Zakopane Benita",
     "trail_counter": "538",
     "exp_counter": "158"
+  },
+  {
+    "nr": "2647",
+    "date": "2026-09-09",
+    "name": "Dolina Gąsienicowa",
+    "mountains": "Tatry",
+    "country": "PL",
+    "distance_km": 16.19,
+    "ascent_m": 777,
+    "duration_min": 429,
+    "duration_text": "7:09",
+    "got": 23.96,
+    "got_total": 851.97,
+    "lat": 49.2277819,
+    "lon": 20.0025169,
+    "participants": "AM, BM",
+    "only_mountain": true,
+    "gpx": "2026-09-09-06-37-dolina-gasienicowa.gpx",
+    "gpx_url": "https://www.wikiloc.com/hiking-trails/2026-09-09-06-37-dolina-gasienicowa-284844160",
+    "photo_album_url": "",
+    "photo_stamp_url": "",
+    "accomodation": "Zakopane Benita",
+    "trail_counter": "539",
+    "exp_counter": "158"
   }
 ]
