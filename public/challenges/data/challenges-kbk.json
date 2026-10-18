@@ -1,6 +1,6 @@
 [
   {
-    "number": 149,
+    "number": 148,
     "peak": "Lysa Hora\nCZ Lysá hora - PL Łysa Góra - DE Kahlberg",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pogórze Łysogórskie\nCZ Lysohorská hornatina",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 160,
+    "number": 159,
     "peak": "Skrzyczne\nDE Rauhkogel",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Baraniej Góry",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 164,
+    "number": 163,
     "peak": "Czupel",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Magurki Wilkowickiej - Grupa Magurki i Czupla",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 179,
+    "number": 178,
     "peak": "Lubomir",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Lubomira i Łysiny",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 188,
+    "number": 187,
     "peak": "Mogielica",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Masyw Mogielicy",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 200,
+    "number": 199,
     "peak": "Turbacz",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Grupa Turbacza",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 203,
+    "number": 202,
     "peak": "Wielka Racza\nSK Veľká Rača",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Wielkiej Raczy\nSK Rača",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 206,
+    "number": 205,
     "peak": "Pupov\nSK Pupov",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "SK Kysucké bradlá",
@@ -96,7 +96,7 @@
     "status": "done"
   },
   {
-    "number": 212,
+    "number": 211,
     "peak": "Babia Góra\nSK Babia hora - DE Teufelspitze - HU Babia-Gura",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Babiogórskie\nSK Babia hora",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 222,
+    "number": 221,
     "peak": "Radziejowa",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Radziejowej - Grupa Radziejowej i Przechyby",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 231,
+    "number": 230,
     "peak": "Mincol\nSK Minčol - PL Minczoł Czerchowski",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "done"
   },
   {
-    "number": 234,
+    "number": 233,
     "peak": "Mincol\nSK Minčol - PL Minczoł Orawski",
     "region": "Zewnętrzne Karpaty Zachodnie\nMagura",
     "subregion": "SK Kubínska hoľa",
@@ -144,7 +144,7 @@
     "status": "done"
   },
   {
-    "number": 500,
+    "number": 499,
     "peak": "Busov\nSK Busov",
     "region": "Karpaty Wschodnie\nBeskid Niski",
     "subregion": "Busow\nSK Busov",
@@ -156,7 +156,7 @@
     "status": "done"
   },
   {
-    "number": 501,
+    "number": 500,
     "peak": "Stebnicka Magura\nSK Stebnícka Magura",
     "region": "Karpaty Wschodnie\nBeskid Niski",
     "subregion": "Busow\nSK Busov",
@@ -168,7 +168,7 @@
     "status": "done"
   },
   {
-    "number": 529,
+    "number": 528,
     "peak": "Magura Łomniańska\nUA Magura Limnianska (Маґура Лімнянська)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -180,7 +180,7 @@
     "status": "done"
   },
   {
-    "number": 547,
+    "number": 546,
     "peak": "Tarnica\nUA Тарніца",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Pasmo Połonin",
@@ -192,7 +192,7 @@
     "status": "done"
   },
   {
-    "number": 550,
+    "number": 549,
     "peak": "Pikuj\nUA Pikui (Пікуй)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -204,7 +204,7 @@
     "status": "done"
   },
   {
-    "number": 552,
+    "number": 551,
     "peak": "Ciuchowy Dział\nUA Tsiukhiv Verkh (Цюхів Верх)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Beskidy Brzeżne",
@@ -216,7 +216,7 @@
     "status": "done"
   },
   {
-    "number": 557,
+    "number": 556,
     "peak": "Wielka Sywula\nUA Velyka Syvulia (Велика Сивуля)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Gorgany Centralne",
@@ -228,7 +228,7 @@
     "status": "done"
   },
   {
-    "number": 560,
+    "number": 559,
     "peak": "Rotyło\nUA Rotylo (Ротило)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -240,7 +240,7 @@
     "status": "done"
   },
   {
-    "number": 561,
+    "number": 560,
     "peak": "Równa\nUA Rivna (Рівна)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -252,7 +252,7 @@
     "status": "done"
   },
   {
-    "number": 563,
+    "number": 562,
     "peak": "Stoj\nUA Stiy (Стій)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -264,7 +264,7 @@
     "status": "done"
   },
   {
-    "number": 564,
+    "number": 563,
     "peak": "Syhłański\nUA Syhlianskyi (Сиглянський)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -276,7 +276,7 @@
     "status": "done"
   },
   {
-    "number": 565,
+    "number": 564,
     "peak": "Bliźnica\nUA Blyznytsia (Близниця)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -288,7 +288,7 @@
     "status": "done"
   },
   {
-    "number": 567,
+    "number": 566,
     "peak": "Howerla\nUA Hoverla (Говерла)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -300,7 +300,7 @@
     "status": "done"
   },
   {
-    "number": 570,
+    "number": 569,
     "peak": "Pohreptyna\nUA Pokhrebtyna (Похребтина)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -312,7 +312,7 @@
     "status": "done"
   },
   {
-    "number": 599,
+    "number": 598,
     "peak": "Jarowica\nUA Yarovytsia (Яровиця)",
     "region": "Karpaty Wschodnie\nBukowina",
     "subregion": "",

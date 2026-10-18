@@ -1,6 +1,6 @@
 [
   {
-    "number": 4,
+    "number": 3,
     "peak": "Luz\nCZ Luž DE Lausche",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 5,
+    "number": 4,
     "peak": "Jested\nCZ Ještěd DE Jeschken",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 9,
+    "number": 8,
     "peak": "Wysoka Kopa\nDE Hinterberg",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 10,
+    "number": 9,
     "peak": "Śnieżka\nCZ Sněžka DE Schneekoppe",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "Czarny Grzbiet\nCZ Obří hřeben DE Riesenkamm",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 14,
+    "number": 13,
     "peak": "Skalnik\nDE Friesensteine",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 18,
+    "number": 17,
     "peak": "Skopiec\nDE Melkgelte",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "Grzbiet Południowy\nDE Hauptkamm",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 23,
+    "number": 22,
     "peak": "Borowa\nDE Schwarzeberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "Rybnicki Grzbiet",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 25,
+    "number": 24,
     "peak": "Wielka Sowa\nDE Hohe Eule",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -96,7 +96,7 @@
     "status": "done"
   },
   {
-    "number": 29,
+    "number": 28,
     "peak": "Waligóra\nDE Heidelberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "Góry Suche\nCZ Javoří hory",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 31,
+    "number": 30,
     "peak": "Szczeliniec Wielki\nCZ Velká Hejšovina DE Großen Heuscheuer",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 33,
+    "number": 32,
     "peak": "Zaltman\nCZ Žaltman DE Hexenstein",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "done"
   },
   {
-    "number": 37,
+    "number": 36,
     "peak": "Velka Destna\nCZ Velká Deštná DE Deschneyer Großkoppe",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -144,7 +144,7 @@
     "status": "done"
   },
   {
-    "number": 39,
+    "number": 38,
     "peak": "Jagodna\nDE Heidelberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -156,7 +156,7 @@
     "status": "done"
   },
   {
-    "number": 41,
+    "number": 40,
     "peak": "Kłodzka Góra\nDE Glatzer Berg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -168,7 +168,7 @@
     "status": "done"
   },
   {
-    "number": 43,
+    "number": 42,
     "peak": "Ślęża\nDE Zobtenberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -180,7 +180,7 @@
     "status": "done"
   },
   {
-    "number": 45,
+    "number": 44,
     "peak": "Śnieżnik\nCZ Králický Sněžník DE Glatzer Schneeberg",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -192,7 +192,7 @@
     "status": "done"
   },
   {
-    "number": 48,
+    "number": 47,
     "peak": "Smrk Rychleby\nCZ Smrk DE Fichtlich",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -204,7 +204,7 @@
     "status": "done"
   },
   {
-    "number": 50,
+    "number": 49,
     "peak": "Lazek\nCZ Lázek",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -216,7 +216,7 @@
     "status": "done"
   },
   {
-    "number": 51,
+    "number": 50,
     "peak": "Jerab\nCZ Jeřáb - DE Ebereschberg",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -228,7 +228,7 @@
     "status": "done"
   },
   {
-    "number": 52,
+    "number": 51,
     "peak": "Praded\nCZ Praděd - PL pradziad - DE Altvater",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -240,7 +240,7 @@
     "status": "done"
   },
   {
-    "number": 53,
+    "number": 52,
     "peak": "Slunecna\nCZ Slunečná - DE Sonnenberg",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -252,7 +252,7 @@
     "status": "done"
   },
   {
-    "number": 54,
+    "number": 53,
     "peak": "Pricny Vrch\nCZ Příčný vrch - PL Góra Poprzeczna - DE Querberg",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",

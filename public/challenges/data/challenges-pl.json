@@ -1,6 +1,6 @@
 [
   {
-    "number": 9,
+    "number": 8,
     "peak": "Wysoka Kopa\nDE Hinterberg",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 10,
+    "number": 9,
     "peak": "Śnieżka\nCZ Sněžka DE Schneekoppe",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "Czarny Grzbiet\nCZ Obří hřeben DE Riesenkamm",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 14,
+    "number": 13,
     "peak": "Skalnik\nDE Friesensteine",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 18,
+    "number": 17,
     "peak": "Skopiec\nDE Melkgelte",
     "region": "Sudety Zachodnie\nDE Westsudeten",
     "subregion": "Grzbiet Południowy\nDE Hauptkamm",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 22,
+    "number": 21,
     "peak": "Chełmiec\nDE Hochwald",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "Masyw Chełmca",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 25,
+    "number": 24,
     "peak": "Wielka Sowa\nDE Hohe Eule",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 29,
+    "number": 28,
     "peak": "Waligóra\nDE Heidelberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "Góry Suche\nCZ Javoří hory",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 31,
+    "number": 30,
     "peak": "Szczeliniec Wielki\nCZ Velká Hejšovina DE Großen Heuscheuer",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -96,7 +96,7 @@
     "status": "done"
   },
   {
-    "number": 36,
+    "number": 35,
     "peak": "Orlica\nCZ Vrchmezí DE Hohe Mense",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 39,
+    "number": 38,
     "peak": "Jagodna\nDE Heidelberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 41,
+    "number": 40,
     "peak": "Kłodzka Góra\nDE Glatzer Berg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "done"
   },
   {
-    "number": 43,
+    "number": 42,
     "peak": "Ślęża\nDE Zobtenberg",
     "region": "Sudety Środkowe\nDE Mittelsudeten",
     "subregion": "",
@@ -144,7 +144,7 @@
     "status": "done"
   },
   {
-    "number": 45,
+    "number": 44,
     "peak": "Śnieżnik\nCZ Králický Sněžník DE Glatzer Schneeberg",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -156,7 +156,7 @@
     "status": "done"
   },
   {
-    "number": 46,
+    "number": 45,
     "peak": "Rudawiec\nCZ Červené Bahno DE Rote Sümpfe",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "Góry Bialskie\nCZ Rychlebské hory DE Bielengebirge",
@@ -168,7 +168,7 @@
     "status": "done"
   },
   {
-    "number": 49,
+    "number": 48,
     "peak": "Kowadło\nCZ Kovadlina DE Schmiedekoppe",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -180,7 +180,7 @@
     "status": "done"
   },
   {
-    "number": 55,
+    "number": 54,
     "peak": "Biskupia Kopa\nDE Bischofskoppe - CZ Biskupská kupa",
     "region": "Sudety Wschodnie\nDE Ostsudeten",
     "subregion": "",
@@ -192,7 +192,7 @@
     "status": "done"
   },
   {
-    "number": 67,
+    "number": 66,
     "peak": "Łysica",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -204,7 +204,7 @@
     "status": "done"
   },
   {
-    "number": 160,
+    "number": 159,
     "peak": "Skrzyczne\nDE Rauhkogel",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Baraniej Góry",
@@ -216,7 +216,7 @@
     "status": "done"
   },
   {
-    "number": 164,
+    "number": 163,
     "peak": "Czupel",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Magurki Wilkowickiej - Grupa Magurki i Czupla",
@@ -228,7 +228,7 @@
     "status": "done"
   },
   {
-    "number": 179,
+    "number": 178,
     "peak": "Lubomir",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Lubomira i Łysiny",
@@ -240,7 +240,7 @@
     "status": "done"
   },
   {
-    "number": 188,
+    "number": 187,
     "peak": "Mogielica",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Masyw Mogielicy",
@@ -252,7 +252,7 @@
     "status": "done"
   },
   {
-    "number": 200,
+    "number": 199,
     "peak": "Turbacz",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Grupa Turbacza",
@@ -264,7 +264,7 @@
     "status": "done"
   },
   {
-    "number": 212,
+    "number": 211,
     "peak": "Babia Góra\nSK Babia hora - DE Teufelspitze - HU Babia-Gura",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Babiogórskie\nSK Babia hora",
@@ -276,7 +276,7 @@
     "status": "done"
   },
   {
-    "number": 222,
+    "number": 221,
     "peak": "Radziejowa",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Radziejowej - Grupa Radziejowej i Przechyby",
@@ -288,7 +288,7 @@
     "status": "done"
   },
   {
-    "number": 249,
+    "number": 248,
     "peak": "Vysoke Skalky\nSK Vysoké Skalky - PL Wysoka",
     "region": "Zewnętrzne Karpaty Zachodnie\nMagura",
     "subregion": "Małe Pieniny",
@@ -300,7 +300,7 @@
     "status": "done"
   },
   {
-    "number": 362,
+    "number": 361,
     "peak": "Rysy\nSK Rysy - HU Tengerszem-csúcs - DE Meeraugspitze",
     "region": "Wewnętrzne Karpaty Zachodnie\nTatry i Fatra",
     "subregion": "SK Východné Tatry - Vysoké Tatry",
@@ -312,7 +312,7 @@
     "status": "done"
   },
   {
-    "number": 494,
+    "number": 493,
     "peak": "Lackowa\nSK Lacková",
     "region": "Karpaty Wschodnie\nBeskid Niski",
     "subregion": "Góry Hańczowskie - Pasmo Lackowej",
@@ -324,7 +324,7 @@
     "status": "done"
   },
   {
-    "number": 547,
+    "number": 546,
     "peak": "Tarnica\nUA Тарніца",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Pasmo Połonin",

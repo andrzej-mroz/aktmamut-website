@@ -1,6 +1,6 @@
 [
   {
-    "number": 57,
+    "number": 56,
     "peak": "Fajna Ryba",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 58,
+    "number": 57,
     "peak": "Altana",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 59,
+    "number": 58,
     "peak": "Góra Dobrzeszowska",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 60,
+    "number": 59,
     "peak": "Góra Siniewska",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 61,
+    "number": 60,
     "peak": "Góra Osieczyńska",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 62,
+    "number": 61,
     "peak": "Kamień Michniowski",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 63,
+    "number": 62,
     "peak": "Bukowa Góra",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 64,
+    "number": 63,
     "peak": "Sosnowica",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -96,7 +96,7 @@
     "status": "done"
   },
   {
-    "number": 65,
+    "number": 64,
     "peak": "Klonówka",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 66,
+    "number": 65,
     "peak": "Radostowa",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 67,
+    "number": 66,
     "peak": "Łysica",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "done"
   },
   {
-    "number": 69,
+    "number": 68,
     "peak": "Góra Milechowska",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -144,7 +144,7 @@
     "status": "done"
   },
   {
-    "number": 70,
+    "number": 69,
     "peak": "Miedzianka",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -156,7 +156,7 @@
     "status": "done"
   },
   {
-    "number": 71,
+    "number": 70,
     "peak": "Zelejowa",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -168,7 +168,7 @@
     "status": "done"
   },
   {
-    "number": 72,
+    "number": 71,
     "peak": "Zamkowa",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -180,7 +180,7 @@
     "status": "todo"
   },
   {
-    "number": 73,
+    "number": 72,
     "peak": "Glinianki",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -192,7 +192,7 @@
     "status": "done"
   },
   {
-    "number": 74,
+    "number": 73,
     "peak": "Patrol",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -204,7 +204,7 @@
     "status": "done"
   },
   {
-    "number": 75,
+    "number": 74,
     "peak": "Karczówka",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -216,7 +216,7 @@
     "status": "todo"
   },
   {
-    "number": 76,
+    "number": 75,
     "peak": "Biesak",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -228,7 +228,7 @@
     "status": "done"
   },
   {
-    "number": 77,
+    "number": 76,
     "peak": "Telegraf",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -240,7 +240,7 @@
     "status": "done"
   },
   {
-    "number": 78,
+    "number": 77,
     "peak": "Otrocz",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -252,7 +252,7 @@
     "status": "done"
   },
   {
-    "number": 79,
+    "number": 78,
     "peak": "Sikorza",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -264,7 +264,7 @@
     "status": "done"
   },
   {
-    "number": 80,
+    "number": 79,
     "peak": "Włochy",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -276,7 +276,7 @@
     "status": "done"
   },
   {
-    "number": 81,
+    "number": 80,
     "peak": "Jaźwina",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -288,7 +288,7 @@
     "status": "done"
   },
   {
-    "number": 82,
+    "number": 81,
     "peak": "Kiełki",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -300,7 +300,7 @@
     "status": "done"
   },
   {
-    "number": 83,
+    "number": 82,
     "peak": "Drogosiowa",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -312,7 +312,7 @@
     "status": "done"
   },
   {
-    "number": 84,
+    "number": 83,
     "peak": "Góra Chełmowa",
     "region": "Góry Świętokrzyskie",
     "subregion": "",
@@ -324,7 +324,7 @@
     "status": "done"
   },
   {
-    "number": 85,
+    "number": 84,
     "peak": "Szczytniak",
     "region": "Góry Świętokrzyskie",
     "subregion": "",

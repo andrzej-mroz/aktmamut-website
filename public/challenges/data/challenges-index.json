@@ -1,5 +1,10 @@
 [
   {
+    "key": "ecpc",
+    "name": "Korona Karpat Wschodnich",
+    "icon": "/assets/img/ecpc.webp"
+  },
+  {
     "key": "pl",
     "name": "Korona Gór Polski",
     "icon": "/assets/img/pl.svg"

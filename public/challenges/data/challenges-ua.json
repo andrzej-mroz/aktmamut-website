@@ -1,6 +1,6 @@
 [
   {
-    "number": 529,
+    "number": 528,
     "peak": "Magura Łomniańska\nUA Magura Limnianska (Маґура Лімнянська)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 549,
+    "number": 548,
     "peak": "Kińczyk Bukowski\nUA Kinchyk Bukovskyi (Кінчик Буковський)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Pasmo Połonin",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 550,
+    "number": 549,
     "peak": "Pikuj\nUA Pikui (Пікуй)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 552,
+    "number": 551,
     "peak": "Ciuchowy Dział\nUA Tsiukhiv Verkh (Цюхів Верх)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Beskidy Brzeżne",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 553,
+    "number": 552,
     "peak": "Magura\nUA Magura (Маґура)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 557,
+    "number": 556,
     "peak": "Wielka Sywula\nUA Velyka Syvulia (Велика Сивуля)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "Gorgany Centralne",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 560,
+    "number": 559,
     "peak": "Rotyło\nUA Rotylo (Ротило)",
     "region": "Karpaty Wschodnie\nBeskidy Lesiste",
     "subregion": "",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 561,
+    "number": 560,
     "peak": "Równa\nUA Rivna (Рівна)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -96,7 +96,7 @@
     "status": "done"
   },
   {
-    "number": 563,
+    "number": 562,
     "peak": "Stoj\nUA Stiy (Стій)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 564,
+    "number": 563,
     "peak": "Syhłański\nUA Syhlianskyi (Сиглянський)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 565,
+    "number": 564,
     "peak": "Bliźnica\nUA Blyznytsia (Близниця)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "done"
   },
   {
-    "number": 567,
+    "number": 566,
     "peak": "Howerla\nUA Hoverla (Говерла)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -144,7 +144,7 @@
     "status": "done"
   },
   {
-    "number": 570,
+    "number": 569,
     "peak": "Pohreptyna\nUA Pokhrebtyna (Похребтина)",
     "region": "Karpaty Wschodnie\nBeskidy Połonińskie",
     "subregion": "",
@@ -156,7 +156,7 @@
     "status": "done"
   },
   {
-    "number": 574,
+    "number": 573,
     "peak": "Witrowa Skała\nSK Vetrová skala - UA Vitrova Skala (Вітрова Скала)",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Wyhorlat\nSK Vihorlatské vrchy - UA Вигорлат",
@@ -168,7 +168,7 @@
     "status": "done"
   },
   {
-    "number": 575,
+    "number": 574,
     "peak": "Makowica\nUA Makovytsia (Маковиця)",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Makowica\nUA Маковиця",
@@ -180,7 +180,7 @@
     "status": "done"
   },
   {
-    "number": 576,
+    "number": 575,
     "peak": "Dunawka\nUA Dunavka (Дунавка)",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Siniak\nUA Синяк",
@@ -192,7 +192,7 @@
     "status": "done"
   },
   {
-    "number": 577,
+    "number": 576,
     "peak": "Bużora\nUA Buzhora (Бужора)",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Wielki Dział\nUA Великий Діл",
@@ -204,7 +204,7 @@
     "status": "done"
   },
   {
-    "number": 578,
+    "number": 577,
     "peak": "Tupyj\nUA Tupyi (Тупий)",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Tupy\nUA Тупий",
@@ -216,7 +216,7 @@
     "status": "done"
   },
   {
-    "number": 580,
+    "number": 579,
     "peak": "Piatra Vascului\nRO Piatra Vâscului - PL Kamień Wyszkowski",
     "region": "Karpaty Wschodnie\nPasmo Wulkaniczne",
     "subregion": "Góry Oasz\nRO Munţii Oaş",
@@ -228,7 +228,7 @@
     "status": "done"
   },
   {
-    "number": 585,
+    "number": 584,
     "peak": "Pop Iwan Marmaroski\nUA Pip Ivan Marmaroski (Піп Іван Мармароський)",
     "region": "Karpaty Wschodnie\nMarmarosy",
     "subregion": "Góry Rachowskie\nUA Рахівські гори",
@@ -240,7 +240,7 @@
     "status": "done"
   },
   {
-    "number": 587,
+    "number": 586,
     "peak": "Hnitessa\nUA Hnitesa (Гнітеса)",
     "region": "Karpaty Wschodnie\nMarmarosy",
     "subregion": "Czywczyny\nUA Чивчини",
@@ -252,7 +252,7 @@
     "status": "done"
   },
   {
-    "number": 599,
+    "number": 598,
     "peak": "Jarowica\nUA Yarovytsia (Яровиця)",
     "region": "Karpaty Wschodnie\nBukowina",
     "subregion": "",
@@ -264,7 +264,7 @@
     "status": "done"
   },
   {
-    "number": 600,
+    "number": 599,
     "peak": "Łungul\nUA Lungul (Лунгуль)",
     "region": "Karpaty Wschodnie\nBukowina",
     "subregion": "",

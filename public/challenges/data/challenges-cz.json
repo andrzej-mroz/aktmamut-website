@@ -1,6 +1,6 @@
 [
   {
-    "number": 101,
+    "number": 100,
     "peak": "Devin\nCZ Děvín",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Austriacko-Morawskie",
     "subregion": "",
@@ -12,7 +12,7 @@
     "status": "done"
   },
   {
-    "number": 102,
+    "number": 101,
     "peak": "U Slepice\nCZ U Slepice",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Środkowomorawskie",
     "subregion": "",
@@ -24,7 +24,7 @@
     "status": "done"
   },
   {
-    "number": 103,
+    "number": 102,
     "peak": "Babi Lom\nCZ Babí lom",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Środkowomorawskie",
     "subregion": "",
@@ -36,7 +36,7 @@
     "status": "done"
   },
   {
-    "number": 104,
+    "number": 103,
     "peak": "Brdo\nCZ Brdo",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Środkowomorawskie",
     "subregion": "",
@@ -48,7 +48,7 @@
     "status": "done"
   },
   {
-    "number": 105,
+    "number": 104,
     "peak": "Hradisko\nCZ Hradisko",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Środkowomorawskie",
     "subregion": "",
@@ -60,7 +60,7 @@
     "status": "done"
   },
   {
-    "number": 106,
+    "number": 105,
     "peak": "Klastov\nCZ Klášťov",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Słowacko-Morawskie",
     "subregion": "",
@@ -72,7 +72,7 @@
     "status": "done"
   },
   {
-    "number": 122,
+    "number": 121,
     "peak": "Maly Javornik\nCZ Malý Javorník - PL Mały Jawornik",
     "region": "Zewnętrzne Karpaty Zachodnie\nKarpaty Słowacko-Morawskie",
     "subregion": "",
@@ -84,7 +84,7 @@
     "status": "done"
   },
   {
-    "number": 129,
+    "number": 128,
     "peak": "Ondrejnicka Skalka\nCZ Skalka - PL Ondrejnicka Skałka",
     "region": "Zewnętrzne Karpaty Zachodnie\nPogórze Zachodniobeskidzkie",
     "subregion": "",
@@ -96,7 +96,7 @@
     "status": "todo"
   },
   {
-    "number": 138,
+    "number": 137,
     "peak": "Vysoka Vsetinska\nCZ Vysoká - PL Wysoka Wsetyńska",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "",
@@ -108,7 +108,7 @@
     "status": "done"
   },
   {
-    "number": 149,
+    "number": 148,
     "peak": "Lysa Hora\nCZ Lysá hora - PL Łysa Góra - DE Kahlberg",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pogórze Łysogórskie\nCZ Lysohorská hornatina",
@@ -120,7 +120,7 @@
     "status": "done"
   },
   {
-    "number": 154,
+    "number": 153,
     "peak": "Girova\nCZ Girova",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "",
@@ -132,7 +132,7 @@
     "status": "todo"
   },
   {
-    "number": 157,
+    "number": 156,
     "peak": "Wielka Czantoria\nCZ Velká Čantoryje - DE Großer Czantory-Berg",
     "region": "Zewnętrzne Karpaty Zachodnie\nBeskidy",
     "subregion": "Pasmo Czantorii",
