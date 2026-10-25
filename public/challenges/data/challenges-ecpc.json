@@ -65,11 +65,11 @@
     "region": "",
     "subregion": "",
     "height": 664,
-    "expedition": "",
-    "date": "",
+    "expedition": "2657",
+    "date": "2026-10-25",
     "lat": 49.462184,
     "lon": 22.1138452,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 493,
