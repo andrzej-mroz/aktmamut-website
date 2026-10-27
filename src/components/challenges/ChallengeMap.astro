@@ -212,12 +212,12 @@ const { challengeKey, challengeName } = Astro.props;
         </div>
 
         <div>
-          <dt>Region</dt>
+          <dt>Range</dt>
           <dd>${escapeHtml(peak.range)}</dd>
         </div>
 
         <div>
-          <dt>Subregion</dt>
+          <dt>Range PL</dt>
           <dd>${escapeHtml(peak.rangePL)}</dd>
         </div>
 
@@ -372,12 +372,12 @@ const { challengeKey, challengeName } = Astro.props;
     width: 24px;
     height: 24px;
     place-items: center;
-    border: 1px solid white;
+    border: 1.3px solid white;
     border-radius: 50%;
     box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
     color: white;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.7rem;
+    font-family: var(--font-family-heading);
+    font-size: 0.6rem;
     font-weight: 500;
     line-height: 1;
   }
