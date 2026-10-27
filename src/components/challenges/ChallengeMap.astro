@@ -203,7 +203,7 @@ const { challengeKey, challengeName } = Astro.props;
         marker.bindPopup(
           `
     <article class="challenge-popup">
-      <h2>${escapeHtml(number)}. ${escapeHtml(peak.peak)}</h2>
+      <h2>${escapeHtml(number)} ${escapeHtml(peak.peak)}</h2>
 
       <dl>
         <div>
@@ -213,12 +213,12 @@ const { challengeKey, challengeName } = Astro.props;
 
         <div>
           <dt>Region</dt>
-          <dd>${escapeHtml(peak.region)}</dd>
+          <dd>${escapeHtml(peak.range)}</dd>
         </div>
 
         <div>
           <dt>Subregion</dt>
-          <dd>${escapeHtml(peak.subregion)}</dd>
+          <dd>${escapeHtml(peak.rangePL)}</dd>
         </div>
 
         <div>
@@ -376,6 +376,7 @@ const { challengeKey, challengeName } = Astro.props;
     border-radius: 50%;
     box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
     color: white;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 0.7rem;
     font-weight: 500;
     line-height: 1;

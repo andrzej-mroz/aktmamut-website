@@ -221,8 +221,8 @@ def build_record(row: pd.Series) -> dict[str, Any]:
     return {
         "number": to_int_or_none(row.get("NR", "")),
         "peak": clean_text(row.get("PEAK", "")),
-        "region": clean_text(row.get("REGION", "")),
-        "subregion": clean_text(row.get("SUBREGION", "")),
+        "range": clean_text(row.get("RANGE", "")),
+        "rangePL": clean_text(row.get("RANGE PL", "")),
         "height": to_int_or_none(row.get("HEIGHT", "")),
         "expedition": clean_text(row.get("EXPEDITION", "")),
         "date": clean_text(row.get("DATE", "")),
