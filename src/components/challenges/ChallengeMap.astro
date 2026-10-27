@@ -202,42 +202,37 @@ const { challengeKey, challengeName } = Astro.props;
 
         marker.bindPopup(
           `
-    <article class="challenge-popup">
-      <h2>${escapeHtml(number)} ${escapeHtml(peak.peak)}</h2>
+            <article class="challenge-popup">
+              <h2>${escapeHtml(number)} ${escapeHtml(peak.peak)}</h2>
 
-      <dl>
-        <div>
-          <dt>Height</dt>
-          <dd>${escapeHtml(peak.height)} m</dd>
-        </div>
+              <dl>
+                <div>
+                  <dt>Height</dt>
+                  <dd>${escapeHtml(peak.height)} m</dd>
+                </div>
 
-        <div>
-          <dt>Range</dt>
-          <dd>${escapeHtml(peak.range)}</dd>
-        </div>
+                <div>
+                  <dt>Range</dt>
+                  <dd>${escapeHtml(peak.range)}</dd>
+                </div>
 
-        <div>
-          <dt>Range PL</dt>
-          <dd>${escapeHtml(peak.rangePL)}</dd>
-        </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>${status === 'done' ? 'Completed' : 'To do'}</dd>
+                </div>
 
-        <div>
-          <dt>Status</dt>
-          <dd>${status === 'done' ? 'Completed' : 'To do'}</dd>
-        </div>
+                <div>
+                  <dt>Expedition</dt>
+                  <dd>${escapeHtml(peak.expedition || '—')}</dd>
+                </div>
 
-        <div>
-          <dt>Expedition</dt>
-          <dd>${escapeHtml(peak.expedition || '—')}</dd>
-        </div>
-
-        <div>
-          <dt>Date</dt>
-          <dd>${escapeHtml(formatChallengeDate(peak.date))}</dd>
-        </div>
-      </dl>
-    </article>
-  `,
+                <div>
+                  <dt>Date</dt>
+                  <dd>${escapeHtml(formatChallengeDate(peak.date))}</dd>
+                </div>
+              </dl>
+            </article>
+          `,
           {
             minWidth: 300,
             maxWidth: 360,
