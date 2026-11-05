@@ -665,11 +665,11 @@
     "range": "",
     "rangePL": "",
     "height": 83,
-    "expedition": "",
-    "date": "",
+    "expedition": "2648",
+    "date": "2026-10-11",
     "lat": 52.2884518,
     "lon": 20.689698,
-    "status": "todo"
+    "status": "done"
   },
   {
     "number": 57,
